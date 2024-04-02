@@ -4,7 +4,5 @@
     {
         public DateTime HireDate { get; set; }
 
-        //instructor in many Tracks
-        //public ICollection<Track> Tracks { get; set; } = new HashSet<Track>();
     }
 }
