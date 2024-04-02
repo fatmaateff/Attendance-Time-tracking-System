@@ -13,12 +13,12 @@ namespace Attendance_Time_tracking_System.Models
 
         // foreign key for Branch
         public int BranchId { get; set; }
-        [ForeignKey("BranchId")]
+        //[ForeignKey("BranchId")]
 
         //navigation property for Branch
-        public Branch BranchNavigation { get; set; }
+        //public Branch BranchNavigation { get; set; }
 
         //user has many attendances
-        public ICollection<Attendance> Attendances { get; set; } = new HashSet<Attendance>();
+        //public ICollection<Attendance> Attendances { get; set; } = new HashSet<Attendance>();
     }
 }
