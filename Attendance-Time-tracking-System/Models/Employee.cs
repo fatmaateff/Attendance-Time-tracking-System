@@ -1,4 +1,6 @@
-﻿using Microsoft.Build.Framework;
+﻿using System.ComponentModel.DataAnnotations;
+
+using Microsoft.Build.Framework;
 
 namespace Attendance_Time_tracking_System.Models
 {

@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Attendance_Time_tracking_System.Models;
 
 public class Intake
 {
     [Key]
-    public Guid Id { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     
     [Required]
     [StringLength(50,MinimumLength =5)]
@@ -18,5 +20,12 @@ public class Intake
 
     [Display(Name = "End Date")]
     public DateTime EndDate { get; set; }
+
+
+    ICollection<StudentTrackIntake> Students = new HashSet<StudentTrackIntake>();
+
+    ICollection<TrackSupervisor> Supervisors = new HashSet<TrackSupervisor>();
+
+    ICollection<TrackSchedule> Schedules = new HashSet<TrackSchedule>();
 
 }
