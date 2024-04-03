@@ -4,10 +4,12 @@ namespace Attendance_Time_tracking_System.Models
 {
     public class Program
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public float Duration { get; set; }
+        //navigation properties
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }
