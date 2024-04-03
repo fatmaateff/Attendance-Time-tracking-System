@@ -15,8 +15,13 @@ namespace Attendance_Time_tracking_System.Models
         [Required]
         public string Role { get; set; }
         public long Mobile { get; set; }
+
+        // user has one branch
         [Required]
+        [ForeignKey("Branch")]
         public int BranchId { get; set; }
+        [Required]
+        public Branch Branch { get; set; }
 
     }
 

@@ -2,6 +2,7 @@
 {
     public class Employee : User
     {
+        [Required]
         public int Type { get; set; }
     }
 }
