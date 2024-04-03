@@ -1,4 +1,6 @@
-﻿namespace Attendance_Time_tracking_System.Models
+﻿using Microsoft.Build.Framework;
+
+namespace Attendance_Time_tracking_System.Models
 {
     public class Employee : User
     {
