@@ -6,19 +6,23 @@ namespace Attendance_Time_tracking_System.Models;
 public class Attendance
 {
     [Key]
-    public Guid Id { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
 
 
-    [Required]
     public DateOnly Date { get; set; }
 
 
     [Display(Name = "Arrival Time")]
-    [Required]
     public DateTime TimeIn { get; set; }
 
 
     [Display(Name = "Time out")]
-    public DateTime DateOut { get; set; }
+    public DateTime? DateOut { get; set; }
 
+
+    [ForeignKey(nameof(User))]
+    public int UserId { get;set; }
+
+    public User User { get; set; }
 }

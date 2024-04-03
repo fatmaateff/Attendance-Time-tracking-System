@@ -1,12 +1,14 @@
 ﻿using Attendance_Time_tracking_System.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Attendance_Time_tracking_System.Models;
 
 public class Branch
 {
     [Key]
-    public Guid Id { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     
     [Required]
 
@@ -15,4 +17,10 @@ public class Branch
 
     [Required]
     public BranchStatus Status { get; set; }
+
+
+    ICollection<User> Users = new HashSet<User>();
+    ICollection<TrackSupervisor> supervisors = new HashSet<TrackSupervisor>();
+    ICollection<TrackSchedule> Schedules = new HashSet<TrackSchedule>();
+
 }

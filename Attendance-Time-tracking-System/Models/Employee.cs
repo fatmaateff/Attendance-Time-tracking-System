@@ -1,4 +1,6 @@
-﻿namespace Attendance_Time_tracking_System.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Attendance_Time_tracking_System.Models
 {
     public class Employee : User
     {
