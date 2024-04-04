@@ -15,9 +15,9 @@ namespace Attendance_Time_tracking_System.Models
         public int TrackID { get; set; }
 
         //navigation properties
-        public virtual Instructor Instructor { get; set; }
-        public virtual Intake Intake { get; set; }
-        public virtual Branch Branch { get; set; }
-        public virtual Track Track { get; set; }
+        public Instructor Instructor { get; set; }
+        public Intake Intake { get; set; }
+        public Branch Branch { get; set; }
+        public Track Track { get; set; }
     }
 }

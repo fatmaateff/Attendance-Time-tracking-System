@@ -17,6 +17,7 @@ public class Branch
 
     [Required]
     public BranchStatus Status { get; set; }
+    public bool IsDeleted { get; set; } = false;
 
 
     ICollection<User> Users = new HashSet<User>();

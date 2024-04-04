@@ -12,7 +12,11 @@ public class Track
     [Required]
     [StringLength(100 ,MinimumLength =5)]
     public string Name { get; set; }
+    [ForeignKey("ProgramType")]
+    public int ProgramID { get; set; }
+    public bool IsDeleted { get; set; } = false;
 
+    public ProgramType ProgramType { get; set; }
 
     ICollection<StudentTrackIntake> Studnets = new HashSet<StudentTrackIntake>();
 
