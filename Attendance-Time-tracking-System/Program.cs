@@ -10,16 +10,16 @@ namespace Attendance_Time_tracking_System
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            builder.Services.AddScoped<IBranchRepository, BranchRepository>();
-            builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<ITrackRepository, TrackRepository>();
-            builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
-            builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
-            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-            builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
-            builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
+            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            //builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+            //builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            //builder.Services.AddScoped<IUserRepository, UserRepository>();
+            //builder.Services.AddScoped<ITrackRepository, TrackRepository>();
+            //builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
+            //builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+            //builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            //builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            //builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
 
 
 
