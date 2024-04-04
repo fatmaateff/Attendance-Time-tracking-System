@@ -4,7 +4,7 @@ namespace Attendance_Time_tracking_System.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        AttendanceSysDbContext db;
+        private readonly AttendanceSysDbContext db;
         public UserRepository(AttendanceSysDbContext _db)
         {
             db = _db;

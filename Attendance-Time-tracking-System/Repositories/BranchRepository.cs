@@ -4,7 +4,7 @@ namespace Attendance_Time_tracking_System.Repositories
 {
     public class BranchRepository : IBranchRepository
     {
-        AttendanceSysDbContext db;
+        private readonly AttendanceSysDbContext db;
         public BranchRepository(AttendanceSysDbContext _db)
         {
             db = _db;
