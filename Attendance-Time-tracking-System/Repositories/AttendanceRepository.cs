@@ -15,6 +15,5 @@ namespace Attendance_Time_tracking_System.Repositories
         //method to delete attendance
 
     }
-    {
     }
-}
+
