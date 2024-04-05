@@ -35,33 +35,33 @@
                 </div>
             </div>
             <div class="list-group list-group-flush">
-                @if (User.IsInRole("supervisor"))
+                @if (User.IsInRole("Supervisor"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students Permissions</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
 
                 }
-                @if (User.IsInRole("admin"))
+                @if (User.IsInRole("Admin"))
                 {
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Supervisors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employees</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Instructors</a>
                 }
-                @if (User.IsInRole("student"))
+                @if (User.IsInRole("Student"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Permissions</a>
                 }
-                @if (User.IsInRole("studentAffair"))
+                @if (User.IsInRole("StudentAffair"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance Reports</a>
                 }
-                @if (User.IsInRole("instructor"))
+                @if (User.IsInRole("Instructor"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                 }
@@ -79,26 +79,26 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            @if (User.IsInRole("admin"))
+                            @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link active" aria-current="page" href="#">welcome Admin </a>
                                 </li>
                             }
                             
-                            @if(User.IsInRole("student"))
+                            @if(User.IsInRole("Student"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Students</a>
                                 </li>
                             }
-                            @if (User.IsInRole("instructor"))
+                            @if (User.IsInRole("Instructor"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Instructors</a>
                                 </li>
                             }
-                            @if (User.IsInRole("supervisor"))
+                            @if (User.IsInRole("Supervisor"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Supervisors</a>
