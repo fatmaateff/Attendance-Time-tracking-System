@@ -35,8 +35,37 @@
                 </div>
             </div>
             <div class="list-group list-group-flush">
+                @if (User.IsInRole("supervisor"))
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students Permissions</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
+
+                }
+                @if (User.IsInRole("admin"))
+                {
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Supervisors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employees</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Instructors</a>
+                }
+                @if (User.IsInRole("student"))
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Permissions</a>
+                }
+                @if (User.IsInRole("studentAffair"))
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance Reports</a>
+                }
+                @if (User.IsInRole("instructor"))
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
+                }
+
             </div>
         </div>
         <!-- Page content wrapper-->
@@ -50,12 +79,32 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">welcome Admin </a>
+                                </li>
+                            }
+                            
+                            @if(User.IsInRole("student"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Students</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("instructor"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Instructors</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("supervisor"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Supervisors</a>
+                                </li>
+                            }
+                            
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Dropdown
@@ -67,6 +116,12 @@
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul>
                             </li>
+                            @if(User.Identity.IsAuthenticated) {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Logout"> Logout</a>
+                            </li>
+                            }
+                           
                         </ul>
                     </div>
                 </div>

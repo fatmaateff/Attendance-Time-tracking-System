@@ -1,4 +1,8 @@
+using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Attendance_Time_tracking_System
 {
@@ -10,6 +14,7 @@ namespace Attendance_Time_tracking_System
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<AttendanceSysDbContext>();
             //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //builder.Services.AddScoped<IBranchRepository, BranchRepository>();
             //builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
@@ -21,7 +26,15 @@ namespace Attendance_Time_tracking_System
             //builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
             //builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
 
+            builder.Services.AddSession();
 
+		builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Login/AccessDenied";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                });
 
             var app = builder.Build();
 
@@ -34,11 +47,13 @@ namespace Attendance_Time_tracking_System
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Login}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }
