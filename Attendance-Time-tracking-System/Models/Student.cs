@@ -12,7 +12,6 @@ namespace Attendance_Time_tracking_System.Models
         [StringLength(100, MinimumLength = 10)]
         public string Specialization { get; set; }
         public int GradYear { get; set; }
-        public bool Status { get; set; }
 
     }
 }

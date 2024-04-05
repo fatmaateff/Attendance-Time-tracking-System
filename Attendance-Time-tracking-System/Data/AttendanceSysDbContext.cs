@@ -5,11 +5,11 @@ namespace Attendance_Time_tracking_System.Data
 {
     public class AttendanceSysDbContext : DbContext
     {
-        public virtual DbSet<Schedule> Schedules { get; set; }
-        public virtual DbSet<Program> Programs { get; set; }
-        public virtual DbSet<TrackSchedule> TrackSchedules { get; set; }
-        public virtual DbSet<TrackSupervisor> TrackSupervisors { get; set; }
-        public virtual DbSet<StudentTrackIntake> StudentTrackIntakes { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<ProgramType> Programs { get; set; }
+        public DbSet<TrackSchedule> TrackSchedules { get; set; }
+        public DbSet<TrackSupervisor> TrackSupervisors { get; set; }
+        public DbSet<StudentTrackIntake> StudentTrackIntakes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
@@ -25,7 +25,7 @@ namespace Attendance_Time_tracking_System.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.; database=Attendance_System; integrated securit=true; trust server certificate =true;");
+            optionsBuilder.UseSqlServer("Server=tcp:fahmy-server.database.windows.net,1433;Initial Catalog=ITIAttendanceSystem;Persist Security Info=False;User ID=ahmed;Password=Uchiha123goat*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,11 +35,11 @@ namespace Attendance_Time_tracking_System.Data
             modelBuilder.Entity<TrackSchedule>().HasKey(x => new {x.ScheduleID, x.IntakeID});
             modelBuilder.Entity<User>(a =>
             {
-                a.UseTpcMappingStrategy();
+                a.UseTptMappingStrategy();
             });
 
             modelBuilder.Entity<Permission>().HasKey(p => new { p.StdId, p.Date });
-        
+
         }
 
 

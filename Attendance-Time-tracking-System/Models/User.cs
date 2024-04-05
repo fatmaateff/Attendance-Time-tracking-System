@@ -20,8 +20,10 @@ namespace Attendance_Time_tracking_System.Models
         [Required]
         [ForeignKey("Branch")]
         public int BranchId { get; set; }
+        public bool IsDeleted { get; set; }
         [Required]
         public Branch Branch { get; set; }
+        public ICollection<Attendance> Attendances { get; set; }
 
     }
 

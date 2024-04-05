@@ -18,10 +18,9 @@ public class Attendance
 
 
     [Display(Name = "Time out")]
-    public DateTime? DateOut { get; set; }
+    public DateTime? TimeOut { get; set; }
 
-
-    [ForeignKey(nameof(User))]
+    [ForeignKey("User")]
     public int UserId { get;set; }
 
     public User User { get; set; }

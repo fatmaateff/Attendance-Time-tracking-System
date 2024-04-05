@@ -15,8 +15,8 @@ namespace Attendance_Time_tracking_System.Models
         public int IntakeID { get; set; }
 
         //navigation properties
-        public virtual Student Student { get; set; }
-        public virtual Track Track { get; set; }
-        public virtual Intake Intake { get; set; }
+        public Student Student { get; set; }
+        public Track Track { get; set; }
+        public Intake Intake { get; set; }
     }
 }
