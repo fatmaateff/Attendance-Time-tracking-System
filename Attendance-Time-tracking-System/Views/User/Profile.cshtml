@@ -1,0 +1,45 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>@Model.Role Profile</h1>
+
+<table class="table table-bordered text-center">
+        <tr>
+            <td>Id</td>
+            <td>@Model.Id</td>
+        </tr>
+
+        <tr>
+            <td>Name</td>
+            <td>@Model.Name</td>
+        </tr>
+
+        <tr>
+            <td>Email</td>
+            <td>@Model.Email</td>
+        </tr>
+
+        <tr>
+            <td>Password</td>
+            <td>@Model.Password</td>
+            <td><a href="/Student/Edit/@Model.Id" class="btn btn-primary">Edit</a></td>
+        </tr>
+
+        <tr>
+            <td>Mobile</td>
+            <td>@Model.Mobile</td>
+            <td><a href="/Student/Edit/@Model.Id" class="btn btn-primary">Edit</a></td>
+        </tr>
+
+        <tr>
+            <td>Role</td>
+            <td>@Model.Role</td>
+        </tr>
+
+    <tr>
+        <td>Branch</td>
+        <td>@Model.Branch.Name</td>
+    </tr>
+</table>
