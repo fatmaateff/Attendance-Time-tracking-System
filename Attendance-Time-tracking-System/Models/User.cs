@@ -22,8 +22,8 @@ namespace Attendance_Time_tracking_System.Models
         public int BranchId { get; set; }
         public bool IsDeleted { get; set; }
         [Required]
-        public Branch Branch { get; set; }
-        public ICollection<Attendance> Attendances { get; set; }
+        public virtual Branch Branch { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
 
     }
 

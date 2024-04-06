@@ -14,7 +14,7 @@ namespace Attendance_Time_tracking_System.Models
         public string Subject { get; set; }
 
         //navigation properties
-        public ICollection<TrackSchedule> TrackSchedules { get; set; }
+        public virtual ICollection<TrackSchedule> TrackSchedules { get; set; }
 
     }
 }
