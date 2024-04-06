@@ -15,11 +15,11 @@ public class Intake
 
 
     [Display(Name = "Start Date")]
-    public DateTime StartDate { get; set; }
+    public DateOnly StartDate { get; set; }
 
 
     [Display(Name = "End Date")]
-    public DateTime EndDate { get; set; }
+    public DateOnly EndDate { get; set; }
 
 
     ICollection<StudentTrackIntake> Students = new HashSet<StudentTrackIntake>();

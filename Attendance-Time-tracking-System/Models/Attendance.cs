@@ -14,11 +14,11 @@ public class Attendance
 
 
     [Display(Name = "Arrival Time")]
-    public DateTime TimeIn { get; set; }
+    public TimeOnly TimeIn { get; set; }
 
 
     [Display(Name = "Time out")]
-    public DateTime? TimeOut { get; set; }
+    public TimeOnly? TimeOut { get; set; }
 
     [ForeignKey("User")]
     public int UserId { get;set; }

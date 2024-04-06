@@ -1,6 +1,6 @@
-﻿namespace Attendance_Time_tracking_System.Repositories
+﻿namespace Attendance_Time_tracking_System.Repositories;
+
+public interface ITrackRepository
 {
-    public interface ITrackRepository
-    {
-    }
+    
 }
