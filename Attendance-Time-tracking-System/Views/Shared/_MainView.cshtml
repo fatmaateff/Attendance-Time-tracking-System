@@ -39,7 +39,7 @@
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students Permissions</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Schedule" asp-action="ShowSchedules">Schedule</a>
 
                 }
                 @if (User.IsInRole("Admin"))

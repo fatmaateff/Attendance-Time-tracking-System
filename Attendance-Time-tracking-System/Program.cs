@@ -13,6 +13,7 @@ namespace Attendance_Time_tracking_System
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+                   
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<AttendanceSysDbContext>();
             //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -23,7 +24,7 @@ namespace Attendance_Time_tracking_System
             //builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
             //builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             //builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-            //builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
             //builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
 
             builder.Services.AddSession();
