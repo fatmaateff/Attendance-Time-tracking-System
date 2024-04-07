@@ -10,6 +10,5 @@ namespace Attendance_Time_tracking_System.Models
 		[Required(ErrorMessage = "Password is required")]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
-		public bool KeepLoggedIn { get; set; }
     }
 }

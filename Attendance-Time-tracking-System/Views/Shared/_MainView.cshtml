@@ -44,10 +44,11 @@
                 }
                 @if (User.IsInRole("Admin"))
                 {
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Instructor">Instructors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Supervisors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employees</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Instructors</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Tracks</a>
                 }
                 @if (User.IsInRole("Student"))
                 {
@@ -118,7 +119,7 @@
                             </li>
                             @if(User.Identity.IsAuthenticated) {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Logout"> Logout</a>
+                                <a class="nav-link" asp-controller="Home" asp-action="Logout"> Logout</a>
                             </li>
                             }
                            
