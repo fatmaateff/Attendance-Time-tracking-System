@@ -18,7 +18,7 @@ namespace Attendance_Time_tracking_System
             //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
             builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
-            //builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             //builder.Services.AddScoped<ITrackRepository, TrackRepository>();
             //builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
             //builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
@@ -52,13 +52,13 @@ namespace Attendance_Time_tracking_System
 
             app.UseAuthorization();
 
-            //app.MapControllerRoute(
-            //    name: "default",
-            //    pattern: "{controller=Login}/{action=Index}/{id?}");
-
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Account}/{action=Login}/{id?}");
+
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Attendance}/{action=Index}/{id?}");
 
             app.Run();
         }

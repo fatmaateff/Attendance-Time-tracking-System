@@ -116,6 +116,30 @@
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul>
                             </li>
+
+                            @*start*@
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Attendance" asp-action="Index" asp-route-role="4">Students</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Attendance" asp-action="Index" asp-route-role="3">Instructors</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Attendance" asp-action="Index" asp-route-role="5">Employees</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                            @*end*@
+
                             @if(User.Identity.IsAuthenticated) {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Account" asp-action="Logout"> Logout</a>

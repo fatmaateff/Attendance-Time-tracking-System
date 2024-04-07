@@ -1,16 +1,43 @@
-﻿@model IEnumerable<User>
+﻿@model AttendanceIndexVM
 
 @{
     ViewBag.Title = "Attendance";
 }
 
 <div class="container">
-    <select>
-
-    </select>
-
-
-    <table>
-
+    @if (Model.IsStudent)
+    {
+        <select asp-items="@ViewBag.TracksSl"></select>
+    }
+    
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.IsStudent)
+            {
+                @foreach (Student stundet in Model.Students)
+                {
+                    <tr>
+                        <td>@stundet.Name</td>
+                        <td>stundet</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                @foreach (User user in Model.Users)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>emp</td>
+                    </tr>
+                }
+            }
+        </tbody>
     </table>
 </div>
