@@ -50,7 +50,7 @@ namespace Attendance_Time_tracking_System.Controllers
 			//claim for every part of the user
 			Claim claimName = new Claim(ClaimTypes.NameIdentifier, user.Name);
             Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
-			Claim claimRole = new Claim(ClaimTypes.Role, user.Role);
+            Claim claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
             Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
 
             ClaimsIdentity claimsIdentity1 = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
