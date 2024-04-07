@@ -3,6 +3,8 @@ using Attendance_Time_tracking_System.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace Attendance_Time_tracking_System
 {
@@ -11,10 +13,10 @@ namespace Attendance_Time_tracking_System
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
                    
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IStudentRepository,StudentRepository>();
             builder.Services.AddDbContext<AttendanceSysDbContext>();
             //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //builder.Services.AddScoped<IBranchRepository, BranchRepository>();
@@ -27,6 +29,7 @@ namespace Attendance_Time_tracking_System
             builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
             //builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
 
+            builder.Services.AddDbContext<AttendanceSysDbContext>();
             builder.Services.AddSession();
 
 		builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

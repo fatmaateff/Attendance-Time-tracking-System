@@ -46,6 +46,8 @@
                 {
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Supervisors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="add" asp-controller="Studentaffairs"> Add Students</a>
+                <a asp-action="index" asp-controller="Studentaffairs" class="list-group-item list-group-item-action list-group-item-light p-3" >Remove Student</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employees</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Instructors</a>
                 }
@@ -128,6 +130,7 @@
             </nav>
             <!-- Page content-->
             <div class="container-fluid">
+                
                 @RenderBody()
             </div>
         </div>
