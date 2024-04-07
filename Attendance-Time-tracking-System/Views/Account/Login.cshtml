@@ -1,4 +1,4 @@
-﻿
+﻿@model LoginViewModel;
 @{
 	Layout = null;
 }
@@ -10,6 +10,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
 	<img class="wave" src="images/wavee.jpg">
@@ -19,7 +20,8 @@
 
 		</div>
 		<div class="login-content">
-			<form action="index.html">
+			<form asp-controller="Account" asp-action="Login" method="post">
+				 
 				<img src="images/profile.jpg">
 				<h3 class="title">Welcome</h3>
 				<div class="input-div one">
@@ -27,8 +29,9 @@
 						<i class="fas fa-user"></i>
 					</div>
 					<div class="div">
-						<h5>Username</h5>
-						<input type="text" class="input">
+						
+						<input asp-for="Email" placeholder="Enter your Email" />
+						<span asp-validation-for="Email"></span>
 					</div>
 				</div>
 				<div class="input-div pass">
@@ -36,9 +39,11 @@
 						<i class="fas fa-lock"></i>
 					</div>
 					<div class="div">
-						<h5>Password</h5>
-						<input type="password" class="input">
+						
+						<input asp-for="Password" placeholder="Enter your password" />
+						<span asp-validation-for="Password"></span>
 					</div>
+
 				</div>
 				<input type="submit" class="btn" value="Login">
 			</form>
