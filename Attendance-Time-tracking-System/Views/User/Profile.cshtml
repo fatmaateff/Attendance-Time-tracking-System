@@ -5,6 +5,7 @@
 
 <h1>@Model.Role Profile</h1>
 
+<a href="/User/Edit/@Model.Id" class="btn btn-primary mb-3">Edit Profile</a>
 <table class="table table-bordered text-center">
         <tr>
             <td>Id</td>
@@ -24,13 +25,11 @@
         <tr>
             <td>Password</td>
             <td>@Model.Password</td>
-            <td><a href="/Student/Edit/@Model.Id" class="btn btn-primary">Edit</a></td>
         </tr>
 
         <tr>
             <td>Mobile</td>
             <td>@Model.Mobile</td>
-            <td><a href="/Student/Edit/@Model.Id" class="btn btn-primary">Edit</a></td>
         </tr>
 
         <tr>
@@ -42,4 +41,5 @@
         <td>Branch</td>
         <td>@Model.Branch.Name</td>
     </tr>
+
 </table>
