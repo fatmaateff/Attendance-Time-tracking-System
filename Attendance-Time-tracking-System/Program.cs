@@ -17,6 +17,13 @@ namespace Attendance_Time_tracking_System
                    
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IStudentRepository,StudentRepository>();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+            //options.AccessDeniedPath = "/Login/AccessDenied";
+            //options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        });
             builder.Services.AddDbContext<AttendanceSysDbContext>();
             //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //builder.Services.AddScoped<IBranchRepository, BranchRepository>();
@@ -28,17 +35,12 @@ namespace Attendance_Time_tracking_System
             //builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
             //builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
+            builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 
             builder.Services.AddDbContext<AttendanceSysDbContext>();
             builder.Services.AddSession();
 
-		builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/Account/Login";
-                    options.AccessDeniedPath = "/Login/AccessDenied";
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                });
+
 
             var app = builder.Build();
 

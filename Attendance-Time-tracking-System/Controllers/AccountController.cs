@@ -23,7 +23,11 @@ namespace Attendance_Time_tracking_System.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+           
+            RedirectToAction("Login");
             return View();
+            
+            
         }
         [HttpPost]
         public async Task <IActionResult> Login(LoginViewModel model)
@@ -55,18 +59,11 @@ namespace Attendance_Time_tracking_System.Controllers
             claimsIdentity1.AddClaim(claimRole);
             claimsIdentity1.AddClaim(claimId);
 
-            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity1);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
-            {
-                IsPersistent = model.KeepLoggedIn
-            });
+            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
+            claimsPrincipal.AddIdentity(claimsIdentity1);
+            await HttpContext.SignInAsync(claimsPrincipal);
             return RedirectToAction("Index", "Home");
 
-        }
-        public async Task <IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Login");
         }
 
     }
