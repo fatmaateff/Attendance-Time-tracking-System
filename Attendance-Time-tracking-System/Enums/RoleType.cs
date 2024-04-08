@@ -4,10 +4,10 @@
 	{
 		Admin,
 		Supervisor,
-		Employee,
 		Instructor,
 		Student,
-		Secretary,
-		StudentAffair
+        StudentAffair,
+        Secretary
+		
 	}
 }

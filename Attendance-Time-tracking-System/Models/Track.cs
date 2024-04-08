@@ -16,7 +16,7 @@ public class Track
     public int ProgramID { get; set; }
     public bool IsDeleted { get; set; } = false;
 
-    public ProgramType ProgramType { get; set; }
+    public virtual ProgramType ProgramType { get; set; }
 
     ICollection<StudentTrackIntake> Studnets = new HashSet<StudentTrackIntake>();
 

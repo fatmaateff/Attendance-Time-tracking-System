@@ -11,6 +11,6 @@ namespace Attendance_Time_tracking_System.Models
         public float Duration { get; set; }
         public bool IsDeleted { get; set; } = false;
         //navigation properties
-        public ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }

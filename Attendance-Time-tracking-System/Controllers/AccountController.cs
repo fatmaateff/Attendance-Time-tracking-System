@@ -23,7 +23,11 @@ namespace Attendance_Time_tracking_System.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+           
+            RedirectToAction("Login");
             return View();
+            
+            
         }
         [HttpPost]
         public async Task <IActionResult> Login(LoginViewModel model)
@@ -44,31 +48,20 @@ namespace Attendance_Time_tracking_System.Controllers
 			//sign in the user
 
 			//claim for every part of the user
-
-			//Claim claimName = new Claim(ClaimTypes.NameIdentifier, user.Name);
             Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
-			Claim claimRole = new Claim(ClaimTypes.Role, user.Role);
+            Claim claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
             Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
 
             ClaimsIdentity claimsIdentity1 = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            //claimsIdentity1.AddClaim(claimName);
             claimsIdentity1.AddClaim(claimEmail);
             claimsIdentity1.AddClaim(claimRole);
             claimsIdentity1.AddClaim(claimId);
 
-            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity1);
-            
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
-            {
-                IsPersistent = model.KeepLoggedIn
-            });
+            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
+            claimsPrincipal.AddIdentity(claimsIdentity1);
+            await HttpContext.SignInAsync(claimsPrincipal);
             return RedirectToAction("Index", "Home");
 
-        }
-        public async Task <IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Login");
         }
 
     }

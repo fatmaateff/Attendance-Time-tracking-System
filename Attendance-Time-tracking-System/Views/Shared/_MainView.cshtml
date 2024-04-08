@@ -39,15 +39,18 @@
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students Permissions</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Schedule" asp-action="ShowSchedules">Schedule</a>
 
                 }
                 @if (User.IsInRole("Admin"))
                 {
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Instructor">Instructors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Supervisors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="add" asp-controller="Studentaffairs"> Add Students</a>
+                <a asp-action="index" asp-controller="Studentaffairs" class="list-group-item list-group-item-action list-group-item-light p-3" >Remove Student</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employees</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Instructors</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Tracks</a>
                 }
                 @if (User.IsInRole("Student"))
                 {
@@ -142,7 +145,7 @@
 
                             @if(User.Identity.IsAuthenticated) {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Logout"> Logout</a>
+                                <a class="nav-link" asp-controller="Home" asp-action="Logout"> Logout</a>
                             </li>
                             }
                            
@@ -152,6 +155,7 @@
             </nav>
             <!-- Page content-->
             <div class="container-fluid">
+                
                 @RenderBody()
             </div>
         </div>
