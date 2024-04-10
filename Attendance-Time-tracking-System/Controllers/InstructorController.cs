@@ -52,6 +52,19 @@ namespace Attendance_Time_tracking_System.Controllers
             }
             return View(instructor);
         }
+        //[HttpGet]
+        //public IActionResult Delete(int id)
+        //{
+        //    var instructor = InsRepository.GetById(id);
+        //    return View(instructor);
+        //}
+
+        public IActionResult Delete(Instructor instructor)
+        {
+            InsRepository.Delete(instructor.Id);
+            return RedirectToAction("Index");
+        }
+
     }
 }
 

@@ -30,6 +30,12 @@ namespace Attendance_Time_tracking_System.Repositories
             db.Instructors.Update(instructor);
             db.SaveChanges();
         }
+        public void Delete(int id)
+        {
+            var instructor = GetById(id);
+            instructor.IsDeleted = true;
+            db.SaveChanges();
+        }
         
     }
 }

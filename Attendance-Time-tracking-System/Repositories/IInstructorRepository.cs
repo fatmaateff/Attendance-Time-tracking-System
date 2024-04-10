@@ -8,6 +8,8 @@ namespace Attendance_Time_tracking_System.Repositories
       void Add(Instructor instructor);
         Instructor GetById(int id);
         void Update (Instructor instructor);
+        void Delete(int id);
+
 
 
     }
