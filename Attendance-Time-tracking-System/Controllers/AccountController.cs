@@ -26,7 +26,7 @@ namespace Attendance_Time_tracking_System.Controllers
            
             RedirectToAction("Login");
             return View();
-            
+
             
         }
         [HttpPost]
@@ -48,13 +48,11 @@ namespace Attendance_Time_tracking_System.Controllers
 			//sign in the user
 
 			//claim for every part of the user
-			Claim claimName = new Claim(ClaimTypes.NameIdentifier, user.Name);
             Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
 			Claim claimRole = new Claim(ClaimTypes.Role, user.Role);
             Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
 
             ClaimsIdentity claimsIdentity1 = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            claimsIdentity1.AddClaim(claimName);
             claimsIdentity1.AddClaim(claimEmail);
             claimsIdentity1.AddClaim(claimRole);
             claimsIdentity1.AddClaim(claimId);
@@ -65,6 +63,6 @@ namespace Attendance_Time_tracking_System.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-
+        
     }
 }

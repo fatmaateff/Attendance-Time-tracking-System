@@ -18,11 +18,6 @@ namespace Attendance_Time_tracking_System.Controllers
             var instructors = InsRepository.GetAll();
             return View(instructors);
         }
-        //public IActionResult Details(int id)
-        //{
-        //    var instructor = InsRepository.Get(id);
-        //    return View(instructor);
-        //}
 
         //create new instructor
         [HttpGet]
@@ -35,6 +30,27 @@ namespace Attendance_Time_tracking_System.Controllers
         {
             InsRepository.Add(instructor);
             return RedirectToAction("Index");
+        }
+        public IActionResult showDetails(int id)
+        {
+            var instructor = InsRepository.GetById(id);
+            return View(instructor);
+        }
+        [HttpGet]
+        public IActionResult Edit (int id)
+        {
+            var instructor = InsRepository.GetById(id);
+            return View(instructor);
+        }
+        [HttpPost]
+        public IActionResult Edit(Instructor instructor )
+        {
+            if (ModelState.IsValid)
+            {
+                InsRepository.Update(instructor);
+                return RedirectToAction("Index");
+            }
+            return View(instructor);
         }
     }
 }

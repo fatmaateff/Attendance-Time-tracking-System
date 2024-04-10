@@ -21,7 +21,7 @@ namespace Attendance_Time_tracking_System.Data
         public DbSet<Intake> Intakes { get; set; }
         public DbSet<Branch> Branchs { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
-
+        public object GetById { get; internal set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,8 +41,6 @@ namespace Attendance_Time_tracking_System.Data
             modelBuilder.Entity<Permission>().HasKey(p => new { p.StdId, p.Date });
 
         }
-
-
     }
     
   

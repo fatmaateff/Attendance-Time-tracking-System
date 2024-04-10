@@ -23,6 +23,8 @@
                 <th scope="col">Mobile</th>
                 <th scope="col">Branch Id</th>
                 <th scope="col">Hire Date</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +45,8 @@
                     <td>@Instructor.Mobile</td>
                     <td>@Instructor.BranchId</td>
                     <td>@Instructor.HireDate</td>
+                    <td><a asp-action="Edit" asp-controller="Instructor" asp-route-id="@Instructor.Id" class="btn btn-primary">Edit</a></td>
+                    <td><a asp-action="showDetails" asp-controller="Instructor" asp-route-id="@Instructor.Id" class="btn btn-primary">Details</a></td>
                  </tr>
                 }
             }
