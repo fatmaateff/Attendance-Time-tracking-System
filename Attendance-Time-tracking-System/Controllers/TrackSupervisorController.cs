@@ -23,12 +23,13 @@ namespace Attendance_Time_tracking_System.Controllers
             var tracks = TrackRepository.GetAll();
             ViewBag.Instructors = instructor;
             ViewBag.Tracks = tracks;
-            return View();
+            //instructor/index view
+            return View("instructor" , "index");
         }
         [HttpPost]
-        public IActionResult AssignSupervisor(int trackId , int instructorId)
+        public IActionResult AssignSupervisor(int trackId , int instructorId, int intakeId, int branchId)
         {
-            if(TrackSupervisorRepository.exists(trackId, instructorId))
+            if(TrackSupervisorRepository.exists(trackId, instructorId, intakeId, branchId))
             {
                 ViewBag.Message = "This supervisor is already assigned to this track";
             }
@@ -37,7 +38,10 @@ namespace Attendance_Time_tracking_System.Controllers
                 var trackSupervisor = new TrackSupervisor()
                 {
                     TrackID = trackId,
-                    InstructorID = instructorId
+                    InstructorID = instructorId,
+                    IntakeID=intakeId,
+                    BranchID=branchId
+
                 };
                 TrackSupervisorRepository.Add(trackSupervisor);
                 ViewBag.Message = "Supervisor assigned successfully";

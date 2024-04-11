@@ -11,9 +11,13 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             db = _db;
         }
-        public bool exists(int trackId, int supervisorId)
+        public bool exists(int trackId, int supervisorId, int intakeId, int branchId)
         {
-            return db.TrackSupervisors.Any(ts => ts.TrackID == trackId && ts.InstructorID == supervisorId);
+            return db.TrackSupervisors
+                .Any(ts => ts.TrackID == trackId &&
+                           ts.InstructorID == supervisorId &&
+                           ts.IntakeID == intakeId &&
+                           ts.BranchID == branchId);
         }
         public void Add(TrackSupervisor trackSupervisor)
         {

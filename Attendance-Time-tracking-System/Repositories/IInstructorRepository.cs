@@ -10,7 +10,5 @@ namespace Attendance_Time_tracking_System.Repositories
         void Update (Instructor instructor);
         void Delete(int id);
 
-
-
     }
 }
