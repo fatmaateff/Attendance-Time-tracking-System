@@ -38,6 +38,32 @@ namespace Attendance_Time_tracking_System.Controllers
             ViewBag.Types = Enum.GetValues(typeof(EmpType)).Cast<EmpType>();
             return View(employee);
         }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.branches = BranchRepository.GetAll();
+            ViewBag.Types = Enum.GetValues(typeof(EmpType)).Cast<EmpType>();
+            var employee = employeeRepository.GetById(id);
+            return View(employee);
+        }
+        [HttpPost]
+        public IActionResult Edit(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                employeeRepository.Update(employee);
+                return RedirectToAction("Index");
+            }
+            ViewBag.branches = BranchRepository.GetAll();
+            ViewBag.Types = Enum.GetValues(typeof(EmpType)).Cast<EmpType>();
+            return View(employee);
+        }
+        public IActionResult showDetails(int id)
+        {
+            ViewBag.branches = BranchRepository.GetAll();
+            var employee = employeeRepository.GetById(id);
+            return View(employee);
+        }
         public IActionResult Delete(int id)
         {
             employeeRepository.Delete(id);
