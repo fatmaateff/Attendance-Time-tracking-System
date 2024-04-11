@@ -72,11 +72,15 @@ namespace Attendance_Time_tracking_System.Controllers
             return View(instructor);
         }
 
-        public IActionResult Delete(Instructor instructor)
+        //public IActionResult Delete(Instructor instructor)
+        //{
+        //    InsRepository.Delete(instructor.Id);
+        //    return RedirectToAction("Index");
+        //}
+        public IActionResult Delete(int id)
         {
-            InsRepository.Delete(instructor.Id);
+            InsRepository.Delete(id);
             return RedirectToAction("Index");
         }
-
     }
 }

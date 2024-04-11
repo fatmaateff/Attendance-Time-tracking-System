@@ -45,9 +45,9 @@
                         @* <td>@Employee.Email</td> *@
                         <td>@Employee.Type</td>
                         @* 
-                            <td>@Employee.Mobile</td>
-                <td>@Employee.Branch.Name</td>
-                <td>@Employee.HireDate</td> *@
+                        <td>@Employee.Mobile</td>
+                        <td>@Employee.Branch.Name</td>
+                        <td>@Employee.HireDate</td> *@
                         <td><a asp-action="Edit" asp-controller="Employee" asp-route-id="@Employee.Id" class="btn btn-primary">Edit</a></td>
                         <td><a asp-action="showDetails" asp-controller="Employee" asp-route-id="@Employee.Id" class="btn btn-primary">Details</a></td>
                         <td>
@@ -62,10 +62,10 @@
     </table>
     <div><a asp-action="Create" asp-controller="Employee" class="btn btn-danger"> Create new Employee </a></div>
     <script>
-        function confirmDelete(instructorId) {
-            if (confirm("Are you sure you want to delete this instructor?")) {
+        function confirmDelete(employeeId) {
+            if (confirm("Are you sure you want to delete this employee?")) {
                 // If user confirms, redirect to delete action
-                window.location.href = '/Instructor/Delete/' + instructorId;
+                window.location.href = '/Employee/Delete/' + employeeId;
             }
         }
     </script>

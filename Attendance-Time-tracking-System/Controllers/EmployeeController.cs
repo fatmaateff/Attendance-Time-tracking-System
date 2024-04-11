@@ -38,5 +38,10 @@ namespace Attendance_Time_tracking_System.Controllers
             ViewBag.Types = Enum.GetValues(typeof(EmpType)).Cast<EmpType>();
             return View(employee);
         }
+        public IActionResult Delete(int id)
+        {
+            employeeRepository.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }
