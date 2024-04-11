@@ -22,7 +22,7 @@ namespace Attendance_Time_tracking_System
             //options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
         });
             builder.Services.AddDbContext<AttendanceSysDbContext>();
-            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IBranchRepository, BranchRepository>();
             //builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             //builder.Services.AddScoped<IUserRepository, UserRepository>();
