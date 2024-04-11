@@ -23,7 +23,7 @@ namespace Attendance_Time_tracking_System
         });
             builder.Services.AddDbContext<AttendanceSysDbContext>();
             //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            //builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+            builder.Services.AddScoped<IBranchRepository, BranchRepository>();
             //builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             //builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ITrackRepository, TrackRepository>();
@@ -34,6 +34,7 @@ namespace Attendance_Time_tracking_System
             builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
             builder.Services.AddScoped<ITrackSupervisorRepository, TrackSupervisorRepository>();
+            builder.Services.AddScoped<IIntakeRepository, IntakeRepository>();
 
             builder.Services.AddSession();
 

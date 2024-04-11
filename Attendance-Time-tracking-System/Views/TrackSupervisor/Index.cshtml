@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TrackSupervisor>
+@{
+    Layout = "_MainView";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="/js/site.js"></script>
+</head>
+<body>
+    <table class="table">
+        <h1> trackSupervisors </h1>
+
+        <thead>
+            <tr>
+                <th scope="col">Track ID</th>
+                <th scope="col">Track Name</th>
+                <th scope="col">Instructor ID</th>
+                <th scope="col">Instructor Name</th>
+                <th scope="col">Intake</th>
+                <th scope="col">Branch</th>
+
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var supervisor in Model)
+                {
+                    <tr>
+                        <td>@supervisor.TrackID</td>
+                    <td>@supervisor.InstructorID</td>
+                    <td>@supervisor.Track.Name</td>
+                    <td>@supervisor.Instructor.Name</td>
+                        <td>@supervisor.Intake.Name</td>
+                        <td>@supervisor.Branch.Name</td>
+                    </tr>
+                }
+
+        </tbody>
+    </table>
+    <div><a asp-action="AssignSupervisor" asp-controller="TrackSupervisor" class="btn btn-danger"> Assign Supervisor to track </a></div>
+
+    
+</body>
+</html>

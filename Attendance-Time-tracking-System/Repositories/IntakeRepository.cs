@@ -1,13 +1,18 @@
 ﻿using Attendance_Time_tracking_System.Data;
+using Attendance_Time_tracking_System.Models;
 
 namespace Attendance_Time_tracking_System.Repositories
 {
     public class IntakeRepository : IIntakeRepository
     {
-        AttendanceSysDbContext _db;
-        public IntakeRepository(AttendanceSysDbContext db)
+        AttendanceSysDbContext db;
+        public IntakeRepository(AttendanceSysDbContext _db)
         {
-            _db = db;
+            db = _db;
+        }
+        public List<Intake> GetAll()
+        {
+            return db.Intakes.ToList();
         }
     }
 }

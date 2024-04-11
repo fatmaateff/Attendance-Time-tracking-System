@@ -9,6 +9,7 @@ namespace Attendance_Time_tracking_System.Repositories
         Instructor GetById(int id);
         void Update (Instructor instructor);
         void Delete(int id);
+        void UpdateRoleToSupervisor(int instructorId);
 
     }
 }
