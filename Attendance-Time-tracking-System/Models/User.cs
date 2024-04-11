@@ -6,7 +6,7 @@ namespace Attendance_Time_tracking_System.Models
     public class User
     {
         public int Id { get; set; }
-        [Required]
+        [Required] 
         public string Name { get; set; }
         [Required]
         [EmailAddress]

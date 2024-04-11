@@ -32,14 +32,21 @@ namespace Attendance_Time_tracking_System.Controllers
             ViewBag.Roles = Enum.GetValues(typeof(RoleType)).Cast<RoleType>();
             return View();
         }
-        [HttpPost]
         public IActionResult Create(Instructor instructor)
         {
-            InsRepository.Add(instructor);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid) // Check if the model state is valid
+            {
+                InsRepository.Add(instructor);
+                return RedirectToAction("Index");
+            }
+            // If model state is not valid, return to the Create view with errors
+            ViewBag.branches = BranchRepository.GetAll();
+            ViewBag.Roles = Enum.GetValues(typeof(RoleType)).Cast<RoleType>();
+            return View(instructor);
         }
         public IActionResult showDetails(int id)
         {
+            ViewBag.branches = BranchRepository.GetAll();
             var instructor = InsRepository.GetById(id);
             return View(instructor);
         }
@@ -54,9 +61,15 @@ namespace Attendance_Time_tracking_System.Controllers
         [HttpPost]
         public IActionResult Edit(Instructor instructor)
         {
+            if (ModelState.IsValid) // Check if the model state is valid
+            {
+                InsRepository.Update(instructor);
+                return RedirectToAction("Index");
+            }
+            // If model state is not valid, return to the Edit view with errors
             ViewBag.branches = BranchRepository.GetAll();
-            InsRepository.Update(instructor);
-            return RedirectToAction("Index");
+            ViewBag.Roles = Enum.GetValues(typeof(RoleType)).Cast<RoleType>();
+            return View(instructor);
         }
 
         public IActionResult Delete(Instructor instructor)
