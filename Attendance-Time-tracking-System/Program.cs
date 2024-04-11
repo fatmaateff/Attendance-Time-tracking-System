@@ -27,7 +27,7 @@ namespace Attendance_Time_tracking_System
             //builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             //builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ITrackRepository, TrackRepository>();
-            //builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
+            builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
             //builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             //builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             //builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();

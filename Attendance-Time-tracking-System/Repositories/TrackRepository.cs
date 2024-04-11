@@ -1,5 +1,6 @@
 ﻿using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Attendance_Time_tracking_System.Repositories
 {
@@ -12,7 +13,7 @@ namespace Attendance_Time_tracking_System.Repositories
         }
         public List<Track> GetAll()
         {
-            return db.Tracks.ToList();
+            return db.Tracks.Where(t=> t.IsDeleted == false).ToList();
         }
         public void Add(Track track)
         {
