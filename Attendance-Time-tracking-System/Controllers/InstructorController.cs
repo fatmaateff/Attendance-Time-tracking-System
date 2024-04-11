@@ -1,4 +1,5 @@
-﻿using Attendance_Time_tracking_System.Models;
+﻿using Attendance_Time_tracking_System.Enums;
+using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,13 +10,17 @@ namespace Attendance_Time_tracking_System.Controllers
     public class InstructorController : Controller
     {
         IInstructorRepository InsRepository;
-        public InstructorController(IInstructorRepository _InstructorRepository)
+        IBranchRepository BranchRepository;
+        public InstructorController(IInstructorRepository _InstructorRepository, IBranchRepository _branchRepository)
         {
             InsRepository = _InstructorRepository;
+            BranchRepository = _branchRepository;
         }
+
         public IActionResult Index()
         {
             var instructors = InsRepository.GetAll();
+            ViewBag.branches = BranchRepository.GetAll();
             return View(instructors);
         }
 
@@ -23,6 +28,8 @@ namespace Attendance_Time_tracking_System.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.branches = BranchRepository.GetAll();
+            ViewBag.Roles = Enum.GetValues(typeof(RoleType)).Cast<RoleType>();
             return View();
         }
         [HttpPost]
@@ -37,27 +44,20 @@ namespace Attendance_Time_tracking_System.Controllers
             return View(instructor);
         }
         [HttpGet]
-        public IActionResult Edit (int id)
+        public IActionResult Edit(int id)
         {
+            ViewBag.branches = BranchRepository.GetAll();
+            ViewBag.Roles = Enum.GetValues(typeof(RoleType)).Cast<RoleType>();
             var instructor = InsRepository.GetById(id);
             return View(instructor);
         }
         [HttpPost]
-        public IActionResult Edit(Instructor instructor )
+        public IActionResult Edit(Instructor instructor)
         {
-            if (ModelState.IsValid)
-            {
-                InsRepository.Update(instructor);
-                return RedirectToAction("Index");
-            }
-            return View(instructor);
+            ViewBag.branches = BranchRepository.GetAll();
+            InsRepository.Update(instructor);
+            return RedirectToAction("Index");
         }
-        //[HttpGet]
-        //public IActionResult Delete(int id)
-        //{
-        //    var instructor = InsRepository.GetById(id);
-        //    return View(instructor);
-        //}
 
         public IActionResult Delete(Instructor instructor)
         {
@@ -67,4 +67,3 @@ namespace Attendance_Time_tracking_System.Controllers
 
     }
 }
-

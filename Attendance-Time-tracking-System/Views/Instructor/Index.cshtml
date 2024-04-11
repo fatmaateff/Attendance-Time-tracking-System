@@ -20,10 +20,11 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Mobile</th>
-                <th scope="col">Branch Id</th>
-                <th scope="col">Hire Date</th>
+                @* <th scope="col">Email</th> *@
+                <th scope="col">Role</th>
+               @*  <th scope="col">Mobile</th>
+                <th scope="col">Branch</th>
+                <th scope="col">Hire Date</th> *@
 
             </tr>
         </thead>
@@ -41,10 +42,11 @@
                  <tr>
                      <td>@Instructor.Id</td>
                     <td>@Instructor.Name</td>
-                    <td>@Instructor.Email</td>
-                    <td>@Instructor.Mobile</td>
-                    <td>@Instructor.BranchId</td>
-                    <td>@Instructor.HireDate</td>
+                    @* <td>@Instructor.Email</td> *@
+                    <td>@Instructor.Role</td>
+@*                     <td>@Instructor.Mobile</td>
+                    <td>@Instructor.Branch.Name</td>
+                    <td>@Instructor.HireDate</td> *@
                     <td><a asp-action="Edit" asp-controller="Instructor" asp-route-id="@Instructor.Id" class="btn btn-primary">Edit</a></td>
                     <td><a asp-action="showDetails" asp-controller="Instructor" asp-route-id="@Instructor.Id" class="btn btn-primary">Details</a></td>
                         <td>
