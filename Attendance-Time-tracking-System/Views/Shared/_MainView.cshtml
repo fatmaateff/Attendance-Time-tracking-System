@@ -24,6 +24,7 @@
             width: 100%;
         }
     </style>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <div class="d-flex" id="wrapper">
@@ -42,7 +43,7 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Schedule" asp-action="ShowSchedules">Schedule</a>
 
                 }
-                @if (User.IsInRole("Admin"))
+                else if (User.IsInRole("Admin"))
                 {
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Instructor">Instructors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Supervisors</a>
@@ -52,21 +53,27 @@
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employees</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Tracks</a>
                 }
-                @if (User.IsInRole("Student"))
+                else if (User.IsInRole("Student"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Permissions</a>
                 }
-                @if (User.IsInRole("StudentAffair"))
+                else if (User.IsInRole("StudentAffair"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance Reports</a>
                 }
-                @if (User.IsInRole("Instructor"))
+                else if (User.IsInRole("Instructor"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
+                }else
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Attendance/Index?role=Employees">Employees Attendance</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Attendance/Index?role=Students">Stundets Attendance</a>
+
                 }
 
             </div>

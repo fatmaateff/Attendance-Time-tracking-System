@@ -22,7 +22,7 @@ namespace Attendance_Time_tracking_System.Repositories
         public void delete(int id)
         {
             var model=db.Students.FirstOrDefault(a=>a.Id==id);
-            var permession=db.permissions.FirstOrDefault(a=>a.StdId==id);
+            var permession=db.permissions.FirstOrDefault(a=> a.StdId == id);
             if (permession != null)
             {
                 db.Remove(permession);

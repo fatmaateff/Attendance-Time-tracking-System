@@ -7,7 +7,7 @@
 		Instructor,
 		Student,
         StudentAffair,
-        Secretary
+        Security
 		
 	}
 }

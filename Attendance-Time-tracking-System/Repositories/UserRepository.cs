@@ -6,27 +6,28 @@ namespace Attendance_Time_tracking_System.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly AttendanceSysDbContext db;
-        public UserRepository(AttendanceSysDbContext _db)
+        private readonly AttendanceSysDbContext _db;
+        public UserRepository(AttendanceSysDbContext db)
         {
-            db = _db;
+            _db = db;
+        }
+        
+        public IEnumerable<User> GetStudents(int branchId)
+        {
+            IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && user.Role.Equals(RoleType.Student));
+            return users;
         }
 
-        public IEnumerable<User> GetInstructor(int branchId)
-        {
-            IEnumerable<User> instructors = db.Users.Where(user => user.Role =="Instructor");
-
-            return instructors;
-        }
         public IEnumerable<User> GetEmployees(int branchId)
         {
-            IEnumerable<User> employees = db.Users.Where(user => user.Role == RoleType.StudentAffair.ToString() || user.Role == RoleType.Employee.ToString());
-
-
-            return employees;
+            IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && !user.Role.Equals(RoleType.Student));
+            return users;
         }
-
-
+        public User GetUserById(int id)
+        {
+            User user = _db.Users.SingleOrDefault(user => user.Id == id);
+            return user;
+        }
         //methods to implement
     }
 }

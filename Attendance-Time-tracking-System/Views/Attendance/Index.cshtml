@@ -1,43 +1,168 @@
-﻿@model AttendanceIndexVM
+﻿@model IEnumerable<User>
 
-@{
-    ViewBag.Title = "Attendance";
-}
 
 <div class="container">
-    @if (Model.IsStudent)
-    {
-        <select asp-items="@ViewBag.TracksSl"></select>
-    }
-    
-    <table class="table table-bordered table-hover">
-        <thead>
+   
+    <table class="table table-hover table-striped">
+      
+        @foreach (User user in Model)
+        {
             <tr>
-                <th>Name</th>
-                <th>Status</th>
+                <td>@user.Name</td>
+                <td>
+                    <button class="mark-attendance-button" data-id="@user.Id">Mark Attendance</button>
+                    <button class="mark-departure-button" data-id="@user.Id" disabled>Mark Departure</button>
+                    <button class="reset-button" data-id="@user.Id" disabled>Reset</button>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @if(Model.IsStudent)
-            {
-                @foreach (Student stundet in Model.Students)
-                {
-                    <tr>
-                        <td>@stundet.Name</td>
-                        <td>stundet</td>
-                    </tr>
-                }
-            }
-            else
-            {
-                @foreach (User user in Model.Users)
-                {
-                    <tr>
-                        <td>@user.Name</td>
-                        <td>emp</td>
-                    </tr>
-                }
-            }
-        </tbody>
+        }
     </table>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modal-message"></p>
+            <button id="confirm-button">Confirm</button>
+            <button id="cancel-button">Cancel</button>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll('tr');
+
+        rows.forEach(row => {
+            const markAttendanceButton = row.querySelector('.mark-attendance-button');
+            const markDepartureButton = row.querySelector('.mark-departure-button');
+            const resetButton = row.querySelector('.reset-button');
+
+            markAttendanceButton.addEventListener('click', function () {
+                const employeeId = this.getAttribute('data-id');
+                handleButtonClick(employeeId, 'attendance');
+            });
+
+            markDepartureButton.addEventListener('click', function () {
+                const employeeId = this.getAttribute('data-id');
+                handleButtonClick(employeeId, 'departure');
+            });
+
+            resetButton.addEventListener('click', function () {
+                const employeeId = this.getAttribute('data-id');
+                handleButtonClick(employeeId, 'reset');
+            });
+        });
+
+        const modal = document.getElementById('modal');
+        const modalContent = document.querySelector('.modal-content'); // added
+
+        modalContent.addEventListener('click', function (event) { // added
+            event.stopPropagation(); // added
+        }); // added
+
+        const modalMessage = document.getElementById('modal-message');
+        const confirmButton = document.getElementById('confirm-button');
+        const cancelButton = document.getElementById('cancel-button');
+        const closeButton = document.querySelector('.close');
+
+        // Function to handle button click events
+        function handleButtonClick(employeeId, action) {
+            const employeeName = `Employee ${employeeId}`;
+            const currentDate = new Date().toLocaleString();
+
+            if (action === 'reset') {
+                modalMessage.textContent = `Are you sure you want to reset info about ${employeeName}?`;
+            } else {
+                modalMessage.textContent = `Are you sure you want to mark ${action} for ${employeeName} at ${currentDate}?`;
+            }
+            modal.style.display = 'block';
+
+            confirmButton.setAttribute('data-employee-id', employeeId);
+            confirmButton.setAttribute('data-action', action);
+
+            confirmButton.addEventListener('click', onConfirm);
+            cancelButton.addEventListener('click', onCancel);
+            closeButton.addEventListener('click', onClose);
+        }
+
+        // Function to handle the confirmation button click
+        function onConfirm() {
+            // Get the employee ID and action
+            const employeeId = confirmButton.getAttribute('data-employee-id');
+            const action = confirmButton.getAttribute('data-action');
+
+            // Send AJAX request
+            if (action === 'reset') {
+                sendResetRequest(employeeId);
+            } else {
+                const currentDate = new Date().toLocaleString();
+                sendAttendanceData(employeeId, currentDate, action);
+            }
+
+            // Close the modal
+            closeModal();
+        }
+
+        // Function to handle the cancellation button click
+        function onCancel() {
+            // Close the modal
+            closeModal();
+        }
+
+        // Function to handle the close button click
+        function onClose() {
+            // Close the modal
+            closeModal();
+        }
+
+        // Function to close the modal and remove event listeners
+        function closeModal() {
+            modal.style.display = 'none';
+            confirmButton.removeEventListener('click', onConfirm);
+            cancelButton.removeEventListener('click', onCancel);
+            closeButton.removeEventListener('click', onClose);
+        }
+
+        // Function to send AJAX request for marking attendance/departure
+        function sendAttendanceData(employeeId, currentDate, action) {
+            console.log(`Sending ${action} data for employee ID ${employeeId} at ${currentDate}`);
+            // In a real application, you would make an AJAX call here
+            // For demonstration, I'm just logging the data to the console
+            handleButtons(employeeId, action);
+        }
+
+        // Function to send AJAX request for resetting data
+        function sendResetRequest(employeeId) {
+            console.log(`Resetting data for employee ID ${employeeId}`);
+            // In a real application, you would make an AJAX call here
+            // For demonstration, I'm just logging the data to the console
+            handleButtons(employeeId, "Reset");
+        }
+
+        // Function to enable buttons
+        // Function to enable buttons
+        function handleButtons(employeeId, action) {
+            const row = document.querySelectorAll(`[data-id="${employeeId}"]`);
+            const markAttendanceButton = row[0];
+            const markDepartureButton = row[1];
+            const resetButton = row[2];
+
+            if (action === 'attendance') {
+                markAttendanceButton.disabled = true;
+                markDepartureButton.disabled = false;
+                resetButton.disabled = false;
+            } else if (action === 'departure') {
+                markAttendanceButton.disabled = true;
+                markDepartureButton.disabled = true;
+                resetButton.disabled = false;
+            } else {
+                markAttendanceButton.disabled = false;
+                markDepartureButton.disabled = true;
+                resetButton.disabled = true;
+            }
+        }
+
+
+    });
+
+</script>   

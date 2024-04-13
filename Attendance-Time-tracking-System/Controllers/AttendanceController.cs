@@ -1,68 +1,56 @@
-﻿using Attendance_Time_tracking_System.Enums;
-using Attendance_Time_tracking_System.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Security.Claims;
+﻿namespace Attendance_Time_tracking_System.Controllers;
 
-namespace Attendance_Time_tracking_System.Controllers
+public class AttendanceController : Controller
 {
-    public class AttendanceController : Controller
+    private User currentUser;
+
+    private readonly IBranchRepository _branchRepo;
+    private readonly IAttendanceRepository _attendanceRepo;
+    private readonly IUserRepository _userRepository;
+    
+    public AttendanceController(IAttendanceRepository attendanceRepository , IBranchRepository branchRepository, IUserRepository userRepository)
     {
-        private readonly IBranchRepository _branchRepo;
-        private readonly IAttendanceRepository _attendanceRepo;
-        private readonly IUserRepository _userRepository;
-        private User currentUser;
-        
-        public AttendanceController(IAttendanceRepository attendanceRepository , IBranchRepository branchRepository, IUserRepository userRepository)
-        {
-            _attendanceRepo = attendanceRepository;
-            _branchRepo = branchRepository;
-            _userRepository = userRepository;
-        }
-        
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            
-            base.OnActionExecuting(context);
-        }
-        
-        public IActionResult Index(RoleType role ,int? trackId)
-        {
-            int branchId = 1;
-            int intakeId = 1;
-
-            AttendanceIndexVM attendanceIndexVM;
-        
-            if (role.Equals(RoleType.Student))
-            {
-                IEnumerable<Track>  tracks = _branchRepo.GetTracksInBranch(branchId);
-                ViewBag.TracksSL = new SelectList(tracks,nameof(Track.Id), nameof(Track.Name));
-                attendanceIndexVM = new AttendanceIndexVM()
-                {
-                    Students = _branchRepo.GetBranchStundents(branchId, intakeId, trackId),
-                    IsStudent = true
-                };
-            }
-            else if(role.Equals(RoleType.Instructor))
-            {
-                attendanceIndexVM = new AttendanceIndexVM()
-                {
-                    Users = _userRepository.GetInstructor(branchId),
-                    IsStudent = false
-                };
-            }
-            else
-            {
-                attendanceIndexVM = new AttendanceIndexVM()
-                {
-                    Users = _userRepository.GetEmployees(branchId),
-                    IsStudent = false
-                };
-            }
-
-            return View(attendanceIndexVM);
-        }
+        _attendanceRepo = attendanceRepository;
+        _branchRepo = branchRepository;
+        _userRepository = userRepository;
     }
+    
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        currentUser = _userRepository.GetUserById(int.Parse(userId));
+        base.OnActionExecuting(context);
+    }
+
+    public IActionResult Index(string role)
+    {
+        int branchId = currentUser.BranchId;
+
+        IEnumerable<User> users;
+        ViewBag.Title = role;
+
+        if (role.Equals("Students",StringComparison.OrdinalIgnoreCase))
+            users = _userRepository.GetStudents(branchId);
+        else
+            users = _userRepository.GetEmployees(branchId);
+
+        return View(users);
+    }
+
+
+    public IActionResult Take(RoleType role ,int? trackId)
+    {
+        //int intakeId = 1;
+        int branchId = currentUser.BranchId;
+
+        IEnumerable<User> users;
+        ViewBag.Role = role;
+        if (role.Equals(RoleType.Student))
+            users = _userRepository.GetStudents(branchId);
+        else
+            users = _userRepository.GetEmployees(branchId);
+
+        return View(users);
+    }
+
 }

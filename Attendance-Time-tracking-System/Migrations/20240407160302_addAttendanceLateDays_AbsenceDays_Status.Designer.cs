@@ -4,6 +4,7 @@ using Attendance_Time_tracking_System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Attendance_Time_tracking_System.Migrations
 {
     [DbContext(typeof(AttendanceSysDbContext))]
-    partial class AttendanceSysDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240407160302_addAttendanceLateDays_AbsenceDays_Status")]
+    partial class addAttendanceLateDays_AbsenceDays_Status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Attendances", (string)null);
+                    b.ToTable("Attendances");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.Branch", b =>
@@ -76,7 +79,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Branchs", (string)null);
+                    b.ToTable("Branchs");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.Intake", b =>
@@ -100,7 +103,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Intakes", (string)null);
+                    b.ToTable("Intakes");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.Permission", b =>
@@ -124,7 +127,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasKey("StdId", "Date");
 
-                    b.ToTable("permissions", (string)null);
+                    b.ToTable("permissions");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.ProgramType", b =>
@@ -147,7 +150,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Programs", (string)null);
+                    b.ToTable("Programs");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.Schedule", b =>
@@ -173,7 +176,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schedules", (string)null);
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.StudentTrackIntake", b =>
@@ -199,7 +202,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasIndex("TrackID");
 
-                    b.ToTable("StudentTrackIntakes", (string)null);
+                    b.ToTable("StudentTrackIntakes");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.Track", b =>
@@ -225,7 +228,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasIndex("ProgramID");
 
-                    b.ToTable("Tracks", (string)null);
+                    b.ToTable("Tracks");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.TrackSchedule", b =>
@@ -250,7 +253,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasIndex("TrackID");
 
-                    b.ToTable("TrackSchedules", (string)null);
+                    b.ToTable("TrackSchedules");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.TrackSupervisor", b =>
@@ -275,7 +278,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasIndex("TrackID");
 
-                    b.ToTable("TrackSupervisors", (string)null);
+                    b.ToTable("TrackSupervisors");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.User", b =>
@@ -317,7 +320,7 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.HasIndex("BranchId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
 
                     b.UseTptMappingStrategy();
                 });
@@ -329,7 +332,7 @@ namespace Attendance_Time_tracking_System.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.Instructor", b =>
@@ -339,7 +342,7 @@ namespace Attendance_Time_tracking_System.Migrations
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("datetime2");
 
-                    b.ToTable("Instructors", (string)null);
+                    b.ToTable("Instructors");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.Student", b =>
@@ -361,7 +364,7 @@ namespace Attendance_Time_tracking_System.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Attendance_Time_tracking_System.Models.Attendance", b =>
