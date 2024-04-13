@@ -56,9 +56,9 @@
     <div><a asp-action="Create" asp-controller="Track" class="btn btn-danger"> Create new Track </a></div>
     <script>
         function confirmDelete(TrackId) {
-            if (confirm("Are you sure you want to delete this instructor?")) {
+            if (confirm("Are you sure you want to delete this track?")) {
                 // If user confirms, redirect to delete action
-                window.location.href = '/Instructor/Delete/' + TrackId;
+                window.location.href = '/Track/Delete/' + TrackId;
             }
         }
     </script>
