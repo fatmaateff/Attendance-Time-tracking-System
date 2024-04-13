@@ -34,5 +34,9 @@ namespace Attendance_Time_tracking_System.Repositories
             db.TrackSupervisors.Add(trackSupervisor);
             db.SaveChanges();
         }
+        public void Update(TrackSupervisor trackSupervisor)
+        {
+            db.TrackSupervisors.Update(trackSupervisor);
+        }
     }
 }

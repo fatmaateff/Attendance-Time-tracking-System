@@ -107,5 +107,20 @@ namespace Attendance_Time_tracking_System.Controllers
             var trackSupervisors = TrackSupervisorRepository.GetAll();
             return View(trackSupervisors);
         }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Edit(TrackSupervisor trackSupervisor)
+        {
+            if (!ModelState.IsValid)
+            {
+                TrackSupervisorRepository.Update(trackSupervisor);
+                return RedirectToAction("Index");
+            }
+            return View(trackSupervisor);
+        }
     }
 }

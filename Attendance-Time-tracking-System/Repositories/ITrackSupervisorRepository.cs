@@ -11,5 +11,7 @@ namespace Attendance_Time_tracking_System.Repositories
 
         void Add(TrackSupervisor trackSupervisor);
         bool Exists(int trackId, int instructorId, int intakeId, int branchId);
+        void Update(TrackSupervisor trackSupervisor);
+        
     }
 }

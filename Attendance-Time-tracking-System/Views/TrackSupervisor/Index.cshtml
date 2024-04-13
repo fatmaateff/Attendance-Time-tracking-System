@@ -19,8 +19,9 @@
         <thead>
             <tr>
                 <th scope="col">Track ID</th>
-                <th scope="col">Track Name</th>
                 <th scope="col">Instructor ID</th>
+                <th scope="col">Track Name</th>
+                
                 <th scope="col">Instructor Name</th>
                 <th scope="col">Intake</th>
                 <th scope="col">Branch</th>
@@ -31,12 +32,12 @@
                 @foreach (var supervisor in Model)
                 {
                     <tr>
-                        <td>@supervisor.TrackID</td>
+                     <td>@supervisor.TrackID</td>
                     <td>@supervisor.InstructorID</td>
                     <td>@supervisor.Track.Name</td>
                     <td>@supervisor.Instructor.Name</td>
-                        <td>@supervisor.Intake.Name</td>
-                        <td>@supervisor.Branch.Name</td>
+                    <td>@supervisor.Intake.Name</td>
+                     <td>@supervisor.Branch.Name</td>
                     </tr>
                 }
 

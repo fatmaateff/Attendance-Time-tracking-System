@@ -32,7 +32,7 @@
             @if (Model.Count() == 0)
             {
                 <tr>
-                    <td colspan="6">No Instructors found</td>
+                    <td colspan="3">No Instructors found</td>
                 }
                 </tr>
             }else
@@ -47,10 +47,10 @@
 @*                     <td>@Instructor.Mobile</td>
                     <td>@Instructor.Branch.Name</td>
                     <td>@Instructor.HireDate</td> *@
-                    <td><a asp-action="Edit" asp-controller="Instructor" asp-route-id="@Instructor.Id" class="btn btn-primary">Edit</a></td>
-                    <td><a asp-action="showDetails" asp-controller="Instructor" asp-route-id="@Instructor.Id" class="btn btn-primary">Details</a></td>
+                        <td><a asp-action="Edit" asp-controller="Instructor" asp-route-id="@Instructor.Id" class="btn btn-danger">Edit</a></td>
+                        <td><a asp-action="showDetails" asp-controller="Instructor" asp-route-id="@Instructor.Id" class="btn btn-danger">Details</a></td>
                         <td>
-                            <a onclick="confirmDelete(@Instructor.Id)" class="btn btn-primary">Delete</a>
+                            <a onclick="confirmDelete(@Instructor.Id)" class="btn btn-danger">Delete</a>
                         </td>
 
 
