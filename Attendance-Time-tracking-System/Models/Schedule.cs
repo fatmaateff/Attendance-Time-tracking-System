@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Attendance_Time_tracking_System.ValidationAttributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Attendance_Time_tracking_System.Models
 {
@@ -6,15 +7,22 @@ namespace Attendance_Time_tracking_System.Models
     {
         public int Id { get; set; }
         [Required]
+        [UniqueScheduleDate]
+        [DataType(DataType.Date)]
         public DateOnly Date { get; set; }
         [Required]
+        [DataType(DataType.Time)]
+        [Display(Name ="Start Time")]
         public TimeOnly StartTime { get; set; }
+        [DataType(DataType.Time)]
+        [Display(Name = "End Time")]
+        [TimeValidation]
         public TimeOnly EndTime { get; set; }
-        [MaxLength(20)]
+        [MinLength(2),MaxLength(20)]
         public string Subject { get; set; }
 
         //navigation properties
-        public ICollection<TrackSchedule> TrackSchedules { get; set; }
+        public virtual ICollection<TrackSchedule> TrackSchedules { get; set; }
 
     }
 }
