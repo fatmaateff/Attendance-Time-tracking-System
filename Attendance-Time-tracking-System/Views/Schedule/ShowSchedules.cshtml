@@ -1,0 +1,40 @@
+﻿@model List<Schedule>
+
+<h1>Schedule</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Subject</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Schedule schedule in Model)
+        {
+            <tr>
+                <td>@schedule.Date</td>
+                <td>@schedule.StartTime</td>
+                <td>@schedule.EndTime</td>
+                <td>@schedule.Subject</td>
+                <td><a asp-action="EditForm" asp-route-id="@schedule.Id"><img width="30" height="30" src="~/images/pen.png"/></a></td>
+                <td><a class="DeleteAction" asp-action="Delete" asp-route-id="@schedule.Id"><img width="30" height="30" src="~/images/delete.png" /></a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary" asp-action="AddForm">Add New Day</a>
+
+@section Scripts {
+    <script>
+        let deletes = document.getElementsByClassName('DeleteAction');
+        for (let i = 0; i < deletes.length; i++) {
+            deletes[i].addEventListener('click', function (e) {
+                if (!confirm("you sure want to delete ? "))
+                    event.preventDefault();
+            })
+        }
+    </script>
+}

@@ -1,0 +1,25 @@
+﻿@model Schedule
+<h1>Add Schedule</h1>
+<form asp-action="Add">
+    <div class="mb-3">
+        <label class="form-label" asp-for="Date"></label>
+        <input asp-for="Date" />
+        <span class="form-text text-danger" asp-validation-for="Date"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="StartTime"></label>
+        <input asp-for="StartTime" />
+        <span class="form-text text-danger" asp-validation-for="StartTime"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="EndTime"></label>
+        <input asp-for="EndTime" />
+        <span class="form-text text-danger" asp-validation-for="EndTime"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" asp-for="Subject"></label>
+        <input asp-for="Subject" />
+        <span class="form-text text-danger" asp-validation-for="Subject"></span>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Add" />
+</form>
