@@ -1,7 +1,9 @@
 ﻿using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Repositories
 {
@@ -13,9 +15,11 @@ namespace Attendance_Time_tracking_System.Repositories
             db = _db;
         }
 
-        public List<StudentTrackIntake> getall()
+        public List<StudentTrackIntake> getall(int id)
         {
-            var model = db.StudentTrackIntakes.Where(a => a.Student.IsDeleted == false).ToList();
+            
+            var userBranchId=db.Users.FirstOrDefault(a=>a.Id==id).BranchId;
+            var model = db.StudentTrackIntakes.Where(a => a.Student.IsDeleted == false &&a.Student.BranchId== userBranchId).ToList();
 
             return model;
 
@@ -50,6 +54,10 @@ namespace Attendance_Time_tracking_System.Repositories
 
 
 
+        }
+        public User getUserById (int id)
+        {
+            return db.Users.FirstOrDefault(a => a.Id == id);
         }
         public void ImportDataFromExcel(string filePath)
         {
