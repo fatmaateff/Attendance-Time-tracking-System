@@ -1,5 +1,8 @@
 using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
@@ -12,8 +15,17 @@ namespace Attendance_Time_tracking_System
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
+                   
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IStudentRepository,StudentRepository>();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+            //options.AccessDeniedPath = "/Login/AccessDenied";
+            //options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        });
+            builder.Services.AddDbContext<AttendanceSysDbContext>();
             //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //builder.Services.AddScoped<IBranchRepository, BranchRepository>();
             //builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
@@ -21,13 +33,18 @@ namespace Attendance_Time_tracking_System
             builder.Services.AddScoped<ITrackRepository, TrackRepository>();
             //builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
             //builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
-            //builder.Services.AddTransient<IStudentRepository, StudentRepository>();
-            //builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            //builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
             //builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
+            builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 
             builder.Services.AddDbContext<AttendanceSysDbContext>();
             //for excel sheeet
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            builder.Services.AddSession();
+
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -39,11 +56,13 @@ namespace Attendance_Time_tracking_System
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Login}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }
