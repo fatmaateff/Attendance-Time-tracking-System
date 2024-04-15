@@ -17,7 +17,7 @@ namespace Attendance_Time_tracking_System
             // Add services to the container.
                    
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IStudentRepository,StudentRepository>();
+            
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options =>
         {
@@ -39,6 +39,7 @@ namespace Attendance_Time_tracking_System
             builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
             builder.Services.AddScoped<ITrackSupervisorRepository, TrackSupervisorRepository>();
             builder.Services.AddScoped<IIntakeRepository, IntakeRepository>();
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
             builder.Services.AddDbContext<AttendanceSysDbContext>();
             //for excel sheeet

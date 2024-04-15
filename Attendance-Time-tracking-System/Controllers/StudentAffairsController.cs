@@ -26,7 +26,7 @@ namespace Attendance_Time_tracking_System.Controllers
 		}
 		public IActionResult Add ()
 		{ 
-			ViewBag.tracks=trackRepository.getalltrackes();
+			ViewBag.tracks=trackRepository.GetAll();
 			return View();
 		}
 		[HttpPost]
