@@ -16,7 +16,7 @@ namespace Attendance_Time_tracking_System.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.programs = ProgramRepository.GetType();
+            ViewBag.programs = ProgramRepository.GetAll();
             var tracks = trackRepository.GetAll();
             return View(tracks);
         }

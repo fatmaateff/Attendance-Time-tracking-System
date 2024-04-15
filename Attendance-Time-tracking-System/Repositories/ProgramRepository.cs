@@ -1,4 +1,5 @@
 ﻿using Attendance_Time_tracking_System.Data;
+using Attendance_Time_tracking_System.Models;
 
 namespace Attendance_Time_tracking_System.Repositories
 {
@@ -9,9 +10,9 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             db = _db;
         }
-        //public List <Program> GetAll()
-        //{
-        //    return db.Programs.ToList();
-        //}
+        public List<ProgramType> GetAll()
+        {
+            return db.Programs.ToList();
+        }
     }
 }

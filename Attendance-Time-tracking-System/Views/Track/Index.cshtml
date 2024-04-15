@@ -39,7 +39,7 @@
                     <tr>
                         <td>@Track.Id</td>
                         <td>@Track.Name</td>
-                        <td>@Track.ProgramID</td>
+                        <td>@Track.ProgramType.Name</td>
 
                                 <td><a asp-action="Edit" asp-controller="Track" asp-route-id="@Track.Id" class="btn btn-danger">Edit</a></td>
                         <td><a asp-action="showDetails" asp-controller="Track" asp-route-id="@Track.Id" class="btn btn-danger">Details</a></td>
