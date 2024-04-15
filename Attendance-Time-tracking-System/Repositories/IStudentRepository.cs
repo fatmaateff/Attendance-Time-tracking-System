@@ -8,6 +8,8 @@ namespace Attendance_Time_tracking_System.Repositories
 
         public List<StudentTrackIntake> getall();
         public void delete(int id);
+        public void add(AddStudent std);
+        public void ImportDataFromExcel(string filePath);
 
     }
 }
