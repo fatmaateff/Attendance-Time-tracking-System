@@ -8,5 +8,9 @@ namespace Attendance_Time_tracking_System.Controllers
         {
             return View();
         }
+        public IActionResult Add()
+        {
+            return View();
+        }
     }
 }
