@@ -56,7 +56,7 @@
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Permissions</a>
                 }
                 @if (User.IsInRole("StudentAffair"))
