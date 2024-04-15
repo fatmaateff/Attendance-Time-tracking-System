@@ -11,13 +11,37 @@ namespace Attendance_Time_tracking_System.Repositories
             db = _db;
         }
 
-        public List<Schedule> GetAllSchedules()
+        public List<Schedule> GetAllSchedules(int InstructorId)
         {
-            return db.Schedules.ToList();
+            TrackSupervisor trackSupervisor = db.TrackSupervisors.OrderByDescending(x => x.Intake.StartDate)
+                .FirstOrDefault(i => i.InstructorID == InstructorId);
+            List<int> ScheduleIds = db.TrackSchedules.Where(x => 
+                x.IntakeID == trackSupervisor.IntakeID &&
+                x.BranchID==trackSupervisor.BranchID &&
+                x.TrackID==trackSupervisor.TrackID)
+            .Select(x => x.ScheduleID).ToList();
+            List<Schedule> schedules = new List<Schedule>();
+            foreach (int id in ScheduleIds)
+            {
+                schedules.Add(db.Schedules.FirstOrDefault(x => x.Id == id));
+            }
+            return schedules;
         }
-        public void AddSchedule(Schedule schedule)
+        public void AddSchedule(int InstructorId, Schedule schedule)
         {
             db.Schedules.Add(schedule);
+            db.SaveChanges();
+            int ScheduleId = db.Schedules.Select(x => x.Id).Max();
+            TrackSupervisor trackSupervisor = db.TrackSupervisors.OrderByDescending(x => x.Intake.StartDate)
+                .FirstOrDefault(i => i.InstructorID == InstructorId);
+            TrackSchedule trackSchedule = new TrackSchedule()
+            {
+                ScheduleID = ScheduleId,
+                IntakeID = trackSupervisor.IntakeID,
+                BranchID = trackSupervisor.BranchID,
+                TrackID = trackSupervisor.TrackID
+            };
+            db.TrackSchedules.Add(trackSchedule);
             db.SaveChanges();
         }
         public void EditSchedule(int id,Schedule schedule)
