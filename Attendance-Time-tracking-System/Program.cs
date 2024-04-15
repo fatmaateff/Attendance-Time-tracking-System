@@ -2,6 +2,7 @@ using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Repositories;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 
 namespace Attendance_Time_tracking_System
 {
@@ -17,7 +18,7 @@ namespace Attendance_Time_tracking_System
             //builder.Services.AddScoped<IBranchRepository, BranchRepository>();
             //builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             //builder.Services.AddScoped<IUserRepository, UserRepository>();
-            //builder.Services.AddScoped<ITrackRepository, TrackRepository>();
+            builder.Services.AddScoped<ITrackRepository, TrackRepository>();
             //builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
             //builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
             //builder.Services.AddTransient<IStudentRepository, StudentRepository>();
@@ -25,8 +26,8 @@ namespace Attendance_Time_tracking_System
             //builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
 
             builder.Services.AddDbContext<AttendanceSysDbContext>();
-
-
+            //for excel sheeet
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
