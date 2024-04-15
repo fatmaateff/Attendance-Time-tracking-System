@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@{
+    int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -35,9 +39,9 @@
                 </div>
             </div>
             <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="User" asp-action="Profile" asp-route-id="@userId">Profile</a>
                 @if (User.IsInRole("Supervisor"))
                 {
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students Permissions</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Schedule" asp-action="ShowSchedules">Schedule</a>
 
@@ -52,7 +56,6 @@
                 }
                 @if (User.IsInRole("Student"))
                 {
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Permissions</a>
@@ -64,10 +67,10 @@
 @*                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
  *@                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance Reports</a>
                 }
-                @if (User.IsInRole("Instructor"))
+                @* @if (User.IsInRole("Instructor"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
-                }
+                } *@
 
             </div>
         </div>
