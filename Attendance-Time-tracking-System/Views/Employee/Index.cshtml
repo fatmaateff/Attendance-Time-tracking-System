@@ -48,10 +48,10 @@
                         <td>@Employee.Mobile</td>
                         <td>@Employee.Branch.Name</td>
                         <td>@Employee.HireDate</td> *@
-                        <td><a asp-action="Edit" asp-controller="Employee" asp-route-id="@Employee.Id" class="btn btn-primary">Edit</a></td>
-                        <td><a asp-action="showDetails" asp-controller="Employee" asp-route-id="@Employee.Id" class="btn btn-primary">Details</a></td>
+                        <td><a asp-action="Edit" asp-controller="Employee" asp-route-id="@Employee.Id" class="btn btn-danger">Edit</a></td>
+                        <td><a asp-action="showDetails" asp-controller="Employee" asp-route-id="@Employee.Id" class="btn btn-danger">Details</a></td>
                         <td>
-                            <a onclick="confirmDelete(@Employee.Id)" class="btn btn-primary">Delete</a>
+                            <a onclick="confirmDelete(@Employee.Id)" class="btn btn-danger">Delete</a>
                         </td>
 
 
