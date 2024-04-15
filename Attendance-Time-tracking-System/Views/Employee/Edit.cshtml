@@ -1,4 +1,4 @@
-﻿@model Instructor
+﻿@model Employee
 @{
     Layout = "_MainView";
 }
@@ -8,13 +8,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <title>Edit</title>
 </head>
-
 <body>
-    <form asp-action="Create" method="post" class="m-5">
+    <form method="post" class="m-5">
 
         <div class="form-group ">
             <label asp-for="Name" class="control-label"></label>
@@ -36,8 +33,32 @@
             <input asp-for="Mobile" class="form-control" />
             <span asp-validation-for="Mobile" class="text-danger"></span>
         </div>
+
+        @* law 3ayz supervisor y3mlo mn 3nd supervisor*@
+
         <div class="form-group">
-            <label asp-for="Branch" class="control-label"></label>
+            <label asp-for="Role" class="control-label"></label>
+            <select asp-for="Role" class="form-control">
+                <option value="">Select Role</option>
+                <option value="Employee">Employee</option>
+            </select>
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Type" class="control-label"></label>
+            <select asp-for="Type" class="form-control">
+                <option value="">Select Type</option>
+                @foreach(var type in ViewBag.Types)
+                {
+                    <option value=@type> @type </option>
+                })
+            </select>
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BranchId" class="control-label">Branch</label>
             <select asp-for="BranchId" class="form-control">
                 <option value="">Select Branch</option>
                 @foreach (var branch in ViewBag.Branches)
@@ -47,26 +68,13 @@
             </select>
             <span asp-validation-for="BranchId" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <label asp-for="Role" class="control-label"></label>
-            <select asp-for="Role" class="form-control">
-                <option>Instructor</option>
-            </select>
-            <span asp-validation-for="Role" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="HireDate" class="control-label"></label>
-            <input asp-for="HireDate" class="form-control" />
-            <span asp-validation-for="HireDate" class="text-danger"></span>
-        </div>
+
         <br />
         <div class="form-group">
-            <input type="submit" value="Add" class="btn btn-primary" />
+            <input type="submit" value="Update" class="btn btn-primary" />
         </div>
         <br />
-<div>
-    <a asp-action="Index" class="btn btn-primary">Back to Instructors List</a>
-</div>
+
     </form>
 </body>
 </html>

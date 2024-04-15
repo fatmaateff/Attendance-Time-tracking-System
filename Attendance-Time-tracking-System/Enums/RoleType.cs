@@ -6,8 +6,7 @@
 		Supervisor,
 		Instructor,
 		Student,
-        StudentAffair,
-        Secretary
-		
+        security,
+		StudentAffair
 	}
 }

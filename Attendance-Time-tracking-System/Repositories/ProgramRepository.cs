@@ -9,5 +9,9 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             db = _db;
         }
+        //public List <Program> GetAll()
+        //{
+        //    return db.Programs.ToList();
+        //}
     }
 }

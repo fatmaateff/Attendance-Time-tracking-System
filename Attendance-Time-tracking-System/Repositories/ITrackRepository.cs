@@ -4,6 +4,10 @@ namespace Attendance_Time_tracking_System.Repositories
 {
     public interface ITrackRepository
     {
-        public List<Track> getalltrackes();
+        List <Track> GetAll();
+        void Add(Track track);
+        Track GetById(int id);
+        void Update (Track track);
+        void Delete(int id);
     }
 }

@@ -45,11 +45,10 @@
                 @if (User.IsInRole("Admin"))
                 {
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Instructor">Instructors</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Supervisors</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="TrackSupervisor">Supervisors</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students</a>
-
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employees</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Tracks</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Employee">Employees</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Track">Tracks</a>
                 }
                 @if (User.IsInRole("Student"))
                 {
@@ -58,7 +57,7 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Permissions</a>
                 }
-                @if (User.IsInRole("StudentAffair"))
+                @if (User.IsInRole("Employee"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="add" asp-controller="Studentaffairs"> Add Students</a>
                     <a asp-action="index" asp-controller="Studentaffairs" class="list-group-item list-group-item-action list-group-item-light p-3">Remove Student</a>
