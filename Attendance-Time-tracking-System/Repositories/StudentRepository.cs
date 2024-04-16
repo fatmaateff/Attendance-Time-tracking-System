@@ -92,6 +92,46 @@ namespace Attendance_Time_tracking_System.Repositories
                 db.SaveChanges();
             }
         }
+        public void addpermission(Permission pre, int id)
+        {
+            var userId = db.Users.FirstOrDefault(a => a.Id == id).Id;
+            pre.StdId = userId;
+            pre.Status = Enums.PermissionStatus.pending;
+            db.permissions.Add(pre);
+            db.SaveChanges() ;
+        }
+        public bool detectpermissioninsamedate(Permission pre, int id)
+        {
+            var model=db.permissions.FirstOrDefault(a=>a.StdId == id &&a.Date==pre.Date);
+            if(model==null) return false;
+            else return true;
+        }
+        public int numofpermissions(int id)
+        {
+            var model=db.permissions.Where(a=>a.StdId==id).ToList();
+            int i = 0;
+            foreach(var permission in model)
+            {
+                i++;
+            }
+            return i;
+        }
+        public List<Permission> allpermissions(int id)
+        {
+            var model = db.permissions.Where(a => a.StdId == id).ToList();
+            return model;
+        }
+        public void deletepermission(DateOnly dateTime)
+        {
+            if(dateTime >= DateOnly.FromDateTime(DateTime.UtcNow.Date))
+            {
+                var model = db.permissions.FirstOrDefault(a => a.Date == dateTime);
+                db.permissions.Remove(model);
+                db.SaveChanges();
+
+            }
+          
+        }
     }
 }
 

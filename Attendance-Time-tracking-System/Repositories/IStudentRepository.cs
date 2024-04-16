@@ -11,6 +11,13 @@ namespace Attendance_Time_tracking_System.Repositories
         public void add(AddStudent std);
         public void ImportDataFromExcel(string filePath);
         public User getUserById(int id);
+        public void addpermission(Permission pre, int id);
+        public bool detectpermissioninsamedate(Permission pre, int id);
+        public int numofpermissions(int id);
+        public List<Permission> allpermissions(int id);
+        public void deletepermission(DateOnly dateTime);
+
+
 
     }
 }
