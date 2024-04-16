@@ -22,7 +22,7 @@
             <tr style="background-color:@RowColors[(int)attendance.Status]">
                 <td>@attendance.Date</td>
                 <td>@(attendance.TimeIn.Hour==0 ? "-" : attendance.TimeIn)</td>
-                <td>@(attendance.TimeOut.Value.Hour==0 ? "-" : attendance.TimeOut)</td>
+                <td>@(attendance.TimeOut == null ? "-" : attendance.TimeOut)</td>
                 <td>@attendance.Status</td>
             </tr>
         }
