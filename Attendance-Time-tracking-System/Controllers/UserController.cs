@@ -18,7 +18,7 @@ namespace Attendance_Time_tracking_System.Controllers
             if (userModel == null)
             {
                 return NotFound();
-            }
+            } 
 
             return View(userModel);
         }
@@ -51,5 +51,21 @@ namespace Attendance_Time_tracking_System.Controllers
             }
             return View("Edit", editUser);
         }
+
+/*        public IActionResult ViewSchedule(int studentId)
+        {
+            // Retrieve the student's schedule data
+            var studentSchedule = context.StudentTrackIntakes
+                .Include(st => st.Track)   
+                    .ThenInclude(t => t.Schedules)
+                .FirstOrDefault(st => st.StudentID == studentId);
+
+            if (studentSchedule == null)
+            {
+                return NotFound();
+            }
+
+            return View(studentSchedule);
+        }*/
     }
 }
