@@ -1,5 +1,4 @@
 ﻿@using System.Security.Claims
-@* @model Employee  *@
 @{
     int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 }
@@ -64,15 +63,14 @@
                 }
                 @if (User.IsInRole("StudentAffair"))
                 {
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="add" asp-controller="Studentaffairs"> Add Students</a>
-                    <a asp-action="index" asp-controller="Studentaffairs" class="list-group-item list-group-item-action list-group-item-light p-3">Remove Student</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance Reports</a>
-
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="add" asp-controller="Studentaffairs"> Add Students</a>
+                        <a asp-action="index" asp-controller="Studentaffairs" class="list-group-item list-group-item-action list-group-item-light p-3">Remove Student</a>
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance Reports</a>
                 }
-                @if (User.IsInRole("Security")){
-                   <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employee Attendance</a>
-                    }
-                
+                @if (User.IsInRole("Security"))
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employee Attendance</a>
+                }
 
             </div>
         </div>
