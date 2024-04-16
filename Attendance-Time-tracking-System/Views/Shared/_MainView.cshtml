@@ -1,5 +1,4 @@
 ﻿@using System.Security.Claims
-@* @model Employee  *@
 @{
     int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 }
@@ -42,11 +41,6 @@
             <div class="list-group list-group-flush">
                 
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="User" asp-action="Profile" asp-route-id="@userId">Profile</a>
-                @if (Model == null)
-                {
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="User" asp-action="Profile" asp-route-id="@userId">test</a>
-
-                }
                 @if (User.IsInRole("Supervisor"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
@@ -67,19 +61,15 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " asp-action="permissionnform" asp-controller="StudentPermission">Permissions</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
                 }
-                @if (User.IsInRole("Employee"))
+                @if (User.IsInRole("StudentAffair"))
                 {
-                    @if (Model != null  && Model.Type == EmpType.StudentAffair)
-                    {
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="add" asp-controller="Studentaffairs"> Add Students</a>
                         <a asp-action="index" asp-controller="Studentaffairs" class="list-group-item list-group-item-action list-group-item-light p-3">Remove Student</a>
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance Reports</a>
-                    }
-                    else if (Model != null  && Model.Type == EmpType.Security)
-                    {
-                        <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employee Attendance</a>
-                    }
-
+                }
+                @if (User.IsInRole("Security"))
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employee Attendance</a>
                 }
 
             </div>

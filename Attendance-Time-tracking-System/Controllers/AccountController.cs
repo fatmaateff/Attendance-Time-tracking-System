@@ -46,7 +46,16 @@ namespace Attendance_Time_tracking_System.Controllers
 
 			//claim for every part of the user
             Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
-            Claim claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
+            Claim claimRole;
+            if (user.Role == "Employee")
+            {
+                Employee Emp = db.Employees.FirstOrDefault(x => x.Id == user.Id);
+                int EmpRoleEnum = (int)Emp.Type;
+                string EmpRole = EmpRoleEnum == 0 ? "Security" : "StudentAffair";
+                claimRole = new Claim(ClaimTypes.Role, EmpRole);
+            }
+            else
+                claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
             Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
             
 
@@ -58,10 +67,7 @@ namespace Attendance_Time_tracking_System.Controllers
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
             claimsPrincipal.AddIdentity(claimsIdentity1);
             await HttpContext.SignInAsync(claimsPrincipal);
-            var routeValues = new RouteValueDictionary {
-                    { "id", user.Id }
-            };
-            return RedirectToAction("Profile", "User", routeValues);
+            return RedirectToAction("Index", "Home");
 
         }
         
