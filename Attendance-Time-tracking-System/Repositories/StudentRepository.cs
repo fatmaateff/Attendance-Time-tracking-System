@@ -1,7 +1,9 @@
 ﻿using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Repositories
 {
@@ -13,9 +15,11 @@ namespace Attendance_Time_tracking_System.Repositories
             db = _db;
         }
 
-        public List<StudentTrackIntake> getall()
+        public List<StudentTrackIntake> getall(int id)
         {
-            var model = db.StudentTrackIntakes.Where(a => a.Student.IsDeleted == false).ToList();
+            
+            var userBranchId=db.Users.FirstOrDefault(a=>a.Id==id).BranchId;
+            var model = db.StudentTrackIntakes.Where(a => a.Student.IsDeleted == false &&a.Student.BranchId== userBranchId).ToList();
 
             return model;
 
@@ -51,6 +55,10 @@ namespace Attendance_Time_tracking_System.Repositories
 
 
         }
+        public User getUserById (int id)
+        {
+            return db.Users.FirstOrDefault(a => a.Id == id);
+        }
         public void ImportDataFromExcel(string filePath)
         {
             using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
@@ -83,6 +91,46 @@ namespace Attendance_Time_tracking_System.Repositories
                 }
                 db.SaveChanges();
             }
+        }
+        public void addpermission(Permission pre, int id)
+        {
+            var userId = db.Users.FirstOrDefault(a => a.Id == id).Id;
+            pre.StdId = userId;
+            pre.Status = Enums.PermissionStatus.pending;
+            db.permissions.Add(pre);
+            db.SaveChanges() ;
+        }
+        public bool detectpermissioninsamedate(Permission pre, int id)
+        {
+            var model=db.permissions.FirstOrDefault(a=>a.StdId == id &&a.Date==pre.Date);
+            if(model==null) return false;
+            else return true;
+        }
+        public int numofpermissions(int id)
+        {
+            var model=db.permissions.Where(a=>a.StdId==id).ToList();
+            int i = 0;
+            foreach(var permission in model)
+            {
+                i++;
+            }
+            return i;
+        }
+        public List<Permission> allpermissions(int id)
+        {
+            var model = db.permissions.Where(a => a.StdId == id).ToList();
+            return model;
+        }
+        public void deletepermission(DateOnly dateTime)
+        {
+            if(dateTime >= DateOnly.FromDateTime(DateTime.UtcNow.Date))
+            {
+                var model = db.permissions.FirstOrDefault(a => a.Date == dateTime);
+                db.permissions.Remove(model);
+                db.SaveChanges();
+
+            }
+          
         }
     }
 }

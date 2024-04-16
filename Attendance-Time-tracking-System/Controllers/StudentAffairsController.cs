@@ -2,6 +2,7 @@
 using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
@@ -16,8 +17,10 @@ namespace Attendance_Time_tracking_System.Controllers
 		}
         public IActionResult Index()
 		{
-            
-            return View(studentRepository.getall());
+            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+
+            return View(studentRepository.getall(int.Parse(userIdClaim)));
 		}
 		public IActionResult Delete(int id) 
 		{ 

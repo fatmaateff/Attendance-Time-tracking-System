@@ -1,0 +1,118 @@
+﻿@model Permission;
+@{
+    Layout = "_MainView";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>permissionnform</title>
+    <style >
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        input[type="submit"] {
+            /* Existing styles */
+            scroll-margin-bottom: 20px; /* Add margin-top to create space */
+        }
+
+        .container {
+            max-width: 600px; /* Increased the max-width */
+            margin: 50px auto;
+            padding: 40px; /* Increased padding for more space */
+/*             background-color: #ffe6e6; /* Light Red */
+ */            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #cc0000; /* Dark Red */
+            margin-right: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: calc(100% - 22px); /* Adjusted width for the text input */
+            padding: 10px;
+            border: 1px solid #cc0000; /* Dark Red */
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #cc0000; /* Dark Red */
+            color: white;
+            border: none;
+            padding: 15px 30px; /* Increased padding for larger button */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #990000; /* Darker Red */
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a type="button" class="btn btn-warning position-relative" asp-action="showpermissions" asp-controller="StudentPermission">
+            Notifications
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                @ViewBag.countpermission
+                <span class="visually-hidden">unread messages</span>
+            </span>
+        </a>
+        <form asp-action="permissionnform" asp-controller="studentPermission" method="post">
+            <div class="form-group">
+                <label for="name">Reason:</label>
+                <input  placeholder="Enter your reason" required  asp-for="Reason">
+            </div>
+            <div class="form-group">
+                <label for="dob">Date:</label>
+                <input id="dob" type="date" asp-for="Date" />                                                                                                                                                          
+            </div>
+            <div class="form-group">
+                <label>Attendance:</label>
+                <input type="radio"  value="Absence" asp-for="Type" checked>
+                <label for="absent">Absence</label>
+                <input type="radio"  asp-for="Type" value="Late">
+                <label for="late">Late</label>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+        @if (ViewBag.message != null)
+        {
+            <div  class="alert alert-danger">@ViewBag.message </div>
+        }
+    </div>
+
+    <script>
+        // Get today's date
+        var today = new Date();
+
+        // Format today's date as YYYY-MM-DD
+        var yyyy = today.getFullYear();
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        var dd = String(today.getDate()).padStart(2, '0');
+        var minDate = yyyy + '-' + mm + '-' + dd;
+
+        // Set the minimum date for the date input
+        document.getElementById("dob").setAttribute("min", minDate);
+    </script>
+</body>
+</html>

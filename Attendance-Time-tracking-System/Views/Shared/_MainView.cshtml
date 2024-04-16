@@ -38,7 +38,7 @@
                 @if (User.IsInRole("Supervisor"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Students Permissions</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="Index" asp-controller="SupervisorPermission">Students Permissions</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Schedule" asp-action="ShowSchedules">Schedule</a>
 
                 }
@@ -54,8 +54,8 @@
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 " asp-action="permissionnform" asp-controller="StudentPermission">Permissions</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Permissions</a>
                 }
                 @if (User.IsInRole("Employee"))
                 {
