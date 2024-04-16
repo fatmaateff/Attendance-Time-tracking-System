@@ -22,7 +22,7 @@ public class Track
 
     ICollection<TrackSupervisor> Supervisors = new HashSet<TrackSupervisor>();
 
-    ICollection<TrackSupervisor> Schedules = new HashSet<TrackSupervisor>();
+    ICollection<TrackSchedule> Schedules = new HashSet<TrackSchedule>();
 
 
 }

@@ -1,0 +1,25 @@
+﻿@model List<TrackSchedule>
+@{
+    ViewData["Title"] = "ViewSchedule";
+}
+
+<h1>ViewSchedule</h1>
+
+<table class="table table-bordered text-center">
+    <tr>
+        <td>Date</td>
+        <td>Start Time</td>
+        <td>End Time</td>
+        <td>Subject</td>
+    </tr>
+    @foreach(var item in Model)
+    {
+        
+        <tr>
+            <td>@item.Schedule.Date</td>
+            <td>@item.Schedule.StartTime</td>
+            <td>@item.Schedule.EndTime</td>
+            <td>@item.Schedule.Subject</td>
+        </tr>
+    }
+</table>

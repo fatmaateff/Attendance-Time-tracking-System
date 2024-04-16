@@ -44,7 +44,7 @@
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="User" asp-action="Profile" asp-route-id="@userId">Profile</a>
                 @if (User.IsInRole("Supervisor"))
                 {
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Profile</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="user" asp-action="profile">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="Index" asp-controller="SupervisorPermission">Students Permissions</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Schedule" asp-action="ShowSchedules">Schedule</a>
 
@@ -58,7 +58,7 @@
                 }
                 @if (User.IsInRole("Student"))
                 {
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Schedule</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="user" asp-action="ViewSchedule">Schedule</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " asp-action="permissionnform" asp-controller="StudentPermission">Permissions</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
                 }
