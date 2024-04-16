@@ -1,6 +1,6 @@
 ﻿@model Instructor
 @{
-    Layout = null;
+    Layout = "_MainView";
 }
 
 <!DOCTYPE html>
@@ -37,13 +37,21 @@
             <span asp-validation-for="Mobile" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="BranchId" class="control-label"></label>
-            <input asp-for="BranchId" class="form-control" />
+            <label asp-for="Branch" class="control-label"></label>
+            <select asp-for="BranchId" class="form-control">
+                <option value="">Select Branch</option>
+                @foreach (var branch in ViewBag.Branches)
+                {
+                    <option value="@branch.Id">@branch.Name</option>
+                }
+            </select>
             <span asp-validation-for="BranchId" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Role" class="control-label"></label>
-            <input asp-for="Role" class="form-control" />
+            <select asp-for="Role" class="form-control">
+                <option>Instructor</option>
+            </select>
             <span asp-validation-for="Role" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -56,9 +64,9 @@
             <input type="submit" value="Add" class="btn btn-primary" />
         </div>
         <br />
-        <div class="form-group">
-            <input asp-action="Instructor" asp-controller="index" value="Back" class="btn btn-primary" />
-        </div>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back to Instructors List</a>
+</div>
     </form>
 </body>
 </html>

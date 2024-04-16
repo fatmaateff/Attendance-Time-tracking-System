@@ -1,0 +1,90 @@
+﻿@model List<Permission>;
+@{
+    Layout = "_MainView";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>showpermissions</title>
+    <style>
+
+        <style >
+        /* Center the table horizontally */
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Vertically center content */
+            height: 100vh; /* Ensure full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+
+        /* Style the table header */
+        th {
+            background-color: #c62f36;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Style the table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Style table cells */
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        /* Alternate row color */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Vertically center content */
+            margin-top: 20px; /* Add margin to the top */
+            margin-bottom: 10px; /* Add margin to the bottom */
+        }
+
+        #searchInput {
+            margin-right: 10px; /* Add some distance between input and search button */
+        }
+    </style>
+
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Reason</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Delete</th>
+            </tr>
+          
+        </thead>
+        <tbody>
+            @foreach(var i in Model)
+            {
+               <tr>
+                   <td>@i.Date</td>
+                   <td>@i.Reason</td>
+                   <td>@i.Type</td>
+                   <td>@i.Status</td>
+                   <td><a class="btn btn-danger" asp-action="Delete" asp-controller="StudentPermission" asp-route-dateTime="@i.Date" >Delete</a></td>
+               </tr> 
+            }
+        </tbody>
+    </table>
+    
+</body>
+</html>

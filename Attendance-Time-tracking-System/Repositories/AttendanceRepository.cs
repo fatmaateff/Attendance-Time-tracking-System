@@ -1,4 +1,5 @@
 ﻿using Attendance_Time_tracking_System.Data;
+using Attendance_Time_tracking_System.Models;
 
 namespace Attendance_Time_tracking_System.Repositories
 {
@@ -10,10 +11,14 @@ namespace Attendance_Time_tracking_System.Repositories
             db = _db;
         }
         //method to get all attendances
-        //method to get attendance by id
+        public List<Attendance> GetAttendanceById(int id)
+        {
+            List<Attendance> attendances = db.Attendances.Where(a => a.UserId == id).ToList();
+            return attendances;
+        }
         //method to add attendance
         //method to delete attendance
-
+        
     }
     }
 

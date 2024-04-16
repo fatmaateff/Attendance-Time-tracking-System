@@ -2,20 +2,25 @@
 using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
 	public class StudentAffairsController : Controller
 	{
 		IStudentRepository studentRepository;
-		public StudentAffairsController (IStudentRepository studentRepository)
+		ITrackRepository trackRepository;
+		public StudentAffairsController (IStudentRepository studentRepository ,ITrackRepository trackRepository)
 		{
 			this.studentRepository = studentRepository;
+			this.trackRepository = trackRepository;
 		}
         public IActionResult Index()
 		{
-            
-            return View(studentRepository.getall());
+            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+
+            return View(studentRepository.getall(int.Parse(userIdClaim)));
 		}
 		public IActionResult Delete(int id) 
 		{ 
@@ -24,7 +29,50 @@ namespace Attendance_Time_tracking_System.Controllers
 		}
 		public IActionResult Add ()
 		{ 
+			ViewBag.tracks=trackRepository.GetAll();
 			return View();
 		}
-	}
+		[HttpPost]
+		public IActionResult add (AddStudent std) {
+
+			studentRepository.add(std);
+
+			return RedirectToAction("index");
+		}
+        [HttpPost]
+
+        public IActionResult UploadExcel(IFormFile file)
+		{
+            try
+            {
+                if (file != null && file.Length > 0)
+                {
+                    string fileName = Path.GetFileName(file.FileName);
+                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
+
+                    using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    studentRepository.ImportDataFromExcel(filePath);
+
+                    ViewBag.Message = "Bulk insert from Excel to database successful!";
+                }
+                else
+                {
+                    ViewBag.Message = "No file uploaded.";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Error: " + ex.Message;
+            }
+
+            return RedirectToAction("index");
+        }
+
+
+
+    }
 }

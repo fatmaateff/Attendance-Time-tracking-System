@@ -26,7 +26,7 @@ namespace Attendance_Time_tracking_System.Controllers
            
             RedirectToAction("Login");
             return View();
-            
+
             
         }
         [HttpPost]
@@ -63,6 +63,6 @@ namespace Attendance_Time_tracking_System.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-
+        
     }
 }
