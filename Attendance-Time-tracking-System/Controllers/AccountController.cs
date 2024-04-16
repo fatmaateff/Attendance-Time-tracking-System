@@ -1,5 +1,6 @@
 ﻿using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Models;
+using Attendance_Time_tracking_System.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,6 @@ namespace Attendance_Time_tracking_System.Controllers
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
-            if (claimUser.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
            
             RedirectToAction("Login");
             return View();
@@ -36,8 +33,8 @@ namespace Attendance_Time_tracking_System.Controllers
             if(!ModelState.IsValid) {
                 return View(model);
             }
+
             //authenticate the user
-            
             var user = db.Users.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
             //check if the user exists in database or not
             if(user == null)
@@ -51,6 +48,7 @@ namespace Attendance_Time_tracking_System.Controllers
             Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
             Claim claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
             Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
+            
 
             ClaimsIdentity claimsIdentity1 = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             claimsIdentity1.AddClaim(claimEmail);
@@ -60,7 +58,10 @@ namespace Attendance_Time_tracking_System.Controllers
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
             claimsPrincipal.AddIdentity(claimsIdentity1);
             await HttpContext.SignInAsync(claimsPrincipal);
-            return RedirectToAction("Index", "Home");
+            var routeValues = new RouteValueDictionary {
+                    { "id", user.Id }
+            };
+            return RedirectToAction("Profile", "User", routeValues);
 
         }
         
