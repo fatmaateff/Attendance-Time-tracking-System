@@ -1,11 +1,13 @@
 ﻿using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
+    [Authorize]
     public class TrackSupervisorController : Controller
     {
         ITrackRepository TrackRepository;
@@ -107,20 +109,25 @@ namespace Attendance_Time_tracking_System.Controllers
             var trackSupervisors = TrackSupervisorRepository.GetAll();
             return View(trackSupervisors);
         }
-        [HttpGet]
-        public IActionResult Edit(int id)
+        //[HttpGet]
+        //public IActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //public IActionResult Edit(TrackSupervisor trackSupervisor)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        TrackSupervisorRepository.Update(trackSupervisor);
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(trackSupervisor);
+        //}
+        public IActionResult Delete (int intakeId, int instructorId)
         {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Edit(TrackSupervisor trackSupervisor)
-        {
-            if (!ModelState.IsValid)
-            {
-                TrackSupervisorRepository.Update(trackSupervisor);
-                return RedirectToAction("Index");
-            }
-            return View(trackSupervisor);
+            TrackSupervisorRepository.Delete(intakeId, instructorId);
+            return RedirectToAction("Index");
         }
     }
 }

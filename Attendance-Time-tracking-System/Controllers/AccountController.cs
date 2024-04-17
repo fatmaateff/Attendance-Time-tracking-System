@@ -31,7 +31,7 @@ namespace Attendance_Time_tracking_System.Controllers
         {
             // Check if the model is valid
             if(!ModelState.IsValid) {
-                return View(model);
+				ModelState.AddModelError("", "Invalid email or password.");
             }
 
             //authenticate the user
@@ -67,8 +67,7 @@ namespace Attendance_Time_tracking_System.Controllers
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
             claimsPrincipal.AddIdentity(claimsIdentity1);
             await HttpContext.SignInAsync(claimsPrincipal);
-            return RedirectToAction("Index", "Home");
-
+            return RedirectToAction("Profile", "User");
         }
         
     }

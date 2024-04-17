@@ -21,11 +21,9 @@
                 <th scope="col">Track ID</th>
                 <th scope="col">Instructor ID</th>
                 <th scope="col">Track Name</th>
-                
                 <th scope="col">Instructor Name</th>
                 <th scope="col">Intake</th>
                 <th scope="col">Branch</th>
-
             </tr>
         </thead>
         <tbody>
@@ -38,13 +36,28 @@
                     <td>@supervisor.Instructor.Name</td>
                     <td>@supervisor.Intake.Name</td>
                      <td>@supervisor.Branch.Name</td>
+                    <td>
+@*                          <a onclick="confirmDelete(@supervisor.InstructorID && @supervisor.IntakeID)" class="btn btn-danger">Delete</a>
+ *@   
+                           <a asp-action="Delete" asp-controller="TrackSupervisor" asp-route-InstructorID="@supervisor.InstructorID" asp-route-IntakeID="@supervisor.IntakeID" class="btn btn-danger deletebtn">Delete</a>
+</td>
                     </tr>
                 }
 
         </tbody>
     </table>
     <div><a asp-action="AssignSupervisor" asp-controller="TrackSupervisor" class="btn btn-danger"> Assign Supervisor to track </a></div>
-
+    <script>
+        let deletedbtns = document.getElementsByClassName("deletebtn");
+        for (let i = 0; i < deletedbtns.length;i++) {
+            deletedbtns[i].addEventListener("click", function (e) {
+                let isDelete = confirm("Are you sure you want to delete this record?");
+                if (!isDelete) {
+                    e.preventDefault();
+                }
+            });
+        }
+    </script>
     
 </body>
 </html>

@@ -2,11 +2,13 @@
 using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
 using Attendance_Time_tracking_System.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         IAttendanceRepository attendanceRepository;
