@@ -11,7 +11,6 @@ namespace Attendance_Time_tracking_System.Controllers
     public class UserController : Controller
     {
         AttendanceSysDbContext context = new AttendanceSysDbContext();
-
         public IActionResult Profile()
         {
             int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);

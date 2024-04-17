@@ -1,11 +1,13 @@
 ﻿using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
+    [Authorize]
     public class TrackSupervisorController : Controller
     {
         ITrackRepository TrackRepository;

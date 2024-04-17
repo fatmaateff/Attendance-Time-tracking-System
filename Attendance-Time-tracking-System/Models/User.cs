@@ -1,4 +1,6 @@
-﻿using Attendance_Time_tracking_System.Enums;
+﻿using Attendance_Time_tracking_System.Data;
+using Attendance_Time_tracking_System.Enums;
+using Attendance_Time_tracking_System.ValidationAttributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,7 +18,7 @@ namespace Attendance_Time_tracking_System.Models
 
         [Required(ErrorMessage = "Email is required")]
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid Email Address")]
-
+        [EmailValidation]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
@@ -29,6 +31,7 @@ namespace Attendance_Time_tracking_System.Models
         //[RegularExpression(@"(010|011|012|015)\d{8}")]
 
         [Range(10000000000, 99999999999, ErrorMessage = "Mobile number must be 11 digits")]
+        [mobileValidation]
         public long Mobile { get; set; }
 
         // user has one branch

@@ -28,7 +28,6 @@ namespace Attendance_Time_tracking_System.Data
             optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=tcp:fahmy-server.database.windows.net,1433;Initial Catalog=ITIAttendanceSystem;Persist Security Info=False;User ID=ahmed;Password=Uchiha123goat*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StudentTrackIntake>().HasKey(x => new {x.StudentID, x.TrackID});

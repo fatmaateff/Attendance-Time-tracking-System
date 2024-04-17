@@ -67,8 +67,7 @@ namespace Attendance_Time_tracking_System.Controllers
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
             claimsPrincipal.AddIdentity(claimsIdentity1);
             await HttpContext.SignInAsync(claimsPrincipal);
-            return RedirectToAction("Index", "Home");
-
+            return RedirectToAction("Profile", "User");
         }
         
     }
