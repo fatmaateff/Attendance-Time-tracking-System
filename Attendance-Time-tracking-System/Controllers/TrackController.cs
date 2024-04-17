@@ -40,6 +40,7 @@ namespace Attendance_Time_tracking_System.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            ViewBag.programs = ProgramRepository.GetAll();
             var track = trackRepository.GetById(id);
             return View(track);
         }
@@ -52,6 +53,7 @@ namespace Attendance_Time_tracking_System.Controllers
                 return RedirectToAction("Index");
             }
             return View(track);
+            ViewBag.programs = ProgramRepository.GetAll();
         }
         public IActionResult showDetails(int id)
         {
