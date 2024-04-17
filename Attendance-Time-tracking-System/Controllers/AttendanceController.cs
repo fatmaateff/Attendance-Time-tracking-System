@@ -7,14 +7,14 @@ public class AttendanceController : Controller
     private readonly IBranchRepository _branchRepo;
     private readonly IAttendanceRepository _attendanceRepo;
     private readonly IUserRepository _userRepository;
-    
-    public AttendanceController(IAttendanceRepository attendanceRepository , IBranchRepository branchRepository, IUserRepository userRepository)
+
+    public AttendanceController(IAttendanceRepository attendanceRepository, IBranchRepository branchRepository, IUserRepository userRepository)
     {
         _attendanceRepo = attendanceRepository;
         _branchRepo = branchRepository;
         _userRepository = userRepository;
     }
-    
+
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -25,32 +25,82 @@ public class AttendanceController : Controller
     public IActionResult Index(string role)
     {
         int branchId = currentUser.BranchId;
+        DateOnly today = DateOnly.FromDateTime(DateTime.Now);
 
         IEnumerable<User> users;
         ViewBag.Title = role;
 
-        if (role.Equals("Students",StringComparison.OrdinalIgnoreCase))
-            users = _userRepository.GetStudents(branchId);
+        if (role.Equals("Students", StringComparison.OrdinalIgnoreCase))
+            users = _userRepository.GetStudentsWithAttedance(branchId,today);
         else
-            users = _userRepository.GetEmployees(branchId);
+            users = _userRepository.GetEmployeesWithAttedance(branchId,today);
 
         return View(users);
     }
 
-
-    public IActionResult Take(RoleType role ,int? trackId)
+    [HttpPost]
+    public IActionResult MarkAttendace(int userId,DateTime dateTime)
     {
-        //int intakeId = 1;
-        int branchId = currentUser.BranchId;
+        User user = _userRepository.GetUserById(userId);
+        if (user == null)
+            return BadRequest();
 
-        IEnumerable<User> users;
-        ViewBag.Role = role;
-        if (role.Equals(RoleType.Student))
-            users = _userRepository.GetStudents(branchId);
+        Attendance attendance = new Attendance();
+        attendance.UserId = userId;
+        attendance.TimeIn = TimeOnly.FromDateTime(dateTime);
+        attendance.Date = DateOnly.FromDateTime(dateTime);
+
+
+        TimeOnly targetTime = new TimeOnly(9, 15);
+
+        if (targetTime.CompareTo(attendance.TimeIn) == -1)
+            attendance.Status = AttendanceStatus.Late;
         else
-            users = _userRepository.GetEmployees(branchId);
+            attendance.Status = AttendanceStatus.Attendant;
 
-        return View(users);
+        bool inserted = _attendanceRepo.TryInsertUserAttendance(attendance);
+        if (! inserted)
+            return BadRequest();
+
+        return View();
     }
 
+    [HttpPost]
+    public IActionResult MarkDeparture(int userId,DateTime dateTime)
+    {
+        User user = _userRepository.GetUserById(userId);
+
+        if (user == null)
+            return BadRequest();
+
+        DateOnly date = DateOnly.FromDateTime(dateTime);
+        TimeOnly time = TimeOnly.FromDateTime(dateTime);
+
+
+        Attendance attendance = _attendanceRepo.GetUserAttendance(userId, date);
+        
+        if(attendance is null)
+            return BadRequest();
+
+        bool marked = _attendanceRepo.TryMarkDeparture(userId, date, time);
+        if(! marked)
+            return BadRequest();
+
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult ResetAttendance(int userId, DateTime date)
+    {
+        User user = _userRepository.GetUserById(userId);
+        if (user == null)
+            return BadRequest();
+
+        bool resetSuccessfully = _attendanceRepo.TryResetAttendance(userId,DateOnly.FromDateTime(date));
+      
+        if (resetSuccessfully)
+            return View(nameof(Index));
+        else
+            return BadRequest();
+    }
 }

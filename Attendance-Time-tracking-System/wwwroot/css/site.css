@@ -98,17 +98,21 @@ button {
     color: white;
 }
 
-    button:hover {
-        background-color: #45a049;
-    }
+button:hover {
+    background-color: #45a049;
+}
 
-    button:disabled {
-        background-color: gray;
-        cursor: not-allowed;
-    }
+button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
 
-#cancel-button {
-    margin-top:5px;
+#cancel-button, .reset-button {
+    margin-top: 5px;
     background-color: darkred;
+}
+
+button.reset-button:hover {
+    background-color:red;
 }
 /*end of mark attendance styles*/
