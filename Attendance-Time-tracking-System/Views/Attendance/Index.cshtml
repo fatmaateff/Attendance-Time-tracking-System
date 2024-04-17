@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<User>
 
-
 <div class="container">
    
     <table class="table table-hover table-striped">
@@ -10,9 +9,22 @@
             <tr>
                 <td>@user.Name</td>
                 <td>
-                    <button class="mark-attendance-button" data-id="@user.Id">Mark Attendance</button>
-                    <button class="mark-departure-button" data-id="@user.Id" disabled>Mark Departure</button>
-                    <button class="reset-button" data-id="@user.Id" disabled>Reset</button>
+                    @if ( user.Attendances.Count == 0 || user.Attendances.FirstOrDefault().Status == AttendanceStatus.Absent)
+                    {
+                        <button class="mark-attendance-button" data-id="@user.Id" >Mark Attendance</button>
+                        <button class="mark-departure-button" data-id="@user.Id" disabled>Mark Departure</button>
+                        <button class="reset-button" data-id="@user.Id" disabled>Reset</button>
+                    }else if(user.Attendances.FirstOrDefault()?.TimeOut == null)
+                    {
+                        <button class="mark-attendance-button" data-id="@user.Id" disabled>Mark Attendance</button>
+                        <button class="mark-departure-button" data-id="@user.Id">Mark Departure</button>
+                        <button class="reset-button" data-id="@user.Id">Reset</button>
+                    }else{
+                        <button class="mark-attendance-button" data-id="@user.Id" disabled>Mark Attendance</button>
+                        <button class="mark-departure-button" data-id="@user.Id" disabled>Mark Departure</button>
+                        <button class="reset-button" data-id="@user.Id">Reset</button>
+                    }
+
                 </td>
             </tr>
         }
@@ -36,48 +48,48 @@
             const markAttendanceButton = row.querySelector('.mark-attendance-button');
             const markDepartureButton = row.querySelector('.mark-departure-button');
             const resetButton = row.querySelector('.reset-button');
-
+            const userName = row.firstElementChild.textContent;
+                     
             markAttendanceButton.addEventListener('click', function () {
-                const employeeId = this.getAttribute('data-id');
-                handleButtonClick(employeeId, 'attendance');
+                const userId = this.getAttribute('data-id');
+                handleButtonClick(userId, userName, 'attendance');
             });
 
             markDepartureButton.addEventListener('click', function () {
-                const employeeId = this.getAttribute('data-id');
-                handleButtonClick(employeeId, 'departure');
+                const userId = this.getAttribute('data-id');
+                handleButtonClick(userId, userName, 'departure');
             });
 
             resetButton.addEventListener('click', function () {
-                const employeeId = this.getAttribute('data-id');
-                handleButtonClick(employeeId, 'reset');
+                const userId = this.getAttribute('data-id');
+                handleButtonClick(userId, userName, 'reset');
             });
         });
 
         const modal = document.getElementById('modal');
-        const modalContent = document.querySelector('.modal-content'); // added
+        const modalContent = document.querySelector('.modal-content');
 
-        modalContent.addEventListener('click', function (event) { // added
-            event.stopPropagation(); // added
-        }); // added
+        modalContent.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
 
         const modalMessage = document.getElementById('modal-message');
         const confirmButton = document.getElementById('confirm-button');
         const cancelButton = document.getElementById('cancel-button');
         const closeButton = document.querySelector('.close');
 
-        // Function to handle button click events
-        function handleButtonClick(employeeId, action) {
-            const employeeName = `Employee ${employeeId}`;
+        function handleButtonClick(userId, userName, action) {
+            const employeeName = `Employee ${userName}`;
             const currentDate = new Date().toLocaleString();
 
             if (action === 'reset') {
-                modalMessage.textContent = `Are you sure you want to reset info about ${employeeName}?`;
+                modalMessage.textContent = `Are you sure you want to reset info about ${userName} at ${currentDate}?`;
             } else {
-                modalMessage.textContent = `Are you sure you want to mark ${action} for ${employeeName} at ${currentDate}?`;
+                modalMessage.textContent = `Are you sure you want to mark ${action} for ${userName} at ${currentDate}?`;
             }
             modal.style.display = 'block';
 
-            confirmButton.setAttribute('data-employee-id', employeeId);
+            confirmButton.setAttribute('data-user-id', userId);
             confirmButton.setAttribute('data-action', action);
 
             confirmButton.addEventListener('click', onConfirm);
@@ -85,37 +97,27 @@
             closeButton.addEventListener('click', onClose);
         }
 
-        // Function to handle the confirmation button click
         function onConfirm() {
-            // Get the employee ID and action
-            const employeeId = confirmButton.getAttribute('data-employee-id');
+            const userId = confirmButton.getAttribute('data-user-id');
             const action = confirmButton.getAttribute('data-action');
-
-            // Send AJAX request
             if (action === 'reset') {
-                sendResetRequest(employeeId);
+                sendResetRequest(userId);
             } else {
                 const currentDate = new Date().toLocaleString();
-                sendAttendanceData(employeeId, currentDate, action);
+                sendAttendanceData(userId, action);
             }
 
-            // Close the modal
             closeModal();
         }
 
-        // Function to handle the cancellation button click
         function onCancel() {
-            // Close the modal
             closeModal();
         }
 
-        // Function to handle the close button click
         function onClose() {
-            // Close the modal
             closeModal();
         }
 
-        // Function to close the modal and remove event listeners
         function closeModal() {
             modal.style.display = 'none';
             confirmButton.removeEventListener('click', onConfirm);
@@ -123,26 +125,47 @@
             closeButton.removeEventListener('click', onClose);
         }
 
-        // Function to send AJAX request for marking attendance/departure
-        function sendAttendanceData(employeeId, currentDate, action) {
-            console.log(`Sending ${action} data for employee ID ${employeeId} at ${currentDate}`);
-            // In a real application, you would make an AJAX call here
-            // For demonstration, I'm just logging the data to the console
-            handleButtons(employeeId, action);
+        function sendAttendanceData(userId, action) {
+           
+            const dateTime = new Date().toISOString();
+
+            console.log(`Sending ${action} data for employee ID ${userId} at ${dateTime}`);
+            
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                    console.log("success");
+            }
+            if (action === "attendance")
+            {
+                var url = `./markAttendace?userId=${userId}&dateTime=${dateTime}`;
+            }else{
+                var url = `./markDeparture?userId=${userId}&dateTime=${dateTime}`;
+            }
+            request.open('Post', url, true);
+            request.send();
+
+            handleButtons(userId, action);
         }
 
-        // Function to send AJAX request for resetting data
-        function sendResetRequest(employeeId) {
-            console.log(`Resetting data for employee ID ${employeeId}`);
-            // In a real application, you would make an AJAX call here
-            // For demonstration, I'm just logging the data to the console
-            handleButtons(employeeId, "Reset");
+        function sendResetRequest(userId) {
+            const dateTime = new Date().toISOString();
+
+            console.log(`Resetting data for employee ID ${userId} at ${dateTime}`);
+            var url = `./ResetAttendance?userId=${userId}&date=${dateTime}`;
+
+            var request = new XMLHttpRequest();
+
+            request.open("Post", url, true);
+            request.send();
+            
+            handleButtons(userId, "Reset");
         }
 
-        // Function to enable buttons
-        // Function to enable buttons
-        function handleButtons(employeeId, action) {
-            const row = document.querySelectorAll(`[data-id="${employeeId}"]`);
+        function handleButtons(userId, action) {
+            const row = document.querySelectorAll(`[data-id="${userId}"]`);
+            console.log(row);
             const markAttendanceButton = row[0];
             const markDepartureButton = row[1];
             const resetButton = row[2];
@@ -161,8 +184,6 @@
                 resetButton.disabled = true;
             }
         }
-
-
     });
 
 </script>   

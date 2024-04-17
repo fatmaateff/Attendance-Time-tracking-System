@@ -59,6 +59,12 @@ namespace Attendance_Time_tracking_System.Controllers
             Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
             
 
+            // initialize day attendance for security
+
+
+
+
+
             ClaimsIdentity claimsIdentity1 = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             claimsIdentity1.AddClaim(claimEmail);
             claimsIdentity1.AddClaim(claimRole);

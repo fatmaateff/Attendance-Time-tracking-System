@@ -24,7 +24,7 @@ public class Attendance
     public AttendanceStatus Status { get; set; }
 
     [ForeignKey("User")]
-    public string UserId { get;set; }
+    public int UserId { get;set; }
 
     public virtual  User User { get; set; }
 }

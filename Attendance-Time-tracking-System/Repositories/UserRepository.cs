@@ -15,6 +15,7 @@ namespace Attendance_Time_tracking_System.Repositories
         public IEnumerable<User> GetStudents(int branchId)
         {
             IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && user.Role.Equals(RoleType.Student));
+                                               
             return users;
         }
 
@@ -27,6 +28,21 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             User user = _db.Users.SingleOrDefault(user => user.Id == id);
             return user;
+        }
+
+        public IEnumerable<User> GetStudentsWithAttedance(int branchId, DateOnly date)
+        {
+            IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && user.Role.Equals(RoleType.Student))
+                                               .Include(user=> user.Attendances.Where(a => a.Date ==date));
+
+            return users;
+        }
+
+        public IEnumerable<User> GetEmployeesWithAttedance(int branchId, DateOnly date)
+        {
+            IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && !user.Role.Equals(RoleType.Student))
+                                               .Include(user=> user.Attendances.Where(a => a.Date ==date));
+            return users;
         }
         //methods to implement
     }
