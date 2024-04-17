@@ -1,10 +1,12 @@
 ﻿using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.Metrics;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
+    [Authorize]
     public class TrackController : Controller
     {
         ITrackRepository trackRepository;
@@ -23,6 +25,7 @@ namespace Attendance_Time_tracking_System.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.programs = ProgramRepository.GetAll();
             return View();
         }
         [HttpPost]
@@ -33,11 +36,13 @@ namespace Attendance_Time_tracking_System.Controllers
                 trackRepository.Add(track);
                 return RedirectToAction("Index");
             }
+            ViewBag.programs = ProgramRepository.GetAll();
             return View(track);
         }
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            ViewBag.programs = ProgramRepository.GetAll();
             var track = trackRepository.GetById(id);
             return View(track);
         }
@@ -49,10 +54,13 @@ namespace Attendance_Time_tracking_System.Controllers
                 trackRepository.Update(track);
                 return RedirectToAction("Index");
             }
+            ViewBag.programs = ProgramRepository.GetAll();
             return View(track);
+            
         }
         public IActionResult showDetails(int id)
         {
+            ViewBag.programs = ProgramRepository.GetAll();
             var track = trackRepository.GetById(id);
             return View(track);
         }

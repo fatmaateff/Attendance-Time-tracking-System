@@ -26,10 +26,11 @@ namespace Attendance_Time_tracking_System.Controllers
         {
             return View();
         }
+     
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

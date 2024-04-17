@@ -1,15 +1,16 @@
 ﻿using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         AttendanceSysDbContext context = new AttendanceSysDbContext();
-
         public IActionResult Profile()
         {
             int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
