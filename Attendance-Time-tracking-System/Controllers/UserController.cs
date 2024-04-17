@@ -80,7 +80,7 @@ namespace Attendance_Time_tracking_System.Controllers
                 .Include(t => t.Schedule)
                 .Where(t => t.BranchID == branchId && t.TrackID == trackId && t.IntakeID == intakeId)
                 .OrderByDescending(t => t.Schedule.Date)
-                .Take(3)
+                .Take(5)
                 .ToList();
             lastFiveSchedules.Reverse();
 
