@@ -4,7 +4,12 @@ namespace Attendance_Time_tracking_System.Repositories
 {
     public interface IInstructorRepository
     {
-       public List<Instructor> GetAll();
-       public Instructor Add(Instructor instructor);
+      List<Instructor> GetAll();
+      void Add(Instructor instructor);
+        Instructor GetById(int id);
+        void Update (Instructor instructor);
+        void Delete(int id);
+        void UpdateRoleToSupervisor(int instructorId);
+
     }
 }

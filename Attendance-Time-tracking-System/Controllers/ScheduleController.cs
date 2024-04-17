@@ -1,6 +1,7 @@
 ﻿using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
@@ -17,7 +18,8 @@ namespace Attendance_Time_tracking_System.Controllers
         }
         public IActionResult ShowSchedules()
         {
-            return View(scheduleRepository.GetAllSchedules());
+            int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            return View(scheduleRepository.GetAllSchedules(InstructorId));
         }
         public IActionResult AddForm()
         {
@@ -29,7 +31,8 @@ namespace Attendance_Time_tracking_System.Controllers
         {
             if(ModelState.IsValid)
             {
-                scheduleRepository.AddSchedule(schedule);
+                int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                scheduleRepository.AddSchedule(InstructorId, schedule);
                 return RedirectToAction("ShowSchedules");
             }
             return View("AddForm", schedule);

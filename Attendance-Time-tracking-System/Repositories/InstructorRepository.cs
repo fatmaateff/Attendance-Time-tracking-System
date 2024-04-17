@@ -14,11 +14,39 @@ namespace Attendance_Time_tracking_System.Repositories
         {
                return db.Instructors.Where(I=> I.IsDeleted == false ).ToList();
         }
-        public Instructor Add(Instructor instructor)
+        public void Add(Instructor instructor)
         {
             db.Instructors.Add(instructor);
             db.SaveChanges();
-            return instructor;
         }
+        public Instructor GetById(int id)
+        {
+            return db.Instructors.Where(I=> I.IsDeleted == false ).FirstOrDefault(I => I.Id == id);
+        }
+
+        public void Update(Instructor instructor)
+        {
+
+            db.Instructors.Update(instructor);
+            db.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            var instructor = GetById(id);
+            instructor.IsDeleted = true;
+            db.SaveChanges();
+        }
+        // InstructorRepository.cs
+        public void UpdateRoleToSupervisor(int instructorId)
+        {
+            var instructor = db.Instructors.FirstOrDefault(i => i.Id == instructorId);
+            if (instructor != null)
+            {
+                instructor.Role = "Supervisor";
+                db.SaveChanges();
+            }
+        }
+
+
     }
 }

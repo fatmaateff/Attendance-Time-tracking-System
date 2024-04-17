@@ -1,0 +1,182 @@
+﻿@model AddStudent;
+@{
+    Layout = "_MainView";
+    List<Track> Tracks = ViewBag.tracks as List<Track>;
+    SelectList tracklist = new SelectList(ViewBag.tracks, "Name", "Id");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Student</title>
+    <link rel="stylesheet" href="/css/StudentForm.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        .trackname{
+            margin-right=20px;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form {
+            border: 2px solid #c62f36;
+            padding: 40px;
+            width: 70%;
+            max-width: 700px;
+            border-radius: 20px;
+        }
+
+        .focus {
+            border: 3px solid #fef6fb;
+            box-shadow: 0 0 10px 0 #c62f36;
+            position: absolute;
+            transition: width .2s ease;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+            .input-group input[type="text"],
+            .input-group input[type="email"],
+            .input-group input[type="date"],
+            .input-group input[type="number"],
+            .input-group input[type="submit"] {
+                flex: 1;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #c62f36; /* Add border style */
+                padding: 8px; /* Add padding for better appearance */
+                border-radius: 5px; /* Add border radius */
+            }
+
+            .input-group input[type="submit"] {
+                background-color: #c62f36;
+                color: #fff;
+                border: none; /* Remove border for submit button */
+                cursor: pointer;
+            }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+       
+        <form class="form" asp-action="add"  method="post" >
+            <div class="focus"></div>
+            <h3>Add Student</h3>
+            <div class="input-group">
+                <input type="text" class="half" asp-for="student.Name" placeholder="Full Name" required >
+                
+            </div>
+            <div class="input-group">
+                <input type="email" placeholder="Email" asp-for="student.Email" required>
+                <input type="text" class="half" placeholder="Password" asp-for="student.Password" required>
+            </div>
+            <div class="input-group">
+                <input type="text" class="half" placeholder="Mobile"asp-for="student.Mobile" required> 
+                <input type="text" placeholder="University" asp-for="student.University" required>
+            </div>
+           
+            <div class="input-group">
+                <input type="text" class="half" placeholder="Faculty" asp-for="student.Faculty" required>
+                <input type="text" class="half" placeholder="Specialization" asp-for="student.Specialization" required>
+            </div>
+          
+            <div class="input-group">
+                
+                <input type="number" class="half" placeholder="GraduationYear" asp-for="student.GradYear" required>
+            </div>
+            <div class="input-group">
+                <label class="trackname">Track Name  </label>
+                <select asp-for="StudentTrackIntake.TrackID">
+                    @foreach(var i in Tracks)
+                    {
+                        <option value="@i.Id">@i.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="input-group">
+                <button type="submit" class="btn btn-success">Add Student</button>
+                @using (Html.BeginForm("UploadExcel", "StudentAffairs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        <label for="file" style="display: none;">Choose Excel file:</label>
+                        <label for="file" class="file-input-label">
+                            <img src="images/excel icon.png" width="70px" /> Upload Excel File
+                        </label>
+                        <input type="file" name="file" id="file" class="form-control-file" accept=".xlsx,.xls" style="display: none;" />
+                    </div>
+                    <button type="submit" class="btn btn-success">Upload</button>
+                }
+            </div>
+        </form>
+       
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const FORM = $(".form");
+            const TYPES = ["input[type=text]", "input[type=email]", "input[type=date]", "input[type=number]", "input[type=submit]"];
+            const FOCUS = $(".focus");
+
+            function position(e) {
+                var props = {
+                    top: e.offset().top,
+                    left: e.offset().left,
+                    width: e.outerWidth(),
+                    height: e.outerHeight(),
+                    radius: parseInt(e.css("border-radius"))
+                };
+
+                FOCUS.css({
+                    top: props.top,
+                    left: props.left,
+                    width: props.width,
+                    height: props.height,
+                    "border-radius": props.radius
+                });
+
+                FOCUS.fadeIn(200);
+            }
+
+            FORM.find(TYPES.join()).each(function (i) {
+                $(this).focus(function () {
+                    el = $(this);
+                    $(window).resize(function () {
+                        position(el);
+                    });
+                    position(el);
+                });
+            });
+
+            FORM.on("focusout", function (e) {
+                setTimeout(function () {
+                    if (!e.delegateTarget.contains(document.activeElement)) {
+                        FOCUS.fadeOut(200);
+                    }
+                }, 0);
+            });
+        });
+    </script>
+</body>
+
+</html>

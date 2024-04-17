@@ -1,5 +1,6 @@
 ﻿using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Models;
+using Attendance_Time_tracking_System.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +20,10 @@ namespace Attendance_Time_tracking_System.Controllers
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
-            if (claimUser.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
            
             RedirectToAction("Login");
             return View();
-            
+
             
         }
         [HttpPost]
@@ -36,8 +33,8 @@ namespace Attendance_Time_tracking_System.Controllers
             if(!ModelState.IsValid) {
                 return View(model);
             }
+
             //authenticate the user
-            
             var user = db.Users.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
             //check if the user exists in database or not
             if(user == null)
@@ -49,8 +46,18 @@ namespace Attendance_Time_tracking_System.Controllers
 
 			//claim for every part of the user
             Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
-            Claim claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
+            Claim claimRole;
+            if (user.Role == "Employee")
+            {
+                Employee Emp = db.Employees.FirstOrDefault(x => x.Id == user.Id);
+                int EmpRoleEnum = (int)Emp.Type;
+                string EmpRole = EmpRoleEnum == 0 ? "Security" : "StudentAffair";
+                claimRole = new Claim(ClaimTypes.Role, EmpRole);
+            }
+            else
+                claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
             Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
+            
 
             ClaimsIdentity claimsIdentity1 = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             claimsIdentity1.AddClaim(claimEmail);
@@ -63,6 +70,6 @@ namespace Attendance_Time_tracking_System.Controllers
             return RedirectToAction("Index", "Home");
 
         }
-
+        
     }
 }

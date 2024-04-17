@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 
 namespace Attendance_Time_tracking_System
 {
@@ -16,7 +17,7 @@ namespace Attendance_Time_tracking_System
             // Add services to the container.
                    
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IStudentRepository,StudentRepository>();
+            
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options =>
         {
@@ -25,19 +26,23 @@ namespace Attendance_Time_tracking_System
             //options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
         });
             builder.Services.AddDbContext<AttendanceSysDbContext>();
-            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IBranchRepository, BranchRepository>();
             builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            //builder.Services.AddScoped<ITrackRepository, TrackRepository>();
-            //builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
-            //builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
-            //builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<ITrackRepository, TrackRepository>();
+            builder.Services.AddScoped<IProgramRepository, ProgramRepository>();
+            builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
-            //builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
+            builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
+            builder.Services.AddScoped<ITrackSupervisorRepository, TrackSupervisorRepository>();
+            builder.Services.AddScoped<IIntakeRepository, IntakeRepository>();
 
             builder.Services.AddDbContext<AttendanceSysDbContext>();
+            //for excel sheeet
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             builder.Services.AddSession();
             builder.Services.AddScoped<IBranchRepository, BranchRepository>();
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Attendance_Time_tracking_System.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Attendance_Time_tracking_System.Models;
@@ -20,6 +21,7 @@ public class Attendance
 
     [Display(Name = "Time out")]
     public TimeOnly? TimeOut { get; set; }
+    public AttendanceStatus Status { get; set; }
 
     [ForeignKey("User")]
     public string UserId { get;set; }

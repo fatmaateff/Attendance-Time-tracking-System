@@ -26,6 +26,8 @@ namespace Attendance_Time_tracking_System.Models
         [Required(ErrorMessage = "Role is required")]
         public string Role { get; set; }
 
+        //[RegularExpression(@"(010|011|012|015)\d{8}")]
+
         [Range(10000000000, 99999999999, ErrorMessage = "Mobile number must be 11 digits")]
         public long Mobile { get; set; }
 
@@ -35,9 +37,9 @@ namespace Attendance_Time_tracking_System.Models
         public int BranchId { get; set; }
 
         public bool IsDeleted { get; set; }
-
-        [Required(ErrorMessage = "Branch is required")]
+        //[Required]
         public virtual Branch Branch { get; set; }
+        //public ICollection<Attendance> Attendances { get; set; }
 
         public virtual ICollection<Attendance> Attendances { get; set; }
     }

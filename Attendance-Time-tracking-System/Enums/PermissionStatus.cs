@@ -2,5 +2,5 @@
 
 public enum PermissionStatus
 {
-    Accepted , Refused
+    Accepted , Refused,pending
 }

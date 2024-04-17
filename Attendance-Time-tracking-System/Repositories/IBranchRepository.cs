@@ -21,4 +21,12 @@ public interface IBranchRepository
     IEnumerable<Student> GetBranchStundents(int branchId ,int intakeId ,int? trackId = null);
 
 
+using Attendance_Time_tracking_System.Models;
+
+namespace Attendance_Time_tracking_System.Repositories
+{
+    public interface IBranchRepository
+    {
+        List<Branch> GetAll();
+    }
 }

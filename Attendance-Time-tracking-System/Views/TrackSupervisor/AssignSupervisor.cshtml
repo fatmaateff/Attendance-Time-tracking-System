@@ -1,0 +1,38 @@
+﻿@model AssignSupervisorViewModel
+@{
+    Layout = "_MainView";
+}
+<h2>Assign Supervisor to Track</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TrackId, "Select Track:", new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.TrackId, new SelectList(ViewBag.Tracks, "Id", "Name"), "Select Track", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TrackId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.InstructorId, "Select Instructor:", new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.InstructorId, new SelectList(ViewBag.Instructors, "Id", "Name"), "Select Instructor", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.InstructorId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IntakeId, "Select Intake:", new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.IntakeId, new SelectList(ViewBag.Intakes, "Id", "Name"), "Select Intake", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.IntakeId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BranchId, "Select Branch:", new { @class = "control-label" })
+        @Html.DropDownListFor(model => model.BranchId, new SelectList(ViewBag.Branches, "Id", "Name"), "Select Branch", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger" })
+    </div>
+    <br />
+    <div class="form-group">
+        <input type="submit" value="Assign Supervisor" class="btn btn-primary" />
+    </div>
+}

@@ -1,0 +1,40 @@
+﻿@model List<Student>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<a asp-action="Index" asp-controller="Student">Edit</a>
+
+<table class="table table-bordered text-center">
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>Id</td>
+            <td >@item.Id</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>@item.Name</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@item.Email</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>@item.Password</td>
+            <td><a href="/Student/Edit/@item.Id" class="btn btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Mobile</td>
+            <td>@item.Mobile</td>
+            <td><a href="/Student/Edit/@item.Id" class="btn btn-primary">Edit</a></td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>@item.Role</td>
+        </tr>
+    }
+</table>

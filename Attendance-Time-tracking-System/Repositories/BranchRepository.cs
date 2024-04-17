@@ -1,4 +1,5 @@
 ﻿using Attendance_Time_tracking_System.Data;
+using Attendance_Time_tracking_System.Models;
 
 
 namespace Attendance_Time_tracking_System.Repositories
@@ -53,6 +54,10 @@ namespace Attendance_Time_tracking_System.Repositories
             }
 
             return allTracks;
+        }
+        public List<Branch> GetAll()
+        {
+            return db.Branchs.ToList();
         }
 
     }
