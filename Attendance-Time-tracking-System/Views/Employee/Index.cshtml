@@ -22,6 +22,10 @@
                 <th scope="col">Name</th>
                 @* <th scope="col">Email</th> *@
                 <th scope="col">Type</th>
+                <th>Edit</th>
+                <th>Details</th>
+                <th>Delete</th>
+
                 @*  <th scope="col">Mobile</th>
                 <th scope="col">Branch</th>
                 <th scope="col">Hire Date</th> *@
@@ -48,10 +52,10 @@
                         <td>@Employee.Mobile</td>
                         <td>@Employee.Branch.Name</td>
                         <td>@Employee.HireDate</td> *@
-                        <td><a asp-action="Edit" asp-controller="Employee" asp-route-id="@Employee.Id" class="btn btn-danger">Edit</a></td>
-                        <td><a asp-action="showDetails" asp-controller="Employee" asp-route-id="@Employee.Id" class="btn btn-danger">Details</a></td>
+                        <td><a asp-action="Edit" asp-controller="Employee" asp-route-id="@Employee.Id"> <img width="30" height="30" src="~/images/edit.png" /></a></td>
+                        <td><a asp-action="showDetails" asp-controller="Employee" asp-route-id="@Employee.Id"> <img width="30" height="30" src="~/images/details.png" /></a></td>
                         <td>
-                            <a onclick="confirmDelete(@Employee.Id)" class="btn btn-danger">Delete</a>
+                            <a onclick="confirmDelete(@Employee.Id)"> <img width="30" height="30" src="~/images/bin.png" /></a>
                         </td>
 
 

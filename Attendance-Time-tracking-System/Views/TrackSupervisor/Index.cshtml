@@ -24,6 +24,7 @@
                 <th scope="col">Instructor Name</th>
                 <th scope="col">Intake</th>
                 <th scope="col">Branch</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -38,8 +39,8 @@
                      <td>@supervisor.Branch.Name</td>
                     <td>
 @*                          <a onclick="confirmDelete(@supervisor.InstructorID && @supervisor.IntakeID)" class="btn btn-danger">Delete</a>
- *@   
-                           <a asp-action="Delete" asp-controller="TrackSupervisor" asp-route-InstructorID="@supervisor.InstructorID" asp-route-IntakeID="@supervisor.IntakeID" class="btn btn-danger deletebtn">Delete</a>
+ *@
+                        <a asp-action="Delete" asp-controller="TrackSupervisor" asp-route-InstructorID="@supervisor.InstructorID" asp-route-IntakeID="@supervisor.IntakeID"> <img width="30" height="30" src="~/images/bin.png" /></a>
 </td>
                     </tr>
                 }
