@@ -32,7 +32,7 @@ namespace Attendance_Time_tracking_System.Repositories
 
         public IEnumerable<User> GetStudentsWithAttedance(int branchId, DateOnly date)
         {
-            IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && user.Role.Equals(RoleType.Student))
+            IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && user.Role == "Student")
                                                .Include(user=> user.Attendances.Where(a => a.Date ==date));
 
             return users;
@@ -40,7 +40,7 @@ namespace Attendance_Time_tracking_System.Repositories
 
         public IEnumerable<User> GetEmployeesWithAttedance(int branchId, DateOnly date)
         {
-            IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && !user.Role.Equals(RoleType.Student))
+            IEnumerable<User> users = _db.Users.Where(user => user.BranchId == branchId && user.Role != "Student")
                                                .Include(user=> user.Attendances.Where(a => a.Date ==date));
             return users;
         }

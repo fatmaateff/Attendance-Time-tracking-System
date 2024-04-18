@@ -70,7 +70,8 @@
                 }
                 @if (User.IsInRole("Security"))
                 {
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employee Attendance</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Attendance/Index?role=employee">Employee Attendance</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Attendance/Index?role=student">Student Attendance</a>
                 }
 
             </div>

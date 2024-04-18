@@ -16,12 +16,11 @@ public class Attendance
 
 
     [Display(Name = "Arrival Time")]
-    public TimeOnly TimeIn { get; set; }
+    public TimeOnly? TimeIn { get; set; }
 
 
     [Display(Name = "Time out")]
     public TimeOnly? TimeOut { get; set; }
-    public AttendanceStatus Status { get; set; }
 
     [ForeignKey("User")]
     public int UserId { get;set; }

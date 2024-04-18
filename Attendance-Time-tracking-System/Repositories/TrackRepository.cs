@@ -8,9 +8,9 @@ namespace Attendance_Time_tracking_System.Repositories
     {
         private readonly AttendanceSysDbContext db;
          public TrackRepository(AttendanceSysDbContext _db)
-        {
+         {
             _db = db;
-        }
+         }
         public List<Track> GetAll()
         {
             return db.Tracks.Where(t=> t.IsDeleted == false).ToList();

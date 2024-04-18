@@ -6,11 +6,8 @@
 		Supervisor,
 		Instructor,
 		Student,
-        StudentAffair,
-        Security
-		
-	}
         Employee
 
     }
+       
 }

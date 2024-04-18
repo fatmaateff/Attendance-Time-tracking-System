@@ -73,5 +73,22 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             return db.Schedules.FirstOrDefault(s => s.Date == date) == null;
         }
+
+        public IEnumerable<TrackSchedule> TodaysTracksSchedules(int branchId ,int intakeId)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.Now.Date);
+
+
+            IEnumerable<TrackSchedule> tracks = from track in db.TrackSchedules
+                                                join schedule in db.Schedules
+                                                on track.ScheduleID equals schedule.Id
+                                                where track.IntakeID == intakeId
+                                                        && track.BranchID == branchId
+                                                        && schedule.Date == today
+                                                select track;
+                                                
+
+            return tracks;
+        }
     }
 }

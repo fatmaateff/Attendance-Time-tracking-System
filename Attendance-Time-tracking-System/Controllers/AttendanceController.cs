@@ -28,9 +28,10 @@ public class AttendanceController : Controller
         DateOnly today = DateOnly.FromDateTime(DateTime.Now);
 
         IEnumerable<User> users;
+
         ViewBag.Title = role;
 
-        if (role.Equals("Students", StringComparison.OrdinalIgnoreCase))
+        if (role.Equals("Student", StringComparison.OrdinalIgnoreCase))
             users = _userRepository.GetStudentsWithAttedance(branchId,today);
         else
             users = _userRepository.GetEmployeesWithAttedance(branchId,today);
@@ -42,6 +43,7 @@ public class AttendanceController : Controller
     public IActionResult MarkAttendace(int userId,DateTime dateTime)
     {
         User user = _userRepository.GetUserById(userId);
+        
         if (user == null)
             return BadRequest();
 
@@ -58,7 +60,7 @@ public class AttendanceController : Controller
         else
             attendance.Status = AttendanceStatus.Attendant;
 
-        bool inserted = _attendanceRepo.TryInsertUserAttendance(attendance);
+        bool inserted = _attendanceRepo.TryMarkUserAttendance(attendance);
         if (! inserted)
             return BadRequest();
 
@@ -74,17 +76,14 @@ public class AttendanceController : Controller
             return BadRequest();
 
         DateOnly date = DateOnly.FromDateTime(dateTime);
-        TimeOnly time = TimeOnly.FromDateTime(dateTime);
+
+        Attendance attendance = new Attendance();
+        attendance.UserId = userId;
+        attendance.TimeOut = TimeOnly.FromDateTime(dateTime);
+        attendance.Date = DateOnly.FromDateTime(dateTime);
 
 
-        Attendance attendance = _attendanceRepo.GetUserAttendance(userId, date);
-        
-        if(attendance is null)
-            return BadRequest();
-
-        bool marked = _attendanceRepo.TryMarkDeparture(userId, date, time);
-        if(! marked)
-            return BadRequest();
+        _attendanceRepo.TryMarkDeparture(attendance);
 
         return View();
     }
@@ -99,7 +98,7 @@ public class AttendanceController : Controller
         bool resetSuccessfully = _attendanceRepo.TryResetAttendance(userId,DateOnly.FromDateTime(date));
       
         if (resetSuccessfully)
-            return View(nameof(Index));
+            return View();
         else
             return BadRequest();
     }

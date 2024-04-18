@@ -14,5 +14,12 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             return db.Intakes.ToList();
         }
+
+        public Intake GetCurrentIntake()
+        {
+            return db.Intakes.OrderByDescending(intake => intake.Name)
+                .FirstOrDefault();
+        }
+
     }
 }

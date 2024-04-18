@@ -10,5 +10,7 @@ namespace Attendance_Time_tracking_System.Repositories
         Schedule GetScheduleById(int id);
         void DeleteScheduleById(int id);
         bool IsUniqueDate(DateOnly date);
+
+        IEnumerable<TrackSchedule> TodaysTracksSchedules(int branchId, int intakeId); 
     }
 }

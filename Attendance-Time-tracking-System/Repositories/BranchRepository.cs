@@ -57,7 +57,7 @@ namespace Attendance_Time_tracking_System.Repositories
         }
         public List<Branch> GetAll()
         {
-            return db.Branchs.ToList();
+            return _db.Branchs.ToList();
         }
 
     }
