@@ -9,6 +9,11 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             db = _db;
         }
+
+        public string getUsernameById (int id)
+        {
+            return db.Users.FirstOrDefault(u => u.Id == id).Name;
+        }
         //methods to implement
     }
 }
