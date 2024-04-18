@@ -20,7 +20,6 @@ namespace Attendance_Time_tracking_System.Controllers
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
-           
             RedirectToAction("Login");
             return View();
 
@@ -29,45 +28,44 @@ namespace Attendance_Time_tracking_System.Controllers
         [HttpPost]
         public async Task <IActionResult> Login(LoginViewModel model)
         {
-            // Check if the model is valid
-            if(!ModelState.IsValid) {
-				ModelState.AddModelError("", "Invalid email or password.");
-            }
-
             //authenticate the user
             var user = db.Users.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
             //check if the user exists in database or not
-            if(user == null)
+            if(ModelState.IsValid && user == null)
             {
-                ModelState.AddModelError("", "Invalid email or password");
+                //ModelState.AddModelError("", "Invalid email or password");
+                ViewBag.ErrorMessage = "Invalid email or password";
                 return View();
             }
 			//sign in the user
-
-			//claim for every part of the user
-            Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
-            Claim claimRole;
-            if (user.Role == "Employee")
+            if(ModelState.IsValid && user != null)
             {
-                Employee Emp = db.Employees.FirstOrDefault(x => x.Id == user.Id);
-                int EmpRoleEnum = (int)Emp.Type;
-                string EmpRole = EmpRoleEnum == 0 ? "Security" : "StudentAffair";
-                claimRole = new Claim(ClaimTypes.Role, EmpRole);
+                //claim for every part of the user
+                Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
+                Claim claimRole;
+                if (user.Role == "Employee")
+                {
+                    Employee Emp = db.Employees.FirstOrDefault(x => x.Id == user.Id);
+                    int EmpRoleEnum = (int)Emp.Type;
+                    string EmpRole = EmpRoleEnum == 0 ? "Security" : "StudentAffair";
+                    claimRole = new Claim(ClaimTypes.Role, EmpRole);
+                }
+                else
+                    claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
+                Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
+
+
+                ClaimsIdentity claimsIdentity1 = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                claimsIdentity1.AddClaim(claimEmail);
+                claimsIdentity1.AddClaim(claimRole);
+                claimsIdentity1.AddClaim(claimId);
+
+                ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
+                claimsPrincipal.AddIdentity(claimsIdentity1);
+                await HttpContext.SignInAsync(claimsPrincipal);
+                return RedirectToAction("Profile", "User");
             }
-            else
-                claimRole = new Claim(ClaimTypes.Role, user.Role.ToString());
-            Claim claimId = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
-            
-
-            ClaimsIdentity claimsIdentity1 = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            claimsIdentity1.AddClaim(claimEmail);
-            claimsIdentity1.AddClaim(claimRole);
-            claimsIdentity1.AddClaim(claimId);
-
-            ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
-            claimsPrincipal.AddIdentity(claimsIdentity1);
-            await HttpContext.SignInAsync(claimsPrincipal);
-            return RedirectToAction("Profile", "User");
+            return View(model);
         }
         
     }

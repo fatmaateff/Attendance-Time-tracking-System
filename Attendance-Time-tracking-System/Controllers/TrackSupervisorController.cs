@@ -82,7 +82,7 @@ namespace Attendance_Time_tracking_System.Controllers
                 // Check if the exception is due to a violation of the primary key constraint
                 if (ex.InnerException is SqlException sqlException && sqlException.Number == 2627)
                 {
-                    ModelState.AddModelError("", "A supervisor is already assigned to another track");
+                    ModelState.AddModelError("", "This supervisor is already assigned to another track");
                 }
                 else
                 {
