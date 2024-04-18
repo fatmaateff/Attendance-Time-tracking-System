@@ -5,6 +5,16 @@
 
 <h1>@Model.Role Profile</h1>
 
+<style>
+    .header-image {
+        text-align: center;
+    }
+</style>
+
+<div class="header-image">
+    <img src="~/images/profile.jpg" alt="Profile Image" style="height: 150px; width:150px; border-radius:50%;" />
+</div>
+
 <a href="/User/Edit/@Model.Id" class="btn btn-primary mb-3">Edit Profile</a>
 <table class="table table-bordered text-center">
     <tr>
@@ -42,22 +52,5 @@
         <td>@Model.Branch.Name</td>
     </tr>
 
-@*     @if (Model.Role == "student")
-    {
-        <tr>
-            <td>Intake</td>
-            <td>@Model.StudentTrackIntake.Intake.Name</td>
-        </tr>
-
-        <tr>
-            <td>Track</td>
-            <td>@Model.StudentTrackIntake.Track.Name</td>
-        </tr>
-
-        <tr>
-            <td>Program Type</td>
-            <td>@Model.StudentTrackIntake.Track.ProgramType.Name</td>
-        </tr>
-    } *@
 
 </table>

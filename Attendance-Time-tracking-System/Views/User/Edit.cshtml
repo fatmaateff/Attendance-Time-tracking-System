@@ -5,10 +5,30 @@
 
 <h1>Edit @Model.Role Profile</h1>
 
+<style>
+    .header-image {
+        text-align: center;
+    }
+
+    .card {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="header-image">
+    <img src="~/images/profile.jpg" alt="Profile Image" style="height: 150px; width:150px; border-radius:50%;" />
+</div>
+
 <div class="card">
     <div class="card-body">
         <form method="post" asp-action="Edit">
             <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label class="font-weight-bold">Old Password:</label>
+                <input type="password" class="form-control" id="OldPassword" />
+                <span class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <label asp-for="Password" class="font-weight-bold">New Password:</label>
@@ -17,7 +37,7 @@
             </div>
 
             <div class="form-group">
-                <label  class="font-weight-bold">Confirm Password:</label>
+                <label class="font-weight-bold">Confirm Password:</label>
                 <input type="password" class="form-control" id="ConfirmPassword" />
                 <span class="text-danger"></span>
             </div>
@@ -36,13 +56,25 @@
 
 <script>
     function validatePasswords() {
+        var oldPassword = document.getElementById("OldPassword").value;
         var password = document.getElementById("Password").value;
         var confirmPassword = document.getElementById("ConfirmPassword").value;
+
+        if (oldPassword === "" || oldPassword === null) {
+            alert("Please enter your old password.");
+            return false;
+        }
 
         if (password !== confirmPassword) {
             alert("Passwords do not match.");
             return false;
         }
+
+        if (oldPassword !== "@Model.Password") {
+            alert("Old password is incorrect.");
+            return false;
+        }
+
         return true;
     }
 </script>
