@@ -7,12 +7,20 @@ public class AttendanceController : Controller
     private readonly IBranchRepository _branchRepo;
     private readonly IAttendanceRepository _attendanceRepo;
     private readonly IUserRepository _userRepository;
+    private readonly IScheduleRepository scheduleRepository;
+    private readonly IIntakeRepository intakeRepository;
 
-    public AttendanceController(IAttendanceRepository attendanceRepository, IBranchRepository branchRepository, IUserRepository userRepository)
+    public AttendanceController(IAttendanceRepository attendanceRepository,
+                                IBranchRepository branchRepository, 
+                                IUserRepository userRepository,
+                                IScheduleRepository scheduleRepository,
+                                IIntakeRepository intakeRepository)
     {
         _attendanceRepo = attendanceRepository;
         _branchRepo = branchRepository;
         _userRepository = userRepository;
+        this.scheduleRepository = scheduleRepository;
+        this.intakeRepository = intakeRepository;
     }
 
     public override void OnActionExecuting(ActionExecutingContext context)
@@ -25,6 +33,14 @@ public class AttendanceController : Controller
     public IActionResult Index(string role)
     {
         int branchId = currentUser.BranchId;
+        int intakeId = intakeRepository.GetCurrentIntake().Id;
+        
+        List<TrackSchedule> tracks = scheduleRepository.TodaysTracksSchedules(currentUser.BranchId, intakeId).ToList();
+
+        InitializeTracks(tracks);
+
+        InitializeEmployees(currentUser.BranchId);
+
         DateOnly today = DateOnly.FromDateTime(DateTime.Now);
 
         IEnumerable<User> users;
@@ -102,4 +118,21 @@ public class AttendanceController : Controller
         else
             return BadRequest();
     }
+
+
+    private void InitializeTracks(List<TrackSchedule> tracks)
+    {
+        foreach (TrackSchedule track in tracks)
+        {
+            if (!_attendanceRepo.IsStudentsAttendanceInitialized(track.TrackID, track.IntakeID, track.BranchID))
+                _attendanceRepo.InitializeTrackAttendanceToday(track.TrackID, track.IntakeID, track.BranchID);
+        }
+    }
+
+    private void InitializeEmployees(int branchId)
+    {
+        if (!_attendanceRepo.IsEmployeesAttendanceInitialized(branchId))
+            _attendanceRepo.InitializeEmployeesAttendanceToday(branchId);
+    }
+
 }

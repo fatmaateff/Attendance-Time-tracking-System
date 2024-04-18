@@ -55,6 +55,8 @@ namespace Attendance_Time_tracking_System.Controllers
             {
                 //claim for every part of the user
                 Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
+                Claim claimName = new Claim(ClaimTypes.Name, user.Name);
+
                 Claim claimRole;
                 if (user.Role == "Employee")
                 {
@@ -72,6 +74,7 @@ namespace Attendance_Time_tracking_System.Controllers
                 claimsIdentity1.AddClaim(claimEmail);
                 claimsIdentity1.AddClaim(claimRole);
                 claimsIdentity1.AddClaim(claimId);
+                claimsIdentity1.AddClaim(claimName);
 
                 ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
                 claimsPrincipal.AddIdentity(claimsIdentity1);
@@ -82,20 +85,6 @@ namespace Attendance_Time_tracking_System.Controllers
         }
 
         //private void InitializeTracks(int branchId, int intakeId)
-        private void InitializeTracks(List<TrackSchedule> tracks)
-        {
-            foreach (TrackSchedule track in tracks)
-            {
-                if (! _attendanceRepository.IsStudentsAttendanceInitialized(track.TrackID, track.IntakeID, track.BranchID))
-                    _attendanceRepository.InitializeTrackAttendanceToday(track.TrackID, track.IntakeID, track.BranchID);
-            }
-        
-        }
 
-        private void InitializeEmployees(int branchId)
-        {
-            if (!_attendanceRepository.IsEmployeesAttendanceInitialized(branchId))
-                _attendanceRepository.InitializeEmployeesAttendanceToday(branchId);
-        }
     }
 }
