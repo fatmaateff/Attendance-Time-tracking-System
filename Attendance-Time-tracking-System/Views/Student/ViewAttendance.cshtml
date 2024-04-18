@@ -1,31 +1,90 @@
 ﻿@model StudentAttendanceGradeViewModel
-@{
-    string[] RowColors = { "red", "orange", "green" };
-}
-<h1>Attendance</h1>
-<p style="color:red">Absent : @Model.Absent</p>
-<p style="color:orange">Late : @Model.Late</p>
-<p style="color:steelblue">Grade : @Model.Grade</p>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Arrival Time</th>
-            <th>Departure Time</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Attendance attendance in Model.attendances)
-        {
-            <tr style="background-color:@RowColors[(int)attendance.Status]">
-                <td>@attendance.Date</td>
-                <td>@(attendance.TimeIn == null ? "-" : attendance.TimeIn)</td>
-                <td>@(attendance.TimeOut == null ? "-" : attendance.TimeOut)</td>
-                <td>@attendance.Status</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h1 class="text-center">Attendance</h1>
+<p style="color:red; font-weight:bold;">Absent : @Model.Absent</p>
+<p style="color:orange; font-weight:bold;">Late : @Model.Late</p>
+<p style="color:steelblue; font-weight:bold;">Grade : @Model.Grade</p>
+
+<button class="btn" id="absent">Absent</button>
+<button class="btn" id="late">Late</button>
+<button class="btn" id="attendent">Attendent</button>
+
+<div id="attendance-partialView">
+    
+</div>
+<style>
+    .clicked {
+        background-color:orangered;
+        color:white;
+    }
+</style>
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('absent').classList.add('clicked');
+            $.ajax({
+                url: '@Url.Action("ViewAbsentAttendance", "Student")',
+                type: 'GET',
+                success: function (result) {
+                    $('#attendance-partialView').html(result);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        document.getElementById('late').addEventListener('click', function () {
+            document.getElementById('late').classList.add('clicked');
+            document.getElementById('absent').classList.remove('clicked');
+            document.getElementById('attendent').classList.remove('clicked');
+
+            $.ajax({
+                url: '@Url.Action("ViewLateAttendance", "Student")',
+                type: 'GET',
+                success: function (result) {
+                    $('#attendance-partialView').html(result);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        document.getElementById('absent').addEventListener('click', function () {
+            document.getElementById('late').classList.remove('clicked');
+            document.getElementById('absent').classList.add('clicked');
+            document.getElementById('attendent').classList.remove('clicked');
+
+            $.ajax({
+                url: '@Url.Action("ViewAbsentAttendance", "Student")',
+                type: 'GET',
+                success: function (result) {
+                    $('#attendance-partialView').html(result);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+
+        document.getElementById('attendent').addEventListener('click', function () {
+            document.getElementById('late').classList.remove('clicked');
+            document.getElementById('absent').classList.remove('clicked');
+            document.getElementById('attendent').classList.add('clicked');
+
+            $.ajax({
+                url: '@Url.Action("ViewAttendentAttendance", "Student")',
+                type: 'GET',
+                success: function (result) {
+                    $('#attendance-partialView').html(result);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+}
+
 

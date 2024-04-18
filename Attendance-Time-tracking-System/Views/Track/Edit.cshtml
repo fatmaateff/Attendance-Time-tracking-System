@@ -31,7 +31,13 @@
         </div>
         <div class="form-group">
             <label asp-for="ProgramID" class="control-label"></label>
-            <input asp-for="ProgramID" class="form-control" />
+            <select asp-for="ProgramID" class="form-control">
+                <option value="">Select Program</option>
+                @foreach (var program in ViewBag.programs)
+                {
+                    <option value="@program.Id">@program.Name</option>
+                }
+            </select>
             <span asp-validation-for="ProgramID" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -41,7 +47,9 @@
         </div>
         <br />
         <div class="form-group">
-            <input type="submit" value="Update" class="btn btn-primary" />
+            <button type="submit" class="btn btn-danger">
+                <img width="30" height="30" src="~/images/upcr.png" alt="Update" /> Update
+            </button>
         </div>
         <br />
 

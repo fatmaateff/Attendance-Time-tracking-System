@@ -2,11 +2,13 @@
 using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
 using Attendance_Time_tracking_System.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         IAttendanceRepository attendanceRepository;
@@ -23,6 +25,24 @@ namespace Attendance_Time_tracking_System.Controllers
             studentAttendanceGradeVM.Absent = studentAttendanceGradeVM.attendances.Count(a => a.Status == AttendanceStatus.Absent);
             studentAttendanceGradeVM.Grade = GetGrade(studentAttendanceGradeVM.Absent+ studentAttendanceGradeVM.Late);
             return View(studentAttendanceGradeVM);
+        }
+        public IActionResult ViewLateAttendance()
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            List<Attendance> attendances = attendanceRepository.GetLateAttendanceById(userId);
+            return PartialView("ViewLatePartialViews",attendances);
+        }
+        public IActionResult ViewAbsentAttendance()
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            List<Attendance> attendances = attendanceRepository.GetAbsentAttendanceById(userId);
+            return PartialView("ViewAbsentPartialViews", attendances);
+        }
+        public IActionResult ViewAttendentAttendance()
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            List<Attendance> attendances = attendanceRepository.GetAttendentAttendanceById(userId);
+            return PartialView("ViewAttendentPartialViews", attendances);
         }
 
         public int GetGrade(int DaysOff)

@@ -11,14 +11,32 @@ namespace Attendance_Time_tracking_System.Repositories
             db = _db;
         }
 
-        public List<Schedule> GetAllSchedules(int InstructorId)
+        public List<Schedule> GetSchedules(int InstructorId)
         {
             TrackSupervisor trackSupervisor = db.TrackSupervisors.OrderByDescending(x => x.Intake.StartDate)
                 .FirstOrDefault(i => i.InstructorID == InstructorId);
-            List<int> ScheduleIds = db.TrackSchedules.Where(x => 
+            List<int> ScheduleIds = db.TrackSchedules.Where(x =>
                 x.IntakeID == trackSupervisor.IntakeID &&
                 x.BranchID==trackSupervisor.BranchID &&
                 x.TrackID==trackSupervisor.TrackID)
+            .Select(x => x.ScheduleID).ToList();
+            List<Schedule> schedules = new List<Schedule>();
+            foreach (int id in ScheduleIds)
+            {
+                schedules.Add(db.Schedules.FirstOrDefault(x => x.Id == id));
+            }
+            return schedules;
+        }
+        public List<Schedule> GetSchedules(int InstructorId, DateOnly StartDate,DateOnly EndDate)
+        {
+            TrackSupervisor trackSupervisor = db.TrackSupervisors.OrderByDescending(x => x.Intake.StartDate)
+                .FirstOrDefault(i => i.InstructorID == InstructorId);
+            List<int> ScheduleIds = db.TrackSchedules.Where(x =>
+                x.IntakeID == trackSupervisor.IntakeID &&
+                x.BranchID == trackSupervisor.BranchID &&
+                x.TrackID == trackSupervisor.TrackID &&
+                x.Schedule.Date>=StartDate &&
+                x.Schedule.Date <= EndDate)
             .Select(x => x.ScheduleID).ToList();
             List<Schedule> schedules = new List<Schedule>();
             foreach (int id in ScheduleIds)

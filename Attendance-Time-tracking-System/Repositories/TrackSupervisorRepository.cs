@@ -38,5 +38,17 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             db.TrackSupervisors.Update(trackSupervisor);
         }
+        public void Delete(int intakeId, int instructorId)
+        {
+            var trackSupervisor = db.TrackSupervisors.FirstOrDefault(i=> i.IntakeID == intakeId &&  i.InstructorID == instructorId) ;
+            if (trackSupervisor != null)
+            {
+                db.TrackSupervisors.Remove(trackSupervisor);
+                db.SaveChanges();
+            }else
+            {
+                throw new InvalidOperationException("Track Supervisor not found");
+            }
+        }
     }
 }

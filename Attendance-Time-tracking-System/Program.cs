@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using System.Net;
 
 namespace Attendance_Time_tracking_System
 {
@@ -55,6 +56,14 @@ namespace Attendance_Time_tracking_System
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            //app.UseStatusCodePages(async context =>
+            //{
+            //    var response = context.HttpContext.Response;
+            //    if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
+            //    {
+            //        response.Redirect("/Account/Login"); // Redirect to the login page
+            //    }
+            //});
             app.UseStaticFiles();
 
             app.UseRouting();

@@ -1,10 +1,12 @@
 ﻿using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
+    [Authorize]
     public class ScheduleController : Controller
     {
         IScheduleRepository scheduleRepository;
@@ -19,7 +21,31 @@ namespace Attendance_Time_tracking_System.Controllers
         public IActionResult ShowSchedules()
         {
             int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            return View(scheduleRepository.GetAllSchedules(InstructorId));
+            return View(scheduleRepository.GetSchedules(InstructorId));
+        }
+        public IActionResult GetAllSchedules()
+        {
+            int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            List<Schedule> Schedules = scheduleRepository.GetSchedules(InstructorId);
+            return PartialView("ViewScheduleTablePartialView", Schedules);
+        }
+        public IActionResult GetCurrentWeekSchedules()
+        {
+            int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            DateOnly StartDate = GetStartDateOfCurrentWeek();
+            DateOnly EndDate = StartDate;
+            EndDate.AddDays(6);
+            List<Schedule> Schedules = scheduleRepository.GetSchedules(InstructorId,StartDate,EndDate);
+            return PartialView("ViewScheduleTablePartialView", Schedules);
+        }
+        public IActionResult GetNextWeekSchedules()
+        {
+            int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            DateOnly StartDate = GetStartDateOfCurrentWeek().AddDays(7);
+            DateOnly EndDate = StartDate;
+            EndDate = EndDate.AddDays(6);
+            List<Schedule> Schedules = scheduleRepository.GetSchedules(InstructorId, StartDate, EndDate);
+            return PartialView("ViewScheduleTablePartialView", Schedules);
         }
         public IActionResult AddForm()
         {
@@ -56,6 +82,14 @@ namespace Attendance_Time_tracking_System.Controllers
         {
             scheduleRepository.DeleteScheduleById(id);
             return RedirectToAction("ShowSchedules");
+        }
+
+        DateOnly GetStartDateOfCurrentWeek()
+        {
+            DateTime Now = DateTime.Now;
+            int Diff = ((Now.DayOfWeek - DayOfWeek.Saturday) + 7) % 7;
+            DateTime StartOfWeek = Now.AddDays(-1 * Diff);
+            return new DateOnly(StartOfWeek.Year, StartOfWeek.Month, StartOfWeek.Day);
         }
     }
 }

@@ -5,14 +5,41 @@
 
 <h1>Edit @Model.Role Profile</h1>
 
-<div class="card"> 
+<style>
+    .header-image {
+        text-align: center;
+    }
+
+    .card {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="header-image">
+    <img src="~/images/profile.jpg" alt="Profile Image" style="height: 150px; width:150px; border-radius:50%;" />
+</div>
+
+<div class="card">
     <div class="card-body">
         <form method="post" asp-action="Edit">
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label asp-for="Password" class="font-weight-bold">Password:</label>
+                <label class="font-weight-bold">Old Password:</label>
+                <input type="password" class="form-control" id="OldPassword" />
+                <span class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="font-weight-bold">New Password:</label>
                 <input type="password" class="form-control" asp-for="Password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold">Confirm Password:</label>
+                <input type="password" class="form-control" id="ConfirmPassword" />
+                <span class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
@@ -21,8 +48,33 @@
                 <span asp-validation-for="Mobile" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-success">Save Changes</button>
-            <button class="btn btn-primary"><a href="/user/profile/@Model.Id" style="color:white;  text-decoration:none;">Back</a></button>
+            <button type="submit" class="btn btn-success" onclick="return validatePasswords()">Save Changes</button>
+            <a asp-action="Profile" asp-route-id="@Model.Id" class="btn btn-primary">Back</a>
         </form>
     </div>
 </div>
+
+<script>
+    function validatePasswords() {
+        var oldPassword = document.getElementById("OldPassword").value;
+        var password = document.getElementById("Password").value;
+        var confirmPassword = document.getElementById("ConfirmPassword").value;
+
+        if (oldPassword === "" || oldPassword === null) {
+            alert("Please enter your old password.");
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+
+        if (oldPassword !== "@Model.Password") {
+            alert("Old password is incorrect.");
+            return false;
+        }
+
+        return true;
+    }
+</script>

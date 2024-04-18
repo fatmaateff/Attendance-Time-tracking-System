@@ -1,9 +1,11 @@
 ﻿using Attendance_Time_tracking_System.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
+    [Authorize]
     public class SupervisorPermissionController : Controller
     {
         ISupervisorRepository supervisorRepository;

@@ -5,7 +5,17 @@
 
 <h1>@Model.Role Profile</h1>
 
-<a href="/User/Edit/@Model.Id" class="btn btn-primary mb-3">Edit Profile</a>
+<style>
+    .header-image {
+        text-align: center;
+        margin-bottom:5px;
+    }
+</style>
+
+<div class="header-image">
+    <img src="~/images/profile.jpg" alt="Profile Image" style="height: 150px; width:150px; border-radius:50%;" />
+</div>
+
 <table class="table table-bordered text-center">
     <tr>
         <td>Id</td>
@@ -14,7 +24,7 @@
 
     <tr>
         <td>Name</td>
-        <td>@Model.Name</td>
+        <td>@Model.Name</td> 
     </tr>
 
     <tr>
@@ -22,10 +32,10 @@
         <td>@Model.Email</td>
     </tr>
 
-    <tr>
+@*     <tr>
         <td>Password</td>
         <td>@Model.Password</td>
-    </tr>
+    </tr> *@
 
     <tr>
         <td>Mobile</td>
@@ -42,22 +52,9 @@
         <td>@Model.Branch.Name</td>
     </tr>
 
-@*     @if (Model.Role == "student")
-    {
-        <tr>
-            <td>Intake</td>
-            <td>@Model.StudentTrackIntake.Intake.Name</td>
-        </tr>
-
-        <tr>
-            <td>Track</td>
-            <td>@Model.StudentTrackIntake.Track.Name</td>
-        </tr>
-
-        <tr>
-            <td>Program Type</td>
-            <td>@Model.StudentTrackIntake.Track.ProgramType.Name</td>
-        </tr>
-    } *@
 
 </table>
+
+<div class="d-flex justify-content-center">
+    <a href="/User/Edit/@Model.Id" class="btn btn-danger mb-3">  <img width="30" height="30" src="~/images/editProfile.png" />    Edit Profile</a>
+</div>

@@ -1,13 +1,15 @@
 ﻿using Attendance_Time_tracking_System.Data;
 using Attendance_Time_tracking_System.Models;
 using Attendance_Time_tracking_System.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.DependencyResolver;
 using System.Security.Claims;
 
 namespace Attendance_Time_tracking_System.Controllers
 {
-    public class StudentAffairsController : Controller
+    [Authorize]
+	public class StudentAffairsController : Controller
 	{
 		IStudentRepository studentRepository;
 		ITrackRepository trackRepository;

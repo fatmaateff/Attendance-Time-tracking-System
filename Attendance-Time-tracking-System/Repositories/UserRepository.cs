@@ -44,6 +44,11 @@ namespace Attendance_Time_tracking_System.Repositories
                                                .Include(user=> user.Attendances.Where(a => a.Date ==date));
             return users;
         }
+
+        public string getUsernameById (int id)
+        {
+            return db.Users.FirstOrDefault(u => u.Id == id).Name;
+        }
         //methods to implement
     }
 }
