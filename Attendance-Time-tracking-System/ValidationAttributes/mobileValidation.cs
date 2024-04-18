@@ -13,7 +13,8 @@ namespace Attendance_Time_tracking_System.ValidationAttributes
                 long mobile = (long)value;
                 //check if mobile already exists
                 var userNumber = db.Users.FirstOrDefault(e => e.Mobile == mobile);
-                if (userNumber == null)
+                var oldUserNumber = db.Users.FirstOrDefault(e => e.Mobile == mobile);
+                if (userNumber == null || userNumber == oldUserNumber)
                 {
                     return ValidationResult.Success;
                 }
