@@ -5,11 +5,10 @@
 
 <h1>@Model.Role Profile</h1>
 
-<<<<<<< HEAD
-=======
 <style>
     .header-image {
         text-align: center;
+        margin-bottom:5px;
     }
 </style>
 
@@ -17,8 +16,6 @@
     <img src="~/images/profile.jpg" alt="Profile Image" style="height: 150px; width:150px; border-radius:50%;" />
 </div>
 
->>>>>>> main
-<a href="/User/Edit/@Model.Id" class="btn btn-danger mb-3">  <img width="30" height="30" src="~/images/editProfile.png" />    Edit Profile</a>
 <table class="table table-bordered text-center">
     <tr>
         <td>Id</td>
@@ -35,10 +32,10 @@
         <td>@Model.Email</td>
     </tr>
 
-    <tr>
+@*     <tr>
         <td>Password</td>
         <td>@Model.Password</td>
-    </tr>
+    </tr> *@
 
     <tr>
         <td>Mobile</td>
@@ -57,3 +54,7 @@
 
 
 </table>
+
+<div class="d-flex justify-content-center">
+    <a href="/User/Edit/@Model.Id" class="btn btn-danger mb-3">  <img width="30" height="30" src="~/images/editProfile.png" />    Edit Profile</a>
+</div>

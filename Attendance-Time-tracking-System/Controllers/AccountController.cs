@@ -46,6 +46,7 @@ namespace Attendance_Time_tracking_System.Controllers
 
 			//claim for every part of the user
             Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
+            Claim claimName = new Claim(ClaimTypes.Name, user.Name);
             Claim claimRole;
             if (user.Role == "Employee")
             {
@@ -63,6 +64,7 @@ namespace Attendance_Time_tracking_System.Controllers
             claimsIdentity1.AddClaim(claimEmail);
             claimsIdentity1.AddClaim(claimRole);
             claimsIdentity1.AddClaim(claimId);
+            claimsIdentity1.AddClaim(claimName);
 
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal();
             claimsPrincipal.AddIdentity(claimsIdentity1);
