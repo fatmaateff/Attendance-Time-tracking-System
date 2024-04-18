@@ -5,9 +5,9 @@
 <p style="color:orange; font-weight:bold;">Late : @Model.Late</p>
 <p style="color:steelblue; font-weight:bold;">Grade : @Model.Grade</p>
 
-<button id="late">Late</button>
-<button id="absent">Absent</button>
-<button id="attendent">Attendent</button>
+<button class="btn" id="absent">Absent</button>
+<button class="btn" id="late">Late</button>
+<button class="btn" id="attendent">Attendent</button>
 
 <div id="attendance-partialView">
     
@@ -21,7 +21,7 @@
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('late').classList.add('clicked');
+            document.getElementById('absent').classList.add('clicked');
             $.ajax({
                 url: '@Url.Action("ViewAbsentAttendance", "Student")',
                 type: 'GET',
