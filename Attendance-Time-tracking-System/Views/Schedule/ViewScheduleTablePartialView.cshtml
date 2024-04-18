@@ -7,6 +7,8 @@
             <th>Start Time</th>
             <th>End Time</th>
             <th>Subject</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -17,8 +19,8 @@
                 <td>@schedule.StartTime</td>
                 <td>@schedule.EndTime</td>
                 <td>@schedule.Subject</td>
-                <td><a asp-action="EditForm" asp-route-id="@schedule.Id"><img width="30" height="30" src="~/images/pen.png" /></a></td>
-                <td><a class="DeleteAction" asp-action="Delete" asp-route-id="@schedule.Id"><img width="30" height="30" src="~/images/delete.png" /></a></td>
+                <td><a asp-action="EditForm" asp-route-id="@schedule.Id"><img width="30" height="30" src="~/images/edit.png" /></a></td>
+                <td><a class="DeleteAction" asp-action="Delete" asp-route-id="@schedule.Id"><img width="30" height="30" src="~/images/bin.png" /></a></td>
             </tr>
         }
     </tbody>
