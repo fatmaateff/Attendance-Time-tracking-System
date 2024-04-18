@@ -2,12 +2,12 @@
 @{
     string[] RowColors = { "red", "orange", "green" };
 }
-<h1>Attendance</h1>
-<p style="color:red">Absent : @Model.Absent</p>
-<p style="color:orange">Late : @Model.Late</p>
-<p style="color:steelblue">Grade : @Model.Grade</p>
+<h1 class="text-center">Attendance</h1>
+<p style="color:red; font-weight:bold;">Absent : @Model.Absent</p>
+<p style="color:orange; font-weight:bold;">Late : @Model.Late</p>
+<p style="color:steelblue; font-weight:bold;">Grade : @Model.Grade</p>
 
-<table class="table table-hover">
+<table class="table table-bordered text-center">
     <thead>
         <tr>
             <th>Date</th>
@@ -16,10 +16,10 @@
             <th>Status</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody >
         @foreach (Attendance attendance in Model.attendances)
         {
-            <tr style="background-color:@RowColors[(int)attendance.Status]">
+            <tr style="background-color:@RowColors[(int)attendance.Status]; color:white;">
                 <td>@attendance.Date</td>
                 <td>@(attendance.TimeIn.Hour==0 ? "-" : attendance.TimeIn)</td>
                 <td>@(attendance.TimeOut == null ? "-" : attendance.TimeOut)</td>

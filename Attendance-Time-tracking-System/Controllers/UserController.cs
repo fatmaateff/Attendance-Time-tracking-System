@@ -76,7 +76,7 @@ namespace Attendance_Time_tracking_System.Controllers
             var trackId = stdtrackint.TrackID;
             var intakeId = stdtrackint.IntakeID;
 
-            // Retrieve the last 7 records from the schedule table
+            // Retrieve the last 5 records from the schedule table
             var lastFiveSchedules = context.TrackSchedules
                 .Include(t => t.Schedule)
                 .Where(t => t.BranchID == branchId && t.TrackID == trackId && t.IntakeID == intakeId)
