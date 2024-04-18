@@ -1,0 +1,17 @@
+﻿@model List<Attendance>
+
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Attendance attendance in Model)
+        {
+            <tr style="background-color:red; color:white;">
+                <td>@attendance.Date</td>
+            </tr>
+        }
+    </tbody>
+</table>

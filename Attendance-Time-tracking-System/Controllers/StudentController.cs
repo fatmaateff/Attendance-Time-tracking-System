@@ -26,6 +26,24 @@ namespace Attendance_Time_tracking_System.Controllers
             studentAttendanceGradeVM.Grade = GetGrade(studentAttendanceGradeVM.Absent+ studentAttendanceGradeVM.Late);
             return View(studentAttendanceGradeVM);
         }
+        public IActionResult ViewLateAttendance()
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            List<Attendance> attendances = attendanceRepository.GetLateAttendanceById(userId);
+            return PartialView("ViewLatePartialViews",attendances);
+        }
+        public IActionResult ViewAbsentAttendance()
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            List<Attendance> attendances = attendanceRepository.GetAbsentAttendanceById(userId);
+            return PartialView("ViewAbsentPartialViews", attendances);
+        }
+        public IActionResult ViewAttendentAttendance()
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            List<Attendance> attendances = attendanceRepository.GetAttendentAttendanceById(userId);
+            return PartialView("ViewAttendentPartialViews", attendances);
+        }
 
         public int GetGrade(int DaysOff)
         {
