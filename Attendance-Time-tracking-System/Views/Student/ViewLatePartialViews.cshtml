@@ -1,0 +1,21 @@
+﻿@model List<Attendance>
+
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Arrival Time</th>
+            <th>Departure Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Attendance attendance in Model)
+        {
+            <tr style="background-color:orange; color:white;">
+                <td>@attendance.Date</td>
+                <td>@attendance.TimeIn</td>
+                <td>@(attendance.TimeOut == null ? "-" : attendance.TimeOut)</td>
+            </tr>
+        }
+    </tbody>
+</table>
