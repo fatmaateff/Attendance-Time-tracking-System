@@ -21,6 +21,9 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Program</th>
+                <th>Edit</th>
+                <th>Details</th>
+                <th>Delete</th>
 
             </tr>
         </thead>
@@ -41,10 +44,10 @@
                         <td>@Track.Name</td>
                         <td>@Track.ProgramType.Name</td>
 
-                        <td><a asp-action="Edit" asp-controller="Track" asp-route-id="@Track.Id" class="btn btn-danger">Edit</a></td>
-                        <td><a asp-action="showDetails" asp-controller="Track" asp-route-id="@Track.Id" class="btn btn-danger">Details</a></td>
+                        <td><a asp-action="Edit" asp-controller="Track" asp-route-id="@Track.Id"> <img width="30" height="30" src="~/images/edit.png" /></a></td>
+                        <td><a asp-action="showDetails" asp-controller="Track" asp-route-id="@Track.Id"> <img width="30" height="30" src="~/images/details.png" /></a></td>
                         <td>
-                            <a onclick="confirmDelete(@Track.Id)" class="btn btn-danger">Delete</a>
+                            <a onclick="confirmDelete(@Track.Id)"> <img width="30" height="30" src="~/images/bin.png" /></a>
                         </td>
 
 
