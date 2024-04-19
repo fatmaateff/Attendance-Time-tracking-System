@@ -45,7 +45,7 @@ namespace Attendance_Time_tracking_System.Controllers
 
 
         public IActionResult Index(int? trackId , DateOnly? date)
-		{            
+		{
             try
             {
                 int intakeId = _intakeRepository.GetCurrentIntake().Id;
@@ -88,7 +88,13 @@ namespace Attendance_Time_tracking_System.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult EditStudents()
+        {
+            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+
+            return View(studentRepository.getall(int.Parse(userIdClaim)));
+        }
         public IActionResult Delete(int id) 
 		{ 
 			studentRepository.delete(id);

@@ -9,7 +9,7 @@ namespace Attendance_Time_tracking_System.Repositories
         private readonly AttendanceSysDbContext db;
          public TrackRepository(AttendanceSysDbContext _db)
          {
-            _db = db;
+            db = _db;
          }
         public List<Track> GetAll()
         {

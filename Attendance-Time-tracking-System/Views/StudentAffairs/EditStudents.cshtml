@@ -1,0 +1,130 @@
+﻿@model List<StudentTrackIntake>
+@{
+    Layout = "_MainView";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+
+        <style >
+        /* Center the table horizontally */
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Vertically center content */
+            height: 100vh; /* Ensure full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+
+        /* Style the table header */
+        th {
+            background-color: #c62f36;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Style the table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        /* Style table cells */
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        /* Alternate row color */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Vertically center content */
+            margin-top: 20px; /* Add margin to the top */
+            margin-bottom: 10px; /* Add margin to the bottom */
+        }
+
+        #searchInput {
+            margin-right: 10px; /* Add some distance between input and search button */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center-container">
+        <input type="text" name="name" id="searchInput" value="" placeholder="student name or track" />
+        <button class="btn btn-success" onclick="filterTable()">Search</button>
+    </div>
+    <div class="center">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Mobile</th>
+                    <th>Intake</th>
+                    <th>Track</th>
+                    <th>Program</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model)
+                {
+                    <tr>
+                        <td>@i.Student.Id</td>
+                        <td>@i.Student.Name</td>
+                        <td>@i.Student.Email</td>
+                        <td>@i.Student.Password</td>
+                        <td>@i.Student.Mobile</td>
+                        <td>@i.Intake.Name</td>
+                        <td>@i.Track.Name</td>
+                        <td>@i.Track.ProgramType.Name</td>
+                        <td><a asp-action="delete" asp-route-id="@i.Student.Id" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function filterTable() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("dataTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                
+                td = tr[i].getElementsByTagName("td");
+                var found = false;
+                for (var j = 1; j < 7; j++) { // Only search in columns 1 to 6 (Student Name and Track Name)
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (found) {
+                    td = tr[i].getElementsByTagName("td");
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
