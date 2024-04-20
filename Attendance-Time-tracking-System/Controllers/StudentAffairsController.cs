@@ -34,8 +34,10 @@ namespace Attendance_Time_tracking_System.Controllers
 		}
 		[HttpPost]
 		public IActionResult add (AddStudent std) {
+            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            
 
-			studentRepository.add(std);
+            studentRepository.add(std ,int.Parse(userIdClaim));
 
 			return RedirectToAction("index");
 		}
