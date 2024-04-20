@@ -14,11 +14,6 @@ namespace Attendance_Time_tracking_System.Models
 
         [Required, ForeignKey("Intake")]
         public int IntakeID { get; set; }
-        [DefaultValue(0)]
-        public int LateDays { get; set; }
-
-        [DefaultValue(0)]
-        public int AbsenceDays { get; set; }
 
         //navigation properties
         public virtual Student Student { get; set; }
