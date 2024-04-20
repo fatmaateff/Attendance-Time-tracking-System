@@ -35,11 +35,10 @@ namespace Attendance_Time_tracking_System.Controllers
 			return View();
 		}
 		[HttpPost]
-		public IActionResult add (AddStudent std) {
+		public IActionResult add (AddStudentViewModel std) {
+            studentRepository.add(std);
 
-			studentRepository.add(std);
-
-			return RedirectToAction("index");
+            return RedirectToAction("index");
 		}
         [HttpPost]
 

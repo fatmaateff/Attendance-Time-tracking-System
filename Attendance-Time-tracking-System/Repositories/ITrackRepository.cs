@@ -9,5 +9,6 @@ namespace Attendance_Time_tracking_System.Repositories
         Track GetById(int id);
         void Update (Track track);
         void Delete(int id);
+        List<Track> GetTracksByBranchId(int branchId);
     }
 }

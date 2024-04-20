@@ -15,9 +15,9 @@ namespace Attendance_Time_tracking_System.ValidationAttributes
             {
                 string email = value.ToString();
                 //check if email already exists
-                var user = db.Users.FirstOrDefault(e => e.Email == email);
+                var user = (User)validationContext.ObjectInstance;
                 var oldUser = db.Users.FirstOrDefault(e => e.Email == email);
-                if(user == null || user == oldUser)
+                if(oldUser == null || user.Id == oldUser.Id)
                 {
                     return ValidationResult.Success;
                 }

@@ -2,6 +2,7 @@
 using Attendance_Time_tracking_System.Enums;
 using Attendance_Time_tracking_System.ValidationAttributes;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
@@ -33,6 +34,8 @@ namespace Attendance_Time_tracking_System.Models
         [Range(10000000000, 99999999999, ErrorMessage = "Mobile number must be 11 digits")]
         [mobileValidation]
         public long Mobile { get; set; }
+        [DefaultValue(StudentStatus.Accepted)]
+        public StudentStatus Status { get; set; }
 
         // user has one branch
         [Required(ErrorMessage = "Branch is required")]

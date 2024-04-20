@@ -1,0 +1,212 @@
+﻿@model AddStudentViewModel;
+@{
+    Layout = null;
+    List<ProgramType> Programs = ViewBag.Programs;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <style>
+        body {
+            background-image: url("/images/itiLogo.png");
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .select-label {
+            margin: 10px;
+        }
+
+        .container {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form {
+            border: 2px solid #c62f36;
+            padding: 40px;
+            width: 70%;
+            max-width: 700px;
+            border-radius: 20px;
+            background-color: white;
+        }
+
+        .focus {
+            border: 3px solid #fef6fb;
+            box-shadow: 0 0 10px 0 #c62f36;
+            position: absolute;
+            transition: width .2s ease;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="email"],
+        .input-group input[type="date"],
+        .input-group input[type="number"],
+        .input-group input[type="submit"] {
+            flex: 1;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #c62f36; /* Add border style */
+            padding: 8px; /* Add padding for better appearance */
+            border-radius: 5px; /* Add border radius */
+        }
+
+        .input-group input[type="submit"] {
+            background-color: #c62f36;
+            color: #fff;
+            border: none; /* Remove border for submit button */
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <form class="form" asp-action="Register" method="post">
+            <h3>Registeraation</h3>
+
+            <label class="form-label" asp-for="student.Name"></label>
+            <div class="input-group">
+                <input asp-for="student.Name" placeholder="Full Name" required>
+                <span class="form-text text-danger" asp-validation-for="student.Name"></span>
+            </div>
+
+            <label class="form-label" asp-for="student.Email"></label>
+            <div class="input-group">
+                <input placeholder="Email" asp-for="student.Email" required>
+                <span class="form-text text-danger" asp-validation-for="student.Email"></span>
+            </div>
+
+            <label class="form-label" asp-for="student.Password"></label>
+            <div class="input-group">
+                <input placeholder="Password" asp-for="student.Password" required>
+                <span class="form-text text-danger" asp-validation-for="student.Password"></span>
+            </div>
+
+            <label class="form-label" asp-for="student.Mobile"></label>
+            <div class="input-group">
+                <input placeholder="Mobile" asp-for="student.Mobile" required>
+                <span class="form-text text-danger" asp-validation-for="student.Mobile"></span>
+            </div>
+
+            <label class="form-label" asp-for="student.University"></label>
+            <div class="input-group">
+                <input placeholder="University" asp-for="student.University" required>
+                <span class="form-text text-danger" asp-validation-for="student.University"></span>
+            </div>
+
+            <label class="form-label" asp-for="student.Faculty"></label>
+            <div class="input-group">
+                <input placeholder="Faculty" asp-for="student.Faculty" required>
+                <span class="form-text text-danger" asp-validation-for="student.Faculty"></span>
+            </div>
+
+            <label class="form-label" asp-for="student.Specialization"></label>
+            <div class="input-group">
+                <input placeholder="Specialization" asp-for="student.Specialization" required>
+                <span class="form-text text-danger" asp-validation-for="student.Specialization"></span>
+            </div>
+
+            <label class="form-label" asp-for="student.GradYear"></label>
+            <div class="input-group">
+                <input placeholder="GraduationYear" asp-for="student.GradYear" required>
+                <span class="form-text text-danger" asp-validation-for="student.GradYear"></span>
+            </div>
+
+            <div class="input-group">
+                <label class="select-label">Program</label>
+                <select class="form-control" id="program-list">
+                    @foreach (var p in Programs)
+                        {
+                            <option value="@p.Id">@p.Name</option>
+                        }
+                </select>
+
+                <label class="select-label">Branch</label>
+                <select class="form-control" id="branch-list" asp-for="student.BranchId">
+                    
+                </select>
+
+                <label class="select-label">Track</label>
+                <select class="form-control" id="track-list" asp-for="StudentTrackIntake.TrackID">
+
+                </select>
+            </div>
+
+            <input type="hidden" asp-for="student.Role" value="Student">
+
+            <button type="submit" class="btn btn-danger">Register</button>
+        </form>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            GetBranches($('#program-list').val());
+        });
+
+        document.getElementById('program-list').addEventListener('change', function () {
+            GetBranches($('#program-list').val());
+        });
+
+        document.getElementById('branch-list').addEventListener('change', function () {
+            GetTracks($('#branch-list').val());
+        });
+
+        function GetBranches(programId) {
+            $.ajax({
+                url: '@Url.Action("GetBranchesByProgram", "Student")',
+                type: 'GET',
+                data: {
+                    programId: programId,
+                },
+                success: function (result) {
+                    $('#branch-list').html(result);
+                    GetTracks($('#branch-list').val());
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        function GetTracks(branchId) {
+            $.ajax({
+                url: '@Url.Action("GetTracksByBranches", "Student")',
+                type: 'GET',
+                data: {
+                    branchId: branchId,
+                },
+                success: function (result) {
+                    $('#track-list').html(result);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -12,9 +12,46 @@ namespace Attendance_Time_tracking_System.Controllers
     public class StudentController : Controller
     {
         IAttendanceRepository attendanceRepository;
-        public StudentController(IAttendanceRepository _attendanceRepository)
+        IProgramRepository programRepository;
+        IBranchRepository branchRepository;
+        ITrackRepository trackRepository;
+        IStudentRepository studentRepository;
+        public StudentController(IAttendanceRepository _attendanceRepository, IProgramRepository _programRepository, IBranchRepository _branchRepository, ITrackRepository _trackRepository, IStudentRepository _studentRepository)
         {
             attendanceRepository = _attendanceRepository;
+            programRepository = _programRepository;
+            branchRepository = _branchRepository;
+            trackRepository = _trackRepository;
+            studentRepository = _studentRepository;
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Register()
+        {
+            ViewBag.Programs = programRepository.GetAll();
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Register(AddStudentViewModel studentData)
+        {
+            if(ModelState.IsValid)
+            {
+                studentRepository.RegisterStudent(studentData);
+                return RedirectToAction("Login", "Account");
+            }
+            ViewBag.Programs = programRepository.GetAll();
+            return View("Register", studentData);
+        }
+        [AllowAnonymous]
+        public IActionResult GetBranchesByProgram(int programId)
+        {
+            return PartialView("BranchesListPartialView", branchRepository.GetBranchesByProgramId(programId));
+        }
+        [AllowAnonymous]
+        public IActionResult GetTracksByBranches(int branchId)
+        {
+            return PartialView("TracksListPartialView", trackRepository.GetTracksByBranchId(branchId));
         }
         public IActionResult ViewAttendance()
         {

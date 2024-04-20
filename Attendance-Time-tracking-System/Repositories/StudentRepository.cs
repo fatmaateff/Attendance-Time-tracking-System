@@ -1,4 +1,5 @@
 ﻿using Attendance_Time_tracking_System.Data;
+using Attendance_Time_tracking_System.Enums;
 using Attendance_Time_tracking_System.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,23 @@ namespace Attendance_Time_tracking_System.Repositories
             return model;
 
         }
+        public void RegisterStudent(AddStudentViewModel addStudentVM)
+        {
+            DateTime now = DateTime.Now;
+            DateOnly today = new DateOnly(now.Year, now.Month, now.Day);
+            int intakeId = db.Intakes.OrderBy(x => x.StartDate)
+                .FirstOrDefault(x => (today >= x.StartDate && today <= x.EndDate) || today < x.StartDate).Id;
+
+            addStudentVM.student.IsDeleted = false;
+            addStudentVM.student.Status = StudentStatus.Pending;
+            db.Students.Add(addStudentVM.student);
+            db.SaveChanges();
+
+            addStudentVM.StudentTrackIntake.StudentID = addStudentVM.student.Id;
+            addStudentVM.StudentTrackIntake.IntakeID = intakeId;
+            db.StudentTrackIntakes.Add(addStudentVM.StudentTrackIntake);
+            db.SaveChanges();
+        }
         public void delete(int id)
         {
             var model = db.Students.FirstOrDefault(a => a.Id == id);
@@ -36,7 +54,7 @@ namespace Attendance_Time_tracking_System.Repositories
             db.SaveChanges();
 
         }
-        public void add(AddStudent std)
+        public void add(AddStudentViewModel std)
         {
 
             std.student.Role = "Student";
@@ -70,7 +88,7 @@ namespace Attendance_Time_tracking_System.Repositories
 
                 for (int row = 2; row <= rowCount; row++)
                 {
-                    AddStudent entity = new AddStudent();
+                    AddStudentViewModel entity = new AddStudentViewModel();
                     StudentTrackIntake std = new StudentTrackIntake();
                     entity.student.Name = worksheet.Cells[row, 1].Value.ToString() ?? "";
                     entity.student.Email = worksheet.Cells[row, 2].Value.ToString() ?? "";

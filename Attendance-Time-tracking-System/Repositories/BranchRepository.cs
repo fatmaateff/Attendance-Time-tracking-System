@@ -14,6 +14,18 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             return db.Branchs.ToList();
         }
+        public List<Branch> GetBranchesByProgramId(int programId)
+        {
+            DateTime now = DateTime.Now;
+            DateOnly today = new DateOnly(now.Year,now.Month,now.Day);
+            int intakeId = db.Intakes.OrderBy(x => x.StartDate)
+                .FirstOrDefault(x => (today >= x.StartDate && today <= x.EndDate) || today < x.StartDate).Id;
 
+            return db.TrackSupervisors
+                .Where(x => x.Track.ProgramID == programId && x.IntakeID == intakeId)
+                .Select(x => x.Branch)
+                .Distinct()
+                .ToList();
+        }
     }
 }

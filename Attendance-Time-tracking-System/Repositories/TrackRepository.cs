@@ -35,7 +35,18 @@ namespace Attendance_Time_tracking_System.Repositories
             track.IsDeleted = true;
             db.SaveChanges();
         }
+        public List<Track> GetTracksByBranchId(int branchId)
+        {
+            DateTime now = DateTime.Now;
+            DateOnly today = new DateOnly(now.Year, now.Month, now.Day);
+            int intakeId = db.Intakes.OrderBy(x => x.StartDate)
+                .FirstOrDefault(x => (today >= x.StartDate && today <= x.EndDate) || today < x.StartDate).Id;
 
-
+            return db.TrackSupervisors
+                .Where(x => x.BranchID == branchId && x.IntakeID == intakeId)
+                .Select(x => x.Track)
+                .Distinct()
+                .ToList();
+        }
     }
 }

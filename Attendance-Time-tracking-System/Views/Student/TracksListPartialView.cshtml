@@ -1,0 +1,6 @@
+﻿@model List<Track>
+
+@foreach (var t in Model)
+{
+    <option value="@t.Id">@t.Name</option>
+}

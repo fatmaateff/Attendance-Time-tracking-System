@@ -7,8 +7,9 @@ namespace Attendance_Time_tracking_System.Repositories
         //names of methods to implement
 
         public List<StudentTrackIntake> getall(int id);
+        void RegisterStudent(AddStudentViewModel student);
         public void delete(int id);
-        public void add(AddStudent std);
+        public void add(AddStudentViewModel std);
         public void ImportDataFromExcel(string filePath);
         public User getUserById(int id);
         public void addpermission(Permission pre, int id);

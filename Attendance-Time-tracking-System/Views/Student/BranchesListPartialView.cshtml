@@ -1,0 +1,6 @@
+﻿@model List<Branch>
+
+@foreach (var b in Model)
+{
+    <option value="@b.Id">@b.Name</option>
+}
