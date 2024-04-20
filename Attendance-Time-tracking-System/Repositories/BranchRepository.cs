@@ -63,10 +63,10 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             DateTime now = DateTime.Now;
             DateOnly today = new DateOnly(now.Year,now.Month,now.Day);
-            int intakeId = db.Intakes.OrderBy(x => x.StartDate)
+            int intakeId = _db.Intakes.OrderBy(x => x.StartDate)
                 .FirstOrDefault(x => (today >= x.StartDate && today <= x.EndDate) || today < x.StartDate).Id;
 
-            return db.TrackSupervisors
+            return _db.TrackSupervisors
                 .Where(x => x.Track.ProgramID == programId && x.IntakeID == intakeId)
                 .Select(x => x.Branch)
                 .Distinct()

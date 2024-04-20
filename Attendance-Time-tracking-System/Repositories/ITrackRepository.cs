@@ -8,5 +8,4 @@ public interface ITrackRepository
         void Update(Track track);
         void Delete(int id);
         List<Track> GetTracksByBranchId(int branchId);
-    }
 }
