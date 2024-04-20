@@ -1,0 +1,189 @@
+﻿@model IEnumerable<User>
+
+<div class="container">
+   
+    <table class="table table-hover table-striped">
+      
+        @foreach (User user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>
+                    @if ( user.Attendances.Count == 0 || user.Attendances.FirstOrDefault().Status == AttendanceStatus.Absent)
+                    {
+                        <button class="mark-attendance-button" data-id="@user.Id" >Mark Attendance</button>
+                        <button class="mark-departure-button" data-id="@user.Id" disabled>Mark Departure</button>
+                        <button class="reset-button" data-id="@user.Id" disabled>Reset</button>
+                    }else if(user.Attendances.FirstOrDefault()?.TimeOut == null)
+                    {
+                        <button class="mark-attendance-button" data-id="@user.Id" disabled>Mark Attendance</button>
+                        <button class="mark-departure-button" data-id="@user.Id">Mark Departure</button>
+                        <button class="reset-button" data-id="@user.Id">Reset</button>
+                    }else{
+                        <button class="mark-attendance-button" data-id="@user.Id" disabled>Mark Attendance</button>
+                        <button class="mark-departure-button" data-id="@user.Id" disabled>Mark Departure</button>
+                        <button class="reset-button" data-id="@user.Id">Reset</button>
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modal-message"></p>
+            <button id="confirm-button">Confirm</button>
+            <button id="cancel-button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll('tr');
+
+        rows.forEach(row => {
+            const markAttendanceButton = row.querySelector('.mark-attendance-button');
+            const markDepartureButton = row.querySelector('.mark-departure-button');
+            const resetButton = row.querySelector('.reset-button');
+            const userName = row.firstElementChild.textContent;
+                     
+            markAttendanceButton.addEventListener('click', function () {
+                const userId = this.getAttribute('data-id');
+                handleButtonClick(userId, userName, 'attendance');
+            });
+
+            markDepartureButton.addEventListener('click', function () {
+                const userId = this.getAttribute('data-id');
+                handleButtonClick(userId, userName, 'departure');
+            });
+
+            resetButton.addEventListener('click', function () {
+                const userId = this.getAttribute('data-id');
+                handleButtonClick(userId, userName, 'reset');
+            });
+        });
+
+        const modal = document.getElementById('modal');
+        const modalContent = document.querySelector('.modal-content');
+
+        modalContent.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+
+        const modalMessage = document.getElementById('modal-message');
+        const confirmButton = document.getElementById('confirm-button');
+        const cancelButton = document.getElementById('cancel-button');
+        const closeButton = document.querySelector('.close');
+
+        function handleButtonClick(userId, userName, action) {
+            const employeeName = `Employee ${userName}`;
+            const currentDate = new Date().toLocaleString();
+
+            if (action === 'reset') {
+                modalMessage.textContent = `Are you sure you want to reset info about ${userName} at ${currentDate}?`;
+            } else {
+                modalMessage.textContent = `Are you sure you want to mark ${action} for ${userName} at ${currentDate}?`;
+            }
+            modal.style.display = 'block';
+
+            confirmButton.setAttribute('data-user-id', userId);
+            confirmButton.setAttribute('data-action', action);
+
+            confirmButton.addEventListener('click', onConfirm);
+            cancelButton.addEventListener('click', onCancel);
+            closeButton.addEventListener('click', onClose);
+        }
+
+        function onConfirm() {
+            const userId = confirmButton.getAttribute('data-user-id');
+            const action = confirmButton.getAttribute('data-action');
+            if (action === 'reset') {
+                sendResetRequest(userId);
+            } else {
+                const currentDate = new Date().toLocaleString();
+                sendAttendanceData(userId, action);
+            }
+
+            closeModal();
+        }
+
+        function onCancel() {
+            closeModal();
+        }
+
+        function onClose() {
+            closeModal();
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            confirmButton.removeEventListener('click', onConfirm);
+            cancelButton.removeEventListener('click', onCancel);
+            closeButton.removeEventListener('click', onClose);
+        }
+
+        function sendAttendanceData(userId, action) {
+           
+            const dateTime = new Date().toISOString();
+
+            console.log(`Sending ${action} data for employee ID ${userId} at ${dateTime}`);
+            
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                    console.log("success");
+            }
+            if (action === "attendance")
+            {
+                var url = `./markAttendace?userId=${userId}&dateTime=${dateTime}`;
+            }else{
+                var url = `./markDeparture?userId=${userId}&dateTime=${dateTime}`;
+            }
+            request.open('Post', url, true);
+            request.send();
+
+            handleButtons(userId, action);
+        }
+
+        function sendResetRequest(userId) {
+            const dateTime = new Date().toISOString();
+
+            console.log(`Resetting data for employee ID ${userId} at ${dateTime}`);
+            var url = `./ResetAttendance?userId=${userId}&date=${dateTime}`;
+
+            var request = new XMLHttpRequest();
+
+            request.open("Post", url, true);
+            request.send();
+            
+            handleButtons(userId, "Reset");
+        }
+
+        function handleButtons(userId, action) {
+            const row = document.querySelectorAll(`[data-id="${userId}"]`);
+            console.log(row);
+            const markAttendanceButton = row[0];
+            const markDepartureButton = row[1];
+            const resetButton = row[2];
+
+            if (action === 'attendance') {
+                markAttendanceButton.disabled = true;
+                markDepartureButton.disabled = false;
+                resetButton.disabled = false;
+            } else if (action === 'departure') {
+                markAttendanceButton.disabled = true;
+                markDepartureButton.disabled = true;
+                resetButton.disabled = false;
+            } else {
+                markAttendanceButton.disabled = false;
+                markDepartureButton.disabled = true;
+                resetButton.disabled = true;
+            }
+        }
+    });
+
+</script>   

@@ -4,6 +4,7 @@ using Attendance_Time_tracking_System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,16 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Attendance_Time_tracking_System.Migrations
 {
     [DbContext(typeof(AttendanceSysDbContext))]
-    partial class AttendanceSysDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240405144422_change-intake-startEndDate-Type-DateOnly")]
+    partial class changeintakestartEndDateTypeDateOnly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.3")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -36,10 +36,7 @@ namespace Attendance_Time_tracking_System.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<TimeOnly?>("TimeIn")
+                    b.Property<TimeOnly>("TimeIn")
                         .HasColumnType("time");
 
                     b.Property<TimeOnly?>("TimeOut")
@@ -184,13 +181,7 @@ namespace Attendance_Time_tracking_System.Migrations
                     b.Property<int>("TrackID")
                         .HasColumnType("int");
 
-                    b.Property<int>("AbsenceDays")
-                        .HasColumnType("int");
-
                     b.Property<int>("IntakeID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LateDays")
                         .HasColumnType("int");
 
                     b.HasKey("StudentID", "TrackID");
@@ -301,13 +292,11 @@ namespace Attendance_Time_tracking_System.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
                         .IsRequired()

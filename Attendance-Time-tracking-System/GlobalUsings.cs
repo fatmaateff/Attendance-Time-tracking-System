@@ -1,0 +1,11 @@
+﻿global using System.ComponentModel.DataAnnotations;
+global using Attendance_Time_tracking_System.Data;
+global using Attendance_Time_tracking_System.ViewModels;
+global using Attendance_Time_tracking_System.Models;
+global using Microsoft.EntityFrameworkCore;
+global using Attendance_Time_tracking_System.Enums;
+global using Attendance_Time_tracking_System.Repositories;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.Filters;
+global using Microsoft.AspNetCore.Mvc.Rendering;
+global using System.Security.Claims;

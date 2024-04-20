@@ -10,17 +10,17 @@ public class Attendance
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-
     public DateOnly Date { get; set; }
+
+    public AttendanceStatus Status { get; set; }
 
 
     [Display(Name = "Arrival Time")]
-    public TimeOnly TimeIn { get; set; }
+    public TimeOnly? TimeIn { get; set; }
 
 
     [Display(Name = "Time out")]
     public TimeOnly? TimeOut { get; set; }
-    public AttendanceStatus Status { get; set; }
 
     [ForeignKey("User")]
     public int UserId { get;set; }

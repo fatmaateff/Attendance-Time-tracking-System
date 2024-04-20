@@ -1,0 +1,36 @@
+﻿@model Attendance
+
+<h1>Edit Attendance</h1>
+<form class="col-6" action="/StudentAffairs/EditAttendance">
+   
+    <input name="userId" value="@Model.UserId" hidden />
+   
+    <div class="form-control">
+        <label asp-for="User.Name" class="form-label"></label>
+        <input value="@Model.User.Name" readonly/>
+    </div>
+
+    <div class="form-control">
+        <label asp-for="Date" class="form-label"></label>
+        <input value="@Model.Date" readonly />
+    </div>
+
+    <div class="form-control">
+        <label asp-for="Status" class="form-label"></label>
+        
+        <select asp-for="Status" class="form-select">
+           <option value="0">Absent</option>
+           <option value="1">Late</option>
+            <option value="2">Attendant</option>
+        </select>
+
+    </div>
+
+    <div class="form-control">
+        <input type="submit" class="btn btn-success"/>
+        <a class="btn btn-outline-primary" href="/StudentAffairs/Index">Back</a>
+
+        @* <a class="btn btn-outline-primary" href="/StudentAffairs/Index?userId=@Model.UserId&date=@Model.Date">Back</a> *@
+    </div>
+
+</form>

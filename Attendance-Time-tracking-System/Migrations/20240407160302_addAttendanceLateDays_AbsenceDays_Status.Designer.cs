@@ -4,6 +4,7 @@ using Attendance_Time_tracking_System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Attendance_Time_tracking_System.Migrations
 {
     [DbContext(typeof(AttendanceSysDbContext))]
-    partial class AttendanceSysDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240407160302_addAttendanceLateDays_AbsenceDays_Status")]
+    partial class addAttendanceLateDays_AbsenceDays_Status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,7 @@ namespace Attendance_Time_tracking_System.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<TimeOnly?>("TimeIn")
+                    b.Property<TimeOnly>("TimeIn")
                         .HasColumnType("time");
 
                     b.Property<TimeOnly?>("TimeOut")

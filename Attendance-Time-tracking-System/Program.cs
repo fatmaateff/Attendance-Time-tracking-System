@@ -45,6 +45,7 @@ namespace Attendance_Time_tracking_System
             //for excel sheeet
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             builder.Services.AddSession();
+            builder.Services.AddScoped<IBranchRepository, BranchRepository>();
 
 
 
@@ -74,6 +75,10 @@ namespace Attendance_Time_tracking_System
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Account}/{action=Login}/{id?}");
+
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Attendance}/{action=Index}/{id?}");
 
             app.Run();
         }
