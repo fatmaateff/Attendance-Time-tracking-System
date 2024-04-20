@@ -16,44 +16,35 @@
     <img src="~/images/profile.jpg" alt="Profile Image" style="height: 150px; width:150px; border-radius:50%;" />
 </div>
 
-<table class="table table-bordered text-center">
-    <tr>
-        <td>Id</td>
-        <td>@Model.Id</td>
-    </tr>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered text-center">
+        <tr>
+            <th class="text-center">Id</th>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <th class="text-center">Name</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th class="text-center">Email</th>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <th class="text-center">Mobile</th>
+            <td>@Model.Mobile</td>
+        </tr>
+        <tr>
+            <th class="text-center">Role</th>
+            <td>@Model.Role</td>
+        </tr>
+        <tr>
+            <th class="text-center">Branch</th>
+            <td>@Model.Branch.Name</td>
+        </tr>
+    </table>
+</div>
 
-    <tr>
-        <td>Name</td>
-        <td>@Model.Name</td> 
-    </tr>
-
-    <tr>
-        <td>Email</td>
-        <td>@Model.Email</td>
-    </tr>
-
-@*     <tr>
-        <td>Password</td>
-        <td>@Model.Password</td>
-    </tr> *@
-
-    <tr>
-        <td>Mobile</td>
-        <td>@Model.Mobile</td>
-    </tr>
-
-    <tr>
-        <td>Role</td>
-        <td>@Model.Role</td>
-    </tr>
-
-    <tr>
-        <td>Branch</td>
-        <td>@Model.Branch.Name</td>
-    </tr>
-
-
-</table>
 
 <div class="d-flex justify-content-center">
     <a href="/User/Edit/@Model.Id" class="btn btn-danger mb-3">  <img width="30" height="30" src="~/images/editProfile.png" />    Edit Profile</a>
