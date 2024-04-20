@@ -1,9 +1,11 @@
 ﻿@using System.Security.Claims
 @using Attendance_Time_tracking_System.Repositories
+
 @{
     int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
     string name = User.FindFirst(ClaimTypes.Name).Value;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +31,18 @@
         .navbar {
             width: 100%;
         }
+
+        .nav-link.btn.btn-danger {
+            color: white;
+			transition: all 0.3s ease;
+            background-color: #dc3545; !important
+        }
+
+        .nav-link.btn.btn-danger:hover{
+                background-color: #bb2d3b; !important
+        }
     </style>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <div class="d-flex" id="wrapper">
@@ -50,28 +63,30 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Schedule" asp-action="ShowSchedules">Schedule</a>
 
                 }
-                @if (User.IsInRole("Admin"))
+                else if (User.IsInRole("Admin"))
                 {
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Instructor">Instructors</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="TrackSupervisor">Supervisors</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Employee">Employees</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="index" asp-controller="Track">Tracks</a>
                 }
-                @if (User.IsInRole("Student"))
+                else if (User.IsInRole("Student"))
                 {
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="user" asp-action="ViewSchedule">Schedule</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 " asp-action="permissionnform" asp-controller="StudentPermission">Permissions</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-controller="Student" asp-action="ViewAttendance">View Attendance</a>
                 }
-                @if (User.IsInRole("StudentAffair"))
+                else if (User.IsInRole("StudentAffair"))
                 {
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="Index" asp-controller="Studentaffairs">Attendance</a>
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-action="add" asp-controller="Studentaffairs"> Add Students</a>
-                        <a asp-action="index" asp-controller="Studentaffairs" class="list-group-item list-group-item-action list-group-item-light p-3">Remove Student</a>
+                        <a asp-action="EditStudents" asp-controller="Studentaffairs" class="list-group-item list-group-item-action list-group-item-light p-3">Remove Student</a>
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Attendance Reports</a>
                 }
                 @if (User.IsInRole("Security"))
                 {
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">Employee Attendance</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Attendance/Index?role=employee">Employee Attendance</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Attendance/Index?role=student">Student Attendance</a>
                 }
 
             </div>

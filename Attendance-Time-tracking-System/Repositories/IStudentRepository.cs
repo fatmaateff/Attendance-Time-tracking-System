@@ -9,7 +9,7 @@ namespace Attendance_Time_tracking_System.Repositories
         public List<StudentTrackIntake> getall(int id);
         void RegisterStudent(AddStudentViewModel student);
         public void delete(int id);
-        public void add(AddStudentViewModel std);
+        public void add(AddStudentViewModel std, int userid);
         public void ImportDataFromExcel(string filePath);
         public User getUserById(int id);
         public void addpermission(Permission pre, int id);

@@ -54,12 +54,12 @@ namespace Attendance_Time_tracking_System.Repositories
             db.SaveChanges();
 
         }
-        public void add(AddStudentViewModel std)
+        public void add(AddStudentViewModel std ,int userid)
         {
-
+            var model=db.Users.FirstOrDefault(a=>a.Id==userid);
             std.student.Role = "Student";
 
-            std.student.BranchId = 1;
+            std.student.BranchId = model.BranchId;
             std.student.IsDeleted = false;
 
             db.Students.Add(std.student);

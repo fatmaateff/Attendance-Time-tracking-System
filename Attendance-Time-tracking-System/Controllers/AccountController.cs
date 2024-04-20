@@ -4,6 +4,7 @@ using Attendance_Time_tracking_System.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -12,19 +13,31 @@ namespace Attendance_Time_tracking_System.Controllers
     public class AccountController : Controller
     {
         private readonly AttendanceSysDbContext db;
-        public AccountController(AttendanceSysDbContext _db)
+
+        private readonly IAttendanceRepository _attendanceRepository;
+        private readonly IScheduleRepository _scheduleRepository;
+        private readonly IIntakeRepository _intakeRepository;
+
+        public AccountController(AttendanceSysDbContext _db ,
+                                 IAttendanceRepository attendanceRepository,
+                                 IScheduleRepository scheduleRepository ,
+                                 IIntakeRepository intakeRepository)
         {
             db = _db;
+            _attendanceRepository = attendanceRepository;
+            _scheduleRepository = scheduleRepository;
+            _intakeRepository = intakeRepository;
         }
+
+
         [HttpGet]
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
             RedirectToAction("Login");
             return View();
-
-            
         }
+
         [HttpPost]
         public async Task <IActionResult> Login(LoginViewModel model)
         {
@@ -43,6 +56,7 @@ namespace Attendance_Time_tracking_System.Controllers
                 //claim for every part of the user
                 Claim claimEmail = new Claim(ClaimTypes.Email, user.Email);
                 Claim claimName = new Claim(ClaimTypes.Name, user.Name);
+
                 Claim claimRole;
                 if (user.Role == "Employee")
                 {
@@ -68,6 +82,8 @@ namespace Attendance_Time_tracking_System.Controllers
             }
             return View(model);
         }
-        
+
+        //private void InitializeTracks(int branchId, int intakeId)
+
     }
 }
