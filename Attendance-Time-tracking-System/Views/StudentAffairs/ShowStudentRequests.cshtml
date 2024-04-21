@@ -1,0 +1,33 @@
+﻿@model List<AddStudentViewModel>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>University</th>
+            <th>Faculty</th>
+            <th>Specialization</th>
+            <th>Graduation Year</th>
+            <th>Track</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.student.Name</td>
+                <td>@item.student.Email</td>
+                <td>@item.student.Mobile</td>
+                <td>@item.student.University</td>
+                <td>@item.student.Faculty</td>
+                <td>@item.student.Specialization</td>
+                <td>@item.student.GradYear</td>
+                <td>@item.StudentTrackIntake.Track.Name</td>
+                <td><a class=" btn btn-success" asp-controller="StudentAffairs" asp-action="RespondToStudentRequest" asp-route-id="@item.student.Id" asp-route-res="1">Accept</a></td>
+                <td><a class="btn btn-danger" asp-controller="StudentAffairs" asp-action="RespondToStudentRequest" asp-route-id="@item.student.Id" asp-route-res="0">Refuse</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

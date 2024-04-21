@@ -147,5 +147,17 @@ namespace Attendance_Time_tracking_System.Controllers
             return RedirectToAction("index");
         }
 
+        public IActionResult ShowStudentRequests()
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            int branchId = _branchRepository.GetBranchIdByUserId(userId);
+            return View(_userRepository.GetPendingStudentRequests(branchId));
+        }
+
+        public IActionResult RespondToStudentRequest(int id, int res)
+        {
+            _userRepository.RespondToStudentRequest(id, res);
+            return RedirectToAction("ShowStudentRequests");
+        }
     }
 }

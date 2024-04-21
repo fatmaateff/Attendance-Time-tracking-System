@@ -72,5 +72,9 @@ namespace Attendance_Time_tracking_System.Repositories
                 .Distinct()
                 .ToList();
         }
+        public int GetBranchIdByUserId(int userId)
+        {
+            return _db.Users.FirstOrDefault(x => x.Id == userId).BranchId;
+        }
     }
 }

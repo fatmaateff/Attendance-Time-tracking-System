@@ -26,6 +26,6 @@ public interface IBranchRepository
     IEnumerable<Student> GetBranchStundents(int branchId ,int intakeId ,int? trackId = null);
     List<Branch> GetBranchesByProgramId(int programId);
 
-
+    int GetBranchIdByUserId(int userId);
 
 }

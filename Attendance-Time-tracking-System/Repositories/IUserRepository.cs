@@ -29,6 +29,8 @@ namespace Attendance_Time_tracking_System.Repositories
         /// <param name="date">attedance date</param>
         /// <returns>returns collection of track employees with their attendance in a specific date</returns>
         IEnumerable<User> GetEmployeesWithAttedance(int branchId, DateOnly date);
+        List<AddStudentViewModel> GetPendingStudentRequests(int branchId);
+        void RespondToStudentRequest(int studentId, int res);
 
     }
 
