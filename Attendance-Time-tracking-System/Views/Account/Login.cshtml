@@ -70,8 +70,10 @@
                 
                 <input type="submit" class="btn" value="Login">
                 <span class="text-danger font-weight-bold ">@ViewBag.ErrorMessage</span>
+                <span> <b>Don't Have Account? Register Now!</b> </span>
+                <a asp-action="Register" asp-controller="Student" class="btn btn-danger">Register</a>
+
             </form>
-            <a asp-action="Register" asp-controller="Student" class="btn btn-danger">Register</a>
         </div>
     </div>
 
