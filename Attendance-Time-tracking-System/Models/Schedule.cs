@@ -7,7 +7,6 @@ namespace Attendance_Time_tracking_System.Models
     {
         public int Id { get; set; }
         [Required]
-        [UniqueScheduleDate]
         [DataType(DataType.Date)]
         public DateOnly Date { get; set; }
         [Required]

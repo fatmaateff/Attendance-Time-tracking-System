@@ -1,25 +1,30 @@
 ﻿@model Schedule
-<h1>Add Schedule</h1>
-<form asp-action="Add">
-    <div class="mb-3">
-        <label class="form-label" asp-for="Date"></label>
-        <input asp-for="Date" />
-        <span class="form-text text-danger" asp-validation-for="Date"></span>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="col-12 col-md-8 col-lg-6 bg-white p-4 rounded shadow-sm">
+        <h1 class="mb-4">Add Schedule</h1>
+        <form asp-action="Add">
+            <div class="mb-3">
+                <label class="form-label" asp-for="Date">Date</label>
+                <input class="form-control" asp-for="Date" />
+                <span class="form-text text-danger" asp-validation-for="Date"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="StartTime">Start Time</label>
+                <input class="form-control" asp-for="StartTime" />
+                <span class="form-text text-danger" asp-validation-for="StartTime"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="EndTime">End Time</label>
+                <input class="form-control" asp-for="EndTime" />
+                <span class="form-text text-danger" asp-validation-for="EndTime"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="Subject">Subject</label>
+                <input class="form-control" asp-for="Subject" />
+                <span class="form-text text-danger" asp-validation-for="Subject"></span>
+            </div>
+            <input class="btn btn-primary" type="submit" value="Add" />
+        </form>
     </div>
-    <div class="mb-3">
-        <label class="form-label" asp-for="StartTime"></label>
-        <input asp-for="StartTime" />
-        <span class="form-text text-danger" asp-validation-for="StartTime"></span>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" asp-for="EndTime"></label>
-        <input asp-for="EndTime" />
-        <span class="form-text text-danger" asp-validation-for="EndTime"></span>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" asp-for="Subject"></label>
-        <input asp-for="Subject" />
-        <span class="form-text text-danger" asp-validation-for="Subject"></span>
-    </div>
-    <input class="btn btn-primary" type="submit" value="Add" />
-</form>
+</div>
+

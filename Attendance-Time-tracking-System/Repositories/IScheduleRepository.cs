@@ -9,9 +9,9 @@ namespace Attendance_Time_tracking_System.Repositories
         void AddSchedule(int InstructorId, Schedule schedule);
         void EditSchedule(int id, Schedule schedule);
         Schedule GetScheduleById(int id);
+        Schedule GetScheduleByDate(DateOnly date);
+        Schedule ValidateScheduleDateExistence(int insId, DateOnly date);
         void DeleteScheduleById(int id);
-        bool IsUniqueDate(DateOnly date);
-
         IEnumerable<TrackSchedule> TodaysTracksSchedules(int branchId, int intakeId); 
     }
 }

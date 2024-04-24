@@ -34,7 +34,7 @@ namespace Attendance_Time_tracking_System.Controllers
             int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             DateOnly StartDate = GetStartDateOfCurrentWeek();
             DateOnly EndDate = StartDate;
-            EndDate.AddDays(6);
+            EndDate = EndDate.AddDays(6);
             List<Schedule> Schedules = scheduleRepository.GetSchedules(InstructorId,StartDate,EndDate);
             return PartialView("ViewScheduleTablePartialView", Schedules);
         }
@@ -55,9 +55,12 @@ namespace Attendance_Time_tracking_System.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Add(Schedule schedule)
         {
-            if(ModelState.IsValid)
+            int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if(scheduleRepository.ValidateScheduleDateExistence(InstructorId,schedule.Date) != null)
+                ModelState.AddModelError("Date", "Date already exists");
+
+            if (ModelState.IsValid)
             {
-                int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 scheduleRepository.AddSchedule(InstructorId, schedule);
                 return RedirectToAction("ShowSchedules");
             }
@@ -71,17 +74,20 @@ namespace Attendance_Time_tracking_System.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id,Schedule schedule)
         {
-            if(ModelState.IsValid)
+            int InstructorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            Schedule oldSchedule = scheduleRepository.ValidateScheduleDateExistence(InstructorId, schedule.Date);
+            if (oldSchedule != null && schedule.Id != oldSchedule.Id)
+                ModelState.AddModelError("Date", "Date already exists");
+            if (ModelState.IsValid)
             {
                 scheduleRepository.EditSchedule(id,schedule);
                 return RedirectToAction("ShowSchedules");
             }
             return View("EditForm", schedule);
         }
-        public IActionResult Delete(int id)
+        public void Delete(int id)
         {
             scheduleRepository.DeleteScheduleById(id);
-            return RedirectToAction("ShowSchedules");
         }
 
         DateOnly GetStartDateOfCurrentWeek()

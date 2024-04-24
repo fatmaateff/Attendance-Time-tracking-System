@@ -78,6 +78,27 @@ namespace Attendance_Time_tracking_System.Repositories
         {
             return db.Schedules.FirstOrDefault(s => s.Id == id);
         }
+        public Schedule GetScheduleByDate(DateOnly date)
+        {
+            return db.Schedules.FirstOrDefault(s => s.Date == date);
+        }
+        public Schedule ValidateScheduleDateExistence(int insId,DateOnly date)
+        {
+            DateTime now = DateTime.Now;
+            DateOnly today = new DateOnly(now.Year, now.Month, now.Day);
+            int intakeId = db.Intakes.OrderBy(x => x.StartDate)
+                .FirstOrDefault(x => (today >= x.StartDate && today <= x.EndDate) || today < x.StartDate).Id;
+
+            TrackSupervisor trackSupervisor = db.TrackSupervisors
+                .FirstOrDefault(x => x.InstructorID == insId && x.IntakeID == intakeId);
+
+            TrackSchedule trackSchedule =  db.TrackSchedules
+                                            .FirstOrDefault(x => x.IntakeID == intakeId &&
+                                                x.BranchID == trackSupervisor.BranchID &&
+                                                x.TrackID == trackSupervisor.TrackID &&
+                                                x.Schedule.Date == date);
+            return trackSchedule == null ? null : trackSchedule.Schedule;
+        }
         public void DeleteScheduleById(int id)
         {
             Schedule schedule = db.Schedules.FirstOrDefault(s => s.Id == id);
@@ -86,10 +107,6 @@ namespace Attendance_Time_tracking_System.Repositories
                 db.Remove(schedule);
                 db.SaveChanges();
             }
-        }
-        public bool IsUniqueDate(DateOnly date)
-        {
-            return db.Schedules.FirstOrDefault(s => s.Date == date) == null;
         }
 
         public IEnumerable<TrackSchedule> TodaysTracksSchedules(int branchId ,int intakeId)
